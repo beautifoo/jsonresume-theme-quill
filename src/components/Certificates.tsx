@@ -31,11 +31,11 @@ export const Certificates: FC<CertificatesProps> = ({ certificates }) => {
 								: undefined
 						}
 						date={
-							certificate.date
-								? f.dateTime(new Date(certificate.date), {
-										month: 'short',
-										year: 'numeric',
-									})
+							certificate.startDate || certificate.date
+								? f.dateTime(
+										new Date(certificate.startDate || certificate.date || ''),
+										{ month: 'short', year: 'numeric' },
+									)
 								: undefined
 						}
 						url={certificate.url}

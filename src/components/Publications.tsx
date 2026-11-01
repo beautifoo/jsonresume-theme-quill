@@ -22,12 +22,15 @@ export const Publications: FC<PublicationsProps> = memo(({ publications }) => {
 					<SidebarEntry
 						key={index}
 						title={publication.name}
-						subtitle={publication.publisher}
+						subtitle={publication.publisher || publication.organization}
 						date={
-							publication.releaseDate
-								? f.dateTime(new Date(publication.releaseDate), {
-										year: 'numeric',
-									})
+							publication.releaseDate || publication.startDate
+								? f.dateTime(
+										new Date(
+											publication.releaseDate || publication.startDate || '',
+										),
+										{ year: 'numeric' },
+									)
 								: undefined
 						}
 						url={publication.url || undefined}
@@ -35,6 +38,10 @@ export const Publications: FC<PublicationsProps> = memo(({ publications }) => {
 						content={
 							publication.summary ? (
 								<Markdown content={publication.summary} />
+							) : publication.authors?.length ? (
+								<span className='text-ink-3'>
+									{publication.authors.join(', ')}
+								</span>
 							) : undefined
 						}
 					/>

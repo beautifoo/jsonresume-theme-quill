@@ -23,9 +23,10 @@ export const Projects: FC<ProjectsProps> = ({ projects }) => {
 				>
 					<SectionCard
 						title={project.name}
-						subtitle={project.entity}
+						subtitle={project.position || project.entity}
 						url={project.url}
-						summary={project.description}
+						// Both names are common: summary (2.1) / description (1.x samples)
+						summary={project.description || project.summary}
 						highlights={project.highlights}
 						tags={project.keywords}
 						actionUrl={project.url}

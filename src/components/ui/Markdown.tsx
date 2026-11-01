@@ -21,7 +21,9 @@ const METRIC_RE = /\d[\d,.]*(?:%|\s?×)?/
 
 const remarkMetrics = () => (tree: Root) => {
 	visit(tree, 'text', (node, index, parent) => {
-		if (index === undefined || !parent || !METRIC_RE.test(node.value)) {
+		// Skip text we produced ourselves — visit descends into the
+		// spliced nodes and would double-wrap.
+		if (!parent || parent.type === 'strong' || !METRIC_RE.test(node.value)) {
 			return
 		}
 

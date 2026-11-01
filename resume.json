@@ -1,340 +1,255 @@
 {
 	"language": "en",
 	"basics": {
-		"name": "John Doe",
-		"label": "Full Stack Developer",
-		"email": "john.doe@example.com",
-		"phone": "+1 555 123 4567",
-		"url": "https://example.com/johndoe",
-		"summary": "Full Stack Developer with 6 years of experience in developing web and mobile applications. Specialized in JavaScript and modern frameworks like React and Node.js. Passionate about scalable architectures and performance optimization.",
+		"name": "Johanna Kowalska-Nielsen",
+		"label": "Senior Frontend Engineer",
+		"email": "johanna@example.com",
+		"phone": "+45 31 22 44 66",
+		"url": "https://johanna.example.com",
+		"image": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='192'%20height='192'%3E%3Crect%20width='192'%20height='192'%20fill='%23e8e6e3'/%3E%3Ccircle%20cx='96'%20cy='74'%20r='34'%20fill='%238f8a84'/%3E%3Cpath%20d='M28%20192%20a68%2068%200%200%201%20136%200'%20fill='%238f8a84'/%3E%3C/svg%3E",
+		"summary": "Senior frontend engineer with 11 years of experience building design systems and data-heavy web applications. Led the 2024 rewrite of a customer analytics platform, cutting median page load from 4.2s to 1.1s and lifting weekly active usage by 18%. Cares about typography, performance budgets, and interfaces that respect their readers.",
 		"location": {
-			"address": "123 Main Street",
-			"postalCode": "90210",
-			"city": "Beverly Hills",
-			"region": "California",
-			"countryCode": "US"
+			"address": "Bredgade 42",
+			"postalCode": "1260",
+			"city": "Copenhagen",
+			"region": "Capital Region",
+			"countryCode": "DK"
 		},
 		"profiles": [
 			{
 				"network": "LinkedIn",
-				"username": "johndoe",
-				"url": "https://linkedin.com/in/johndoe"
+				"username": "johanna-kn",
+				"url": "https://linkedin.com/in/johanna-kn"
 			},
 			{
 				"network": "GitHub",
-				"username": "johndoe",
-				"url": "https://github.com/johndoe"
+				"username": "jkowalska",
+				"url": "https://github.com/jkowalska"
 			},
 			{
-				"network": "Twitter",
-				"username": "johndoe",
-				"url": "https://twitter.com/johndoe"
+				"network": "X",
+				"username": "jk_builds",
+				"url": "https://x.com/jk_builds"
 			},
 			{
 				"network": "Medium",
-				"username": "johndoe",
-				"url": "https://medium.com/@johndoe"
+				"username": "jkowalska",
+				"url": "https://medium.com/@jkowalska"
 			}
 		]
 	},
 	"work": [
 		{
-			"name": "Tech Solutions Inc.",
-			"position": "Lead Full Stack Developer",
-			"url": "https://techsolutionsinc.example.com",
-			"startDate": "2021-03-01",
-			"summary": "Led a team of developers in creating web and mobile applications for international clients. Implemented best practices in software development and architecture.",
+			"name": "Nordlys Analytics",
+			"position": "Staff Frontend Engineer",
+			"url": "https://nordlys.example.com",
+			"location": "Copenhagen, Denmark",
+			"startDate": "2021-04-12",
+			"summary": "Own the frontend architecture of a customer analytics platform serving 40k weekly users across 12 markets.",
+			"keywords": ["TypeScript", "React", "Design systems", "Performance"],
 			"highlights": [
-				"Led a team of 8 developers on 5 major client projects",
-				"Implemented microservices architecture reducing deployment times by 60%",
-				"Improved application performance reducing load times by 40%",
-				"Set up CI/CD processes enabling daily deployments"
+				"Led a 6-person team through a full rewrite of the dashboard, cutting median page load from 4.2s to 1.1s",
+				"Introduced a performance budget gate in CI that blocked 14 regressions before release",
+				"Grew weekly active usage by 18% through onboarding and empty-state redesign",
+				"Ran the frontend guild across 3 product teams; established the RFC process still in use"
+			],
+			"growth": { "label": "3 promotions", "level": 4 }
+		},
+		{
+			"name": "Nordlys Analytics",
+			"position": "Senior Frontend Engineer",
+			"url": "https://nordlys.example.com",
+			"location": "Copenhagen, Denmark",
+			"startDate": "2019-08-01",
+			"endDate": "2021-04-11",
+			"keywords": ["React", "Component libraries", "Testing"],
+			"highlights": [
+				"Built the component library used by 5 product teams (62 components, 91% test coverage)",
+				"Reduced bundle size by 38% via route-level code splitting"
 			]
 		},
 		{
-			"name": "Innovative Startup LLC",
-			"position": "Senior Full Stack Developer",
-			"url": "https://innovativestartup.example.com",
-			"startDate": "2018-09-01",
-			"endDate": "2021-02-28",
-			"summary": "Developed a SaaS platform for customer relationship management using React, Node.js, and GraphQL. Designed and implemented key features and responsive user interfaces.",
+			"name": "Brightpath",
+			"position": "Frontend Engineer",
+			"url": "https://brightpath.example.com",
+			"location": "Aarhus, Denmark",
+			"startDate": "2017-02-01",
+			"endDate": "2019-07-31",
+			"summary": "Frontend for a B2B logistics platform; first frontend hire on the platform team.",
 			"highlights": [
-				"Developed and launched 3 major features generating 30% additional revenue",
-				"Optimized database queries reducing API response time by 65%",
-				"Mentored 4 junior developers, accelerating their technical growth",
-				"Participated in a complete UI overhaul with a component-driven approach"
+				"Shipped the company's first public web store, reaching DKK 12M in first-year revenue",
+				"Took checkout conversion from 2.1% to 3.4% over two quarters of A/B work"
 			]
 		},
 		{
-			"name": "Creative Web Agency",
-			"position": "Frontend Developer",
-			"url": "https://creativeweb.example.com",
-			"startDate": "2017-01-15",
-			"endDate": "2018-08-31",
-			"summary": "Designed and developed user interfaces for clients in the luxury, finance, and e-commerce sectors.",
+			"name": "Brightpath",
+			"position": "Junior Web Developer",
+			"startDate": "2016-05-01",
+			"endDate": "2017-01-31",
 			"highlights": [
-				"Developed over 15 responsive websites for premium clients",
-				"Created complex animations and interactions enhancing user engagement",
-				"Implemented design system methodologies speeding up development by 40%"
+				"Fixed 200+ tickets while learning the codebase; took over the CSS system"
+			]
+		}
+	],
+	"volunteer": [
+		{
+			"organization": "Open Source Denmark",
+			"position": "Mentor",
+			"location": "Remote",
+			"url": "https://opensource.dk",
+			"startDate": "2020-01-15",
+			"summary": "Mentoring first-time open source contributors, from first PR to first release.",
+			"highlights": [
+				"Mentored 9 first-time open source contributors to their merged PRs",
+				"Organized the annual Copenhagen contributor day (40 attendees)"
+			]
+		},
+		{
+			"organization": "Copenhagen Free Software Meetup",
+			"position": "Website Volunteer",
+			"startDate": "2015-09-01",
+			"endDate": "2016-04-30",
+			"highlights": [
+				"Rebuilt the meetup site; doubled mobile traffic"
 			]
 		}
 	],
 	"education": [
 		{
-			"institution": "National Polytechnic University",
-			"url": "https://npu.example.edu",
-			"area": "Software Engineering",
-			"studyType": "Master's Degree",
-			"startDate": "2015-09-01",
-			"endDate": "2017-06-30",
-			"score": "Summa Cum Laude",
-			"courses": [
-				"Software Architecture",
-				"Advanced Web Development",
-				"Artificial Intelligence",
-				"Cybersecurity",
-				"Data Science"
-			]
+			"institution": "Aarhus University",
+			"studyType": "MSc",
+			"area": "Computer Science",
+			"startDate": "2013-08-20",
+			"endDate": "2015-06-30",
+			"score": "12.4"
 		},
 		{
-			"institution": "State University",
-			"url": "https://stateu.example.edu",
-			"area": "Computer Science",
-			"studyType": "Bachelor's Degree",
-			"startDate": "2012-09-01",
-			"endDate": "2015-06-30",
-			"score": "4.0 GPA",
+			"institution": "Aarhus University",
+			"studyType": "BSc",
+			"area": "Interactive Media",
+			"startDate": "2010-08-20",
+			"endDate": "2013-06-30",
 			"courses": [
-				"Algorithms and Data Structures",
-				"Object-Oriented Programming",
-				"Databases",
-				"Discrete Mathematics",
-				"Operating Systems"
+				"Human-Computer Interaction",
+				"JavaScript",
+				"Information Architecture",
+				"Typography and Visual Design"
 			]
 		}
 	],
 	"skills": [
 		{
-			"name": "Frontend",
+			"name": "Languages",
 			"level": "Expert",
-			"keywords": [
-				"JavaScript",
-				"TypeScript",
-				"React",
-				"Vue.js",
-				"HTML5",
-				"CSS3",
-				"SASS",
-				"Webpack",
-				"Jest",
-				"Next.js"
-			]
+			"keywords": ["TypeScript", "JavaScript", "CSS", "HTML", "Python"]
 		},
 		{
-			"name": "Backend",
+			"name": "Frameworks",
 			"level": "Advanced",
-			"keywords": [
-				"Node.js",
-				"Express",
-				"NestJS",
-				"GraphQL",
-				"REST API",
-				"MongoDB",
-				"PostgreSQL",
-				"Redis",
-				"Docker"
-			]
+			"keywords": ["React", "Next.js", "Vite", "Node.js", "Playwright"]
 		},
 		{
-			"name": "Mobile",
-			"level": "Intermediate",
-			"keywords": [
-				"React Native",
-				"Flutter",
-				"Progressive Web Apps",
-				"Firebase"
-			]
+			"name": "Practices",
+			"level": "Advanced",
+			"keywords": ["Design systems", "Accessibility", "Performance", "i18n"]
 		},
 		{
-			"name": "DevOps",
-			"level": "Intermediate",
-			"keywords": [
-				"AWS",
-				"GCP",
-				"CI/CD",
-				"GitHub Actions",
-				"Kubernetes",
-				"Terraform"
-			]
-		}
-	],
-	"languages": [
-		{
-			"language": "English",
-			"fluency": "Native speaker"
-		},
-		{
-			"language": "Spanish",
-			"fluency": "Fluent"
-		},
-		{
-			"language": "French",
-			"fluency": "Intermediate"
-		},
-		{
-			"language": "German",
-			"fluency": "Basic"
+			"name": "Tooling",
+			"keywords": ["Vitest", "Storybook", "GitHub Actions", "Figma"]
 		}
 	],
 	"projects": [
 		{
-			"name": "Project Management Platform",
-			"description": "Comprehensive web application for project management featuring real-time tracking, metrics, and automated reporting.",
-			"highlights": [
-				"Micro-frontend architecture with React and Module Federation",
-				"Node.js backend with GraphQL API",
-				"Real-time notification system using WebSockets",
-				"Data analysis and visualizations with D3.js"
-			],
-			"keywords": [
-				"React",
-				"Node.js",
-				"GraphQL",
-				"MongoDB",
-				"WebSockets",
-				"Docker"
-			],
-			"startDate": "2020-05-01",
-			"endDate": "2020-11-30",
-			"url": "https://projectplatform.example.com",
-			"roles": ["Architect", "Lead Developer", "DevOps"]
+			"name": "gridsheet",
+			"entity": "open source",
+			"position": "Author",
+			"url": "https://github.com/jkowalska/gridsheet",
+			"summary": "A CSS grid layout generator that exports production-ready, minimal CSS.",
+			"keywords": ["CSS", "CLI", "DX"],
+			"highlights": ["2.1k GitHub stars; used in production by 3 design teams"]
 		},
 		{
-			"name": "Fitness Tracking Mobile App",
-			"description": "Cross-platform application allowing users to track physical activities, set goals, and view progress.",
+			"name": "Nordlys Docs",
+			"entity": "Nordlys Analytics",
+			"position": "Docs lead",
+			"url": "https://docs.nordlys.example.com",
+			"startDate": "2022-01-10",
+			"summary": "Documentation site for the internal component library, serving 1.4k developers.",
 			"highlights": [
-				"Developed with React Native for iOS and Android",
-				"Bluetooth synchronization with connected devices",
-				"Offline mode with automatic synchronization",
-				"Custom data visualization and progress reports"
-			],
-			"keywords": [
-				"React Native",
-				"Redux",
-				"Firebase",
-				"Realm",
-				"Bluetooth LE",
-				"Charts"
-			],
-			"startDate": "2019-02-01",
-			"endDate": "2019-08-15",
-			"url": "https://fittrackapp.example.com",
-			"roles": ["Mobile Developer", "UI/UX Designer"]
+				"Cut onboarding time for new frontend hires from 3 weeks to 1"
+			]
+		},
+		{
+			"name": "type-scale",
+			"entity": "open source",
+			"url": "https://github.com/jkowalska/type-scale",
+			"summary": "Generates harmonic typographic scales from a base size and ratio.",
+			"keywords": ["Typography", "CSS"]
+		}
+	],
+	"languages": [
+		{ "language": "Danish", "fluency": "Native" },
+		{ "language": "English", "fluency": "Fluent" },
+		{ "language": "German", "fluency": "Conversational" }
+	],
+	"interests": [
+		{ "name": "Typography", "keywords": ["Serif revivals", "Variable fonts"] },
+		{ "name": "Cycling", "keywords": ["Long distance"] },
+		{ "name": "Coffee", "keywords": ["Pour over", "Konnict-style cupping"] }
+	],
+	"awards": [
+		{
+			"title": "Danish Developer Awards — Best Engineering Team",
+			"date": "2024-11-02",
+			"awarder": "Danish IT Association",
+			"summary": "For the 2024 platform rewrite and the performance work behind it."
+		},
+		{
+			"title": "CSS Design Awards — Site of the Day",
+			"date": "2023-05-18",
+			"awarder": "CSSDA",
+			"url": "https://cssdesignawards.example.com/sotd/nordlys"
 		}
 	],
 	"certificates": [
 		{
-			"name": "Google Cloud Professional Cloud Architect",
-			"issuer": "Google Cloud",
-			"date": "2022-05-20",
-			"url": "https://cloud.google.com/certification/cloud-architect"
-		},
-		{
-			"name": "AWS Solutions Architect - Associate",
+			"name": "AWS Certified Developer — Associate",
 			"issuer": "Amazon Web Services",
-			"date": "2021-09-10",
-			"url": "https://aws.amazon.com/certification/certified-solutions-architect-associate/"
+			"startDate": "2023-03-14",
+			"url": "https://aws.amazon.com/certification/certified-developer-associate"
 		},
 		{
-			"name": "Certified Scrum Master",
-			"issuer": "Scrum Alliance",
-			"date": "2020-03-15",
-			"url": "https://www.scrumalliance.org/get-certified/scrum-master-track/certified-scrummaster"
-		}
-	],
-	"awards": [
-		{
-			"title": "Digital Innovation Award",
-			"date": "2022-06-15",
-			"awarder": "Tech Innovation Association",
-			"summary": "Recognition for designing an innovative solution in the connected health domain.",
-			"url": "https://techinnovation.example.org/awards/2022"
-		},
-		{
-			"title": "Tech Hackathon - First Prize",
-			"date": "2019-11-25",
-			"awarder": "City Tech",
-			"summary": "First prize in a hackathon for developing a sustainable urban mobility solution.",
-			"url": "https://citytech.example.com/hackathon/2019"
-		}
-	],
-	"volunteer": [
-		{
-			"organization": "CodeForAmerica",
-			"position": "Mentor",
-			"url": "https://codeforamerica.example.org",
-			"startDate": "2020-01-01",
-			"summary": "Mentoring young developers and organizing coding workshops for underserved communities.",
-			"highlights": [
-				"Mentored over 20 young developers",
-				"Organized 12 web and mobile programming workshops",
-				"Contributed to open-source projects benefiting public services"
-			]
-		},
-		{
-			"organization": "Developers Without Borders",
-			"position": "Volunteer Developer",
-			"url": "https://devswithoutborders.example.org",
-			"startDate": "2018-06-01",
-			"endDate": "2019-12-31",
-			"summary": "Developed applications for international NGOs facilitating resource management and field communication.",
-			"highlights": [
-				"Developed a crisis management application used by 3 NGOs",
-				"Designed a data collection system functional in low-connectivity areas",
-				"Trained local staff in tool usage and maintenance"
-			]
-		}
-	],
-	"interests": [
-		{
-			"name": "Photography",
-			"keywords": ["Urban", "Travel", "Black & White"]
-		},
-		{
-			"name": "Water Sports",
-			"keywords": ["Sailing", "Scuba Diving", "Kayaking"]
-		},
-		{
-			"name": "Gastronomy",
-			"keywords": ["Asian Cuisine", "Pastry", "Wine Tasting"]
-		}
-	],
-	"references": [
-		{
-			"name": "Sarah Smith",
-			"reference": "John is an exceptional developer who perfectly blends technical skills with strategic vision. His ability to understand business needs and translate them into technical solutions is remarkable. A true asset to any team.",
-			"position": "Technical Director, Tech Solutions Inc."
-		},
-		{
-			"name": "Mark Green",
-			"reference": "I had the privilege of working with John on several complex projects. His technical expertise and rigorous methodology were crucial to the success of our initiatives. He is also an excellent communicator and a natural mentor.",
-			"position": "CTO, Innovative Startup LLC"
+			"name": "W3C Web Accessibility (WCAG 22)",
+			"issuer": "Deque University",
+			"startDate": "2022-10-01"
 		}
 	],
 	"publications": [
 		{
-			"name": "Micro-Frontend Architectures: Challenges and Solutions",
-			"publisher": "Developer Journal",
-			"releaseDate": "2022-08-10",
-			"url": "https://devjournal.example.com/micro-frontends",
-			"summary": "In-depth analysis of micro-frontend architectures, presenting advantages, challenges, and optimal implementation strategies for modern web applications."
+			"name": "The Quiet Interface: Density and Rest in Data UIs",
+			"publisher": "Frontend Focus",
+			"releaseDate": "2024-02-20",
+			"summary": "On designing dashboards that show more by shouting less."
 		},
 		{
-			"name": "Optimizing React Applications: Beyond the Basics",
-			"publisher": "Dev.to",
-			"releaseDate": "2021-04-22",
-			"url": "https://dev.to/johndoe/optimizing-react-apps",
-			"summary": "Practical guide on advanced performance optimization techniques in React applications, including case studies and benchmarks."
+			"name": "CSS Grid, Finally",
+			"publisher": "CSS Weekly",
+			"releaseDate": "2022-08-09",
+			"authors": ["J. Kowalska-Nielsen", "M. Andersen"],
+			"url": "https://cssweekly.example.com/grid-finally"
+		}
+	],
+	"references": [
+		{
+			"name": "Mette Andersen",
+			"label": "CTO, Nordlys Analytics",
+			"email": "mette@nordlys.example.com",
+			"summary": "Johanna is the engineer I call when 'elegant' and 'shipped' have to be the same sentence."
+		},
+		{
+			"name": "Lars Sørensen",
+			"label": "Design Director, Brightpath",
+			"summary": "Available on request."
 		}
 	]
 }

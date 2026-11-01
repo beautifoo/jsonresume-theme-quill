@@ -20,10 +20,14 @@ export const References: FC<ReferencesProps> = ({ references }) => {
 					<SidebarEntry
 						key={index}
 						title={reference.name}
-						subtitle={reference.organization}
+						subtitle={
+							reference.label || reference.position || reference.organization
+						}
 						content={
-							reference.reference ? (
-								<Markdown content={reference.reference} />
+							reference.summary || reference.reference ? (
+								<Markdown
+									content={reference.summary || reference.reference || ''}
+								/>
 							) : undefined
 						}
 					/>

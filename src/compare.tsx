@@ -1,15 +1,15 @@
 /**
  * Theme comparison page — a development tool, excluded from dist.
  *
- * Renders the theme's variants side by side (native, with
- * layout/scheme controls) at full resolution for a human eye.
+ * Renders the theme's variants side by side for the repo's sample
+ * resume, with layout/scheme controls, at full resolution for a human
+ * eye.
  */
 
 import { type FC, StrictMode, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { IntlProvider } from 'use-intl'
 import resume from '../resume.json'
-import rich from './compare/resume-rich.json'
 import { type LayoutMode, Resume, type ThemeVariant } from './components/Resume'
 import { type Locale, locales } from './i18n/config'
 import type { ResumeSchema } from './types/resumeSchema'
@@ -49,12 +49,11 @@ const Caption: FC<{ title: string; sub: string }> = ({ title, sub }) => (
 const FOIL_VARIANTS: ThemeVariant[] = ['folio', 'folio-monochrome']
 
 const ComparePage: FC = () => {
-	const [resumeName, setResumeName] = useState<'sample' | 'rich'>('rich')
 	const [layout, setLayout] = useState<LayoutMode>('double')
 	const [scheme, setScheme] = useState<'light' | 'dark'>('light')
 	const [variant, setVariant] = useState<ThemeVariant | 'all'>('all')
 
-	const resumeData = (resumeName === 'rich' ? rich : resume) as ResumeSchema
+	const resumeData = resume as ResumeSchema
 	const folioVariants = FOIL_VARIANTS.filter(
 		(v) => variant === 'all' || v === variant,
 	)
@@ -84,19 +83,6 @@ const ComparePage: FC = () => {
 					<span className='text-[1.05rem] font-semibold text-ink'>
 						Folio — theme comparison
 					</span>
-					<Label>resume</Label>
-					<div className='flex gap-1.5'>
-						<Button
-							value='sample (John Doe)'
-							active={resumeName === 'sample'}
-							onClick={() => setResumeName('sample')}
-						/>
-						<Button
-							value='rich (fixture)'
-							active={resumeName === 'rich'}
-							onClick={() => setResumeName('rich')}
-						/>
-					</div>
 					<Label>layout</Label>
 					<div className='flex gap-1.5'>
 						<Button
@@ -155,7 +141,7 @@ const ComparePage: FC = () => {
 }
 
 export const Compare: FC = () => {
-	const lang = (rich as ResumeSchema).language
+	const lang = (resume as ResumeSchema).language
 	const locale: Locale =
 		lang && locales[lang as Locale] ? (lang as Locale) : 'en'
 
