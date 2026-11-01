@@ -21,9 +21,9 @@ bun run build      # self-contained dist/
 bun test           # vitest
 ```
 
-The compare page renders Folio's variants (folio / folio-monochrome)
-next to the registry reference themes for the same resume, with layout
-(single/double), scheme, and variant controls.
+The compare page renders the theme's variants (folio / folio-monochrome)
+side by side for the same resume, with layout (single/double), scheme,
+and variant controls.
 
 ## Theming
 

@@ -57,12 +57,6 @@
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
 		"jsdom": "^26.1.0",
-		"jsonresume-theme-academic-cv-lite": "0.2.9",
-		"jsonresume-theme-data-driven": "0.2.9",
-		"jsonresume-theme-government-standard": "0.2.9",
-		"jsonresume-theme-pro": "0.2.0",
-		"jsonresume-theme-professional": "1.1.0",
-		"jsonresume-theme-reference": "0.2.9",
 		"semantic-release": "^25.0.5",
 		"vitest": "^3.2.6"
 	},

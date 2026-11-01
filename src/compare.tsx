@@ -1,17 +1,10 @@
 /**
  * Theme comparison page — a development tool, excluded from dist.
  *
- * Renders the Folio variants (native, with layout/scheme controls)
- * alongside the registry reference themes (in iframes) for the same
- * resume, at full resolution for a human eye.
+ * Renders the theme's variants side by side (native, with
+ * layout/scheme controls) at full resolution for a human eye.
  */
 
-import * as academicCvLite from 'jsonresume-theme-academic-cv-lite'
-import * as dataDriven from 'jsonresume-theme-data-driven'
-import * as governmentStandard from 'jsonresume-theme-government-standard'
-import * as pro from 'jsonresume-theme-pro'
-import * as professional from 'jsonresume-theme-professional'
-import * as reference from 'jsonresume-theme-reference'
 import { type FC, StrictMode, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { IntlProvider } from 'use-intl'
@@ -20,37 +13,6 @@ import rich from './compare/resume-rich.json'
 import { type LayoutMode, Resume, type ThemeVariant } from './components/Resume'
 import { type Locale, locales } from './i18n/config'
 import type { ResumeSchema } from './types/resumeSchema'
-
-type RenderFn = (resume: ResumeSchema) => unknown
-
-const referenceThemes: { name: string; render: RenderFn }[] = [
-	{ name: 'academic-cv-lite', render: (r) => pick(academicCvLite)(r) },
-	{ name: 'data-driven', render: (r) => pick(dataDriven)(r) },
-	{ name: 'government-standard', render: (r) => pick(governmentStandard)(r) },
-	{ name: 'pro', render: (r) => pick(pro)(r) },
-	{ name: 'professional', render: (r) => pick(professional)(r) },
-	{ name: 'reference', render: (r) => pick(reference)(r) },
-]
-
-function pick(mod: { render?: RenderFn; default?: { render?: RenderFn } }) {
-	const render = mod.render ?? mod.default?.render
-	if (!render) throw new Error('theme has no render() export')
-	return render
-}
-
-/** Normalize a theme's output to a complete document for an iframe. */
-function toSrcDoc(out: unknown): string {
-	let html = ''
-	if (typeof out === 'string') html = out
-	else if (out && typeof out === 'object' && 'html' in out) {
-		html = String((out as { html?: string }).html ?? '')
-	}
-	if (!html) return '<p>theme produced no output</p>'
-	if (!/<!DOCTYPE|<html/i.test(html)) {
-		html = `<!doctype html><html><head><meta charset="utf-8" /><style>body{margin:0}</style></head><body>${html}</body></html>`
-	}
-	return html
-}
 
 const Button: FC<{ value: string; active: boolean; onClick: () => void }> = ({
 	value,
@@ -113,21 +75,6 @@ const ComparePage: FC = () => {
 				</figure>
 			)),
 		[resumeData, layout, scheme, folioVariants],
-	)
-
-	const referencePanels = useMemo(
-		() =>
-			referenceThemes.map((theme) => (
-				<figure key={theme.name} className='m-0'>
-					<Caption title={theme.name} sub='jsonresume registry' />
-					<iframe
-						title={`Reference theme: ${theme.name}`}
-						srcDoc={toSrcDoc(theme.render(resumeData))}
-						className='h-120 w-full rounded-lg border border-line bg-white'
-					/>
-				</figure>
-			)),
-		[resumeData],
 	)
 
 	return (
@@ -197,7 +144,6 @@ const ComparePage: FC = () => {
 
 			<main className='grid gap-6 p-6 [grid-template-columns:repeat(auto-fill,minmax(560px,1fr))]'>
 				{folioPanels}
-				{referencePanels}
 			</main>
 
 			<footer className='px-6 pb-8 text-[0.8rem] text-ink-3'>
