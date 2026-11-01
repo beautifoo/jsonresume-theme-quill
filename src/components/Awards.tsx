@@ -1,12 +1,10 @@
 import { TrophyIcon } from '@phosphor-icons/react'
 import type { FC } from 'react'
 import { useTranslations } from 'use-intl'
-import type { ResumeSchema } from '../types/resumeSchema'
+import type { Award } from '../types/resume'
 import { DateStamp } from './ui/ResumeDate'
 import { SidebarEntry } from './ui/SidebarEntry'
 import { SidebarSection } from './ui/SidebarSection'
-
-type Award = NonNullable<ResumeSchema['awards']>[number]
 
 interface AwardsProps {
 	awards?: Award[]

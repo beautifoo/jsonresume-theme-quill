@@ -1,12 +1,10 @@
 import { CertificateIcon } from '@phosphor-icons/react'
 import type { FC } from 'react'
 import { useTranslations } from 'use-intl'
-import type { ResumeSchema } from '../types/resumeSchema'
+import type { Certificate } from '../types/resume'
 import { DateStamp } from './ui/ResumeDate'
 import { SidebarEntry } from './ui/SidebarEntry'
 import { SidebarSection } from './ui/SidebarSection'
-
-type Certificate = NonNullable<ResumeSchema['certificates']>[number]
 
 interface CertificatesProps {
 	certificates?: Certificate[]

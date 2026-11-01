@@ -1,10 +1,8 @@
 import type { FC } from 'react'
-import type { ResumeSchema } from '../types/resumeSchema'
+import type { Project } from '../types/resume'
 import { SectionCard } from './ui/SectionCard'
 import { TimelineEntry } from './ui/TimelineEntry'
 import { TimelineSection } from './ui/TimelineSection'
-
-type Project = NonNullable<ResumeSchema['projects']>[number]
 
 interface ProjectsProps {
 	projects?: Project[]

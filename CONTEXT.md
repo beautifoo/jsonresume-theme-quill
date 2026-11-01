@@ -40,12 +40,16 @@ On-screen rendering (any viewport, light or dark via `prefers-color-scheme`), in
 **Print target**:
 PDF output rendered from an 850px-wide canvas. Always the light palette, regardless of `prefers-color-scheme`.
 
+**Legacy fields**:
+The JSON Resume 1.x field names the theme reads alongside their 2.x successors (`title`/`name`, `description`/`summary`, `publisher`/`organization`, …). Both eras of resumes appear in the wild, so the theme renders either; the tolerance is typed in `src/types/resume.ts` (hand-written views over the generated schema, which stays unedited) and verified by the type-check gate.
+
 ## Relationships
 
 - The **Folio** identity is expressed entirely through **Tokens**
 - A resume document renders to one **Screen target** view and one **Print target** view; layout decisions that only affect one must be marked as such
 - **Accent** appears at most a handful of times per page; everything else is **Ink scale** or **Surface**
 - Both layout modes share one **ATS-safe document order**; `double` repositions the sidebar visually, never reorders the DOM
+- A resume from either era (current 2.x or **legacy fields**) renders the same; the naming difference lives only in the typed views, never in the components
 
 ## Example dialogue
 
@@ -54,6 +58,10 @@ PDF output rendered from an 850px-wide canvas. Always the light palette, regardl
 
 > **Dev:** "The sidebar cards look washed out in dark mode — can I make them use the accent tint?"
 > **Expert:** "No. Cards are surfaces, one step off the background. Accent tint is for tags and indicators only."
+
+**Growth**:
+Optional non-standard metadata on a work item (`label` / 1–5 `level` / 0–100 `percent`) hinting at progression — rendered as a small accent pill, screen-only (hidden in print). Defined in `src/types/work.ts`.
+_Avoid_: "promotion badge", "indicator"
 
 **Display face**:
 The single embedded serif used for the name and nowhere else.

@@ -1,22 +1,11 @@
 import type { FC } from 'react'
 import { useFormatter, useNow, useTranslations } from 'use-intl'
-import type { ResumeSchema } from '../types/resumeSchema'
+import type { Work } from '../types/resume'
 import { GrowthIndicator } from './ui/GrowthIndicator'
 import { formatDuration, parseResumeDate } from './ui/ResumeDate'
 import { SectionCard } from './ui/SectionCard'
 import { TimelineEntry } from './ui/TimelineEntry'
 import { TimelineSection } from './ui/TimelineSection'
-
-// Extend the work item with optional custom growth metadata.
-// These are non-standard JSONResume additions but harmless to consumers.
-type Work = NonNullable<ResumeSchema['work']>[number] & {
-	keywords?: string[]
-	growth?: {
-		label?: string // e.g., "3 Promotions" or "Rapid Growth"
-		level?: number // 1-5 discrete representation
-		percent?: number // 0-100 percentage bar
-	}
-}
 
 interface WorkExperienceProps {
 	work?: Work[]

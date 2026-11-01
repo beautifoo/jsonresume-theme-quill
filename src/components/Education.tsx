@@ -1,10 +1,8 @@
 import type { FC } from 'react'
-import type { ResumeSchema } from '../types/resumeSchema'
+import type { Education as EducationItem } from '../types/resume'
 import { SectionCard } from './ui/SectionCard'
 import { TimelineEntry } from './ui/TimelineEntry'
 import { TimelineSection } from './ui/TimelineSection'
-
-type EducationItem = NonNullable<ResumeSchema['education']>[number]
 
 interface EducationProps {
 	education?: EducationItem[]
@@ -27,7 +25,7 @@ export const Education: FC<EducationProps> = ({ education }) => {
 							title={title}
 							subtitle={item.institution}
 							url={item.url}
-							location={item.location as string | undefined}
+							location={item.location}
 							summary={
 								// The score field is free text: only prefix bare numbers.
 								item.score

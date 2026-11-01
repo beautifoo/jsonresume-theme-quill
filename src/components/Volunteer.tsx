@@ -1,10 +1,8 @@
 import type { FC } from 'react'
-import type { ResumeSchema } from '../types/resumeSchema'
+import type { Volunteer as VolunteerItem } from '../types/resume'
 import { SectionCard } from './ui/SectionCard'
 import { TimelineEntry } from './ui/TimelineEntry'
 import { TimelineSection } from './ui/TimelineSection'
-
-type VolunteerItem = NonNullable<ResumeSchema['volunteer']>[number]
 
 interface VolunteerProps {
 	volunteer?: VolunteerItem[]
@@ -25,7 +23,7 @@ export const Volunteer: FC<VolunteerProps> = ({ volunteer }) => {
 						title={item.position}
 						subtitle={item.organization}
 						url={item.url}
-						location={item.location as string | undefined}
+						location={item.location}
 						summary={item.summary}
 						highlights={item.highlights}
 						actionUrl={item.url}

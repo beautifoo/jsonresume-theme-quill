@@ -34,7 +34,7 @@ Example:
 }
 
 const toCamelCase = (str: string): string =>
-	str.replace(/-([a-z])/g, (g) => g[1].toUpperCase())
+	str.replace(/-[a-z]/g, (g) => g.slice(1).toUpperCase())
 
 const parseValue = (value: string): boolean | number | string | string[] => {
 	if (value === 'true') return true
@@ -49,7 +49,9 @@ const parseValue = (value: string): boolean | number | string | string[] => {
 }
 
 function parseArgs(): Partial<Bun.BuildConfig> {
-	const config: Partial<Bun.BuildConfig> = {}
+	// The CLI accepts any Bun build flag, so keys are dynamic — build
+	// through a string-indexed view, typed at the return.
+	const config: Record<string, unknown> = {}
 	const args = process.argv.slice(2)
 
 	for (let i = 0; i < args.length; i++) {
@@ -86,14 +88,18 @@ function parseArgs(): Partial<Bun.BuildConfig> {
 
 		if (key.includes('.')) {
 			const [parentKey, childKey] = key.split('.')
-			config[parentKey] = config[parentKey] || {}
-			config[parentKey][childKey] = parseValue(value)
+			if (parentKey === undefined || childKey === undefined) continue
+			if (typeof config[parentKey] !== 'object' || config[parentKey] === null) {
+				config[parentKey] = {}
+			}
+			;(config[parentKey] as Record<string, unknown>)[childKey] =
+				parseValue(value)
 		} else {
 			config[key] = parseValue(value)
 		}
 	}
 
-	return config
+	return config as Partial<Bun.BuildConfig>
 }
 
 const formatFileSize = (bytes: number): string => {

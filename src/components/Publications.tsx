@@ -1,13 +1,13 @@
 import { type FC, memo } from 'react'
 import { useTranslations } from 'use-intl'
-import type { ResumeSchema } from '../types/resumeSchema'
+import type { Publication } from '../types/resume'
 import { Markdown } from './ui/Markdown'
 import { DateStamp } from './ui/ResumeDate'
 import { SidebarEntry } from './ui/SidebarEntry'
 import { SidebarSection } from './ui/SidebarSection'
 
 interface PublicationsProps {
-	publications?: NonNullable<ResumeSchema['publications']>
+	publications?: Publication[]
 }
 
 export const Publications: FC<PublicationsProps> = memo(({ publications }) => {

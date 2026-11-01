@@ -1,8 +1,7 @@
-import type { Root } from 'mdast'
+import type { PhrasingContent, Root } from 'mdast'
 import type React from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import type { Node, Parent } from 'unist'
 import { visit } from 'unist-util-visit'
 import { cn } from '../../lib/utils'
 
@@ -23,12 +22,19 @@ const remarkMetrics = () => (tree: Root) => {
 	visit(tree, 'text', (node, index, parent) => {
 		// Skip text we produced ourselves — visit descends into the
 		// spliced nodes and would double-wrap.
-		if (!parent || parent.type === 'strong' || !METRIC_RE.test(node.value)) {
+		if (
+			!parent ||
+			index === undefined ||
+			parent.type === 'strong' ||
+			!METRIC_RE.test(node.value)
+		) {
 			return
 		}
 
 		const value = node.value
-		const parts: Node[] = []
+		// Text and strong are both PhrasingContent — the one member of
+		// the union every possible parent's children accept.
+		const parts: PhrasingContent[] = []
 		const re = /\d[\d,.]*(?:%|\s?×)?/g
 		let last = 0
 		let match: RegExpExecArray | null = re.exec(value)
@@ -48,7 +54,7 @@ const remarkMetrics = () => (tree: Root) => {
 			parts.push({ type: 'text', value: value.slice(last) })
 		}
 
-		parent.children.splice(index, 1, ...(parts as Parent[]))
+		parent.children.splice(index, 1, ...parts)
 	})
 }
 

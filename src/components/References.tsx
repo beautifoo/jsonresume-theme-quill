@@ -1,10 +1,8 @@
 import type { FC } from 'react'
-import type { ResumeSchema } from '../types/resumeSchema'
+import type { Reference } from '../types/resume'
 import { Markdown } from './ui/Markdown'
 import { SidebarEntry } from './ui/SidebarEntry'
 import { SidebarSection } from './ui/SidebarSection'
-
-type Reference = NonNullable<ResumeSchema['references']>[number]
 
 interface ReferencesProps {
 	references?: Reference[]
