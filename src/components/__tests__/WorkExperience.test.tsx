@@ -1,3 +1,4 @@
+import en from '../../i18n/locales/en.json'
 import { render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { IntlProvider } from 'use-intl'
@@ -10,7 +11,7 @@ const wrap = (children: ReactNode) => {
 			locale='en'
 			now={new Date('2024-01-01')}
 			timeZone='UTC'
-			messages={{}}
+			messages={en}
 		>
 			{children}
 		</IntlProvider>

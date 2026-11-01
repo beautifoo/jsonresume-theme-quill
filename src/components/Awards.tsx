@@ -1,8 +1,8 @@
 import { TrophyIcon } from '@phosphor-icons/react'
-import type React from 'react'
+import type { FC } from 'react'
 import { useFormatter, useTranslations } from 'use-intl'
 import type { ResumeSchema } from '../types/resumeSchema'
-import { SidebarCard } from './ui/SidebarCard'
+import { SidebarEntry } from './ui/SidebarEntry'
 import { SidebarSection } from './ui/SidebarSection'
 
 type Award = NonNullable<ResumeSchema['awards']>[number]
@@ -11,44 +11,37 @@ interface AwardsProps {
 	awards?: Award[]
 }
 
-export const Awards: React.FC<AwardsProps> = ({ awards }) => {
+export const Awards: FC<AwardsProps> = ({ awards }) => {
 	const f = useFormatter()
 	const t = useTranslations()
 
-	if (!awards?.length) {
-		return null
-	}
+	if (!awards?.length) return null
 
 	return (
 		<SidebarSection title='sections.awards'>
-			{awards.map((award, index) => {
-				const dateInfo = award.date
-					? `${t('date.label')}: ${f.dateTime(new Date(award.date))}`
-					: ''
-
-				return (
-					<SidebarCard
+			<div className='space-y-3 print:space-y-2.5'>
+				{awards.map((award, index) => (
+					<SidebarEntry
 						key={index}
-						title={
-							<div className='flex items-start'>
-								<div className='mr-3 text-brand'>
-									<TrophyIcon />
-								</div>
-								<div>{award.title}</div>
-							</div>
-						}
+						icon={<TrophyIcon className='h-3.5 w-3.5' />}
+						title={award.title}
 						subtitle={
-							award.awarder
-								? `${t('common.awardedBy')}: ${award.awarder}`
+							award.awarder ? `${t('common.awardedBy')} ${award.awarder}` : undefined
+						}
+						date={
+							award.date
+								? f.dateTime(new Date(award.date), {
+										month: 'short',
+										year: 'numeric',
+									})
 								: undefined
 						}
-						date={dateInfo}
-						url={award.url as string}
+						url={award.url}
 						urlLabel={t('common.viewAward')}
-						content={award.summary as string}
+						content={award.summary}
 					/>
-				)
-			})}
+				))}
+			</div>
 		</SidebarSection>
 	)
 }

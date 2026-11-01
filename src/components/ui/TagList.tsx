@@ -1,21 +1,24 @@
 import type { FC, ReactNode } from 'react'
 import { cn } from '../../lib/utils'
+import { Tag } from './Tag'
 
 interface TagListProps {
-	children: ReactNode
+	/** Either `string[]` (rendered as tags) or pre-built elements */
+	children: string[] | ReactNode
 	className?: string
-	layout?: 'inline' | 'grid'
 }
 
-export const TagList: FC<TagListProps> = ({
-	children,
-	className,
-	layout = 'inline',
-}) => {
-	const layoutClasses = {
-		inline: 'flex flex-wrap gap-2',
-		grid: 'grid grid-cols-2 sm:grid-cols-3 gap-2',
-	}
-
-	return <div className={cn(layoutClasses[layout], className)}>{children}</div>
+export const TagList: FC<TagListProps> = ({ children, className }) => {
+	return (
+		<div
+			className={cn(
+				'flex flex-wrap gap-1.5 print:gap-1',
+				className,
+			)}
+		>
+			{Array.isArray(children)
+				? children.map((tag, i) => <Tag key={i}>{tag}</Tag>)
+				: children}
+		</div>
+	)
 }

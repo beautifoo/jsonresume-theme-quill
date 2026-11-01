@@ -1,31 +1,36 @@
-import type React from 'react'
+import type { FC } from 'react'
 import type { ResumeSchema } from '../types/resumeSchema'
 import { SidebarSection } from './ui/SidebarSection'
 
 interface LanguagesProps {
-	languages: ResumeSchema['languages']
+	languages?: ResumeSchema['languages']
 }
 
-export const Languages: React.FC<LanguagesProps> = ({ languages }) => {
+/**
+ * Taxonomy rows: language with its fluency right-aligned.
+ */
+export const Languages: FC<LanguagesProps> = ({ languages }) => {
 	if (!languages?.length) return null
 
 	return (
-		<SidebarSection
-			title='sections.languages'
-			contentClassName='grid grid-cols-2'
-		>
-			{languages.map((language, index) => (
-				<div key={`language-${index}`}>
-					<h3 className='text-base font-medium text-foreground'>
-						{language.language}
-					</h3>
-					{language.fluency && (
-						<p className='text-sm text-foreground-tertiary'>
-							{language.fluency}
-						</p>
-					)}
-				</div>
-			))}
+		<SidebarSection title='sections.languages'>
+			<div className='space-y-1.5 print:space-y-1'>
+				{languages.map((language, i) => (
+					<div
+						key={i}
+						className='flex items-baseline justify-between gap-3'
+					>
+						<span className='min-w-0 text-[0.9rem] text-ink'>
+							{language.language}
+						</span>
+						{language.fluency && (
+							<span className='folio-context shrink-0 font-normal'>
+								{language.fluency}
+							</span>
+						)}
+					</div>
+				))}
+			</div>
 		</SidebarSection>
 	)
 }

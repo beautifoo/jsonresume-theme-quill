@@ -12,12 +12,10 @@ interface AppProps {
 
 const App: FC<AppProps> = ({ resume, locale = 'en' }) => {
 	return (
-		<IntlProvider
-			messages={locales[locale].messages}
-			locale={locale}
-			timeZone='UTC'
-		>
-			<IconContext.Provider value={{ size: 16, weight: 'duotone' }}>
+		// No timeZone: a resume viewed on screen should show dates in the
+		// viewer's own timezone. (The print canvas renders in UTC anyway.)
+		<IntlProvider messages={locales[locale].messages} locale={locale}>
+			<IconContext.Provider value={{ weight: 'duotone' }}>
 				<Resume resume={resume} />
 			</IconContext.Provider>
 		</IntlProvider>

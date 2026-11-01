@@ -7,27 +7,35 @@ import {
 } from '@phosphor-icons/react'
 
 interface NetworkIconProps {
-	name: string // TODO: Change to enum?
+	name: string
 }
 
+/**
+ * Social network glyphs, decorative only — they inherit the current
+ * color so they sit quietly in both schemes (brand colors would fight
+ * the palette and vanish in dark mode).
+ */
 export const NetworkIcon = ({ name }: NetworkIconProps) => {
-	const lowercasedName = name.toLowerCase()
+	const lowercased = name.toLowerCase()
 
-	switch (lowercasedName) {
+	const props = {
+		className: 'h-3.5 w-3.5',
+		'aria-hidden': true as const,
+	}
+
+	switch (lowercased) {
 		case 'github':
-			return <GithubLogoIcon color='#333333' />
+			return <GithubLogoIcon {...props} />
 		case 'linkedin':
-			return <LinkedinLogoIcon color='#0077B5' />
+			return <LinkedinLogoIcon {...props} />
 		case 'twitter':
 		case 'x':
-			return <XLogoIcon color='#000000' />
+			return <XLogoIcon {...props} />
 		case 'medium':
-			return <MediumLogoIcon color='#000000' />
+			return <MediumLogoIcon {...props} />
 		case 'stackoverflow':
-			return <StackOverflowLogoIcon color='#F48024' />
-		default: {
-			console.warn(`Icon for network "${name}" not found.`)
+			return <StackOverflowLogoIcon {...props} />
+		default:
 			return null
-		}
 	}
 }

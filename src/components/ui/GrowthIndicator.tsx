@@ -1,21 +1,24 @@
-import type { FC } from 'react'
-import { borders, colors, typography } from '../../lib/styleTokens'
 import { cn } from '../../lib/utils'
 
 interface GrowthIndicatorProps {
-	label?: string // e.g., "Promoted", "Growth: 3 roles"
-	level?: number // optional discrete level (1-5)
-	percent?: number // optional percent (0-100)
+	label?: string
+	/** Optional discrete level, 1–5, rendered as dots */
+	level?: number
+	/** Optional 0–100 percentage, rendered as a tiny bar */
+	percent?: number
 	className?: string
 }
 
-// A small, unobtrusive pill to hint at career growth/progression
-export const GrowthIndicator: FC<GrowthIndicatorProps> = ({
+/**
+ * A small accent pill hinting at progression (promotions, rapid growth).
+ * Screen garnish only — the SectionCard hides addons in print.
+ */
+export const GrowthIndicator = ({
 	label = 'Growth',
 	level,
 	percent,
 	className,
-}) => {
+}: GrowthIndicatorProps) => {
 	const clampedPercent =
 		typeof percent === 'number'
 			? Math.max(0, Math.min(100, percent))
@@ -26,44 +29,38 @@ export const GrowthIndicator: FC<GrowthIndicatorProps> = ({
 	return (
 		<span
 			className={cn(
-				'inline-flex items-center gap-1 px-2 py-0.5',
-				`${typography.size.sm} ${borders.radius.default} ${borders.width.default}`,
-				`${colors.bg.tag.brand} ${colors.border.brand} ${colors.text.brand}`,
-				'align-middle',
+				'inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent/10 px-2 py-0.5 align-middle text-[0.75rem] leading-none text-accent',
 				className,
 			)}
 		>
-			{/* Simple arrow glyph, avoids extra icon deps in tests */}
-			<span aria-hidden='true' className='font-bold leading-none'>
+			<span aria-hidden='true' className='font-semibold'>
 				↑
 			</span>
-			<span className='leading-none'>{label}</span>
+			{label}
 
-			{/* Optional tiny level dots (1-5) */}
 			{typeof clampedLevel === 'number' && (
-				<span className='ml-1 flex items-center gap-0.5' aria-hidden='true'>
-					{[0, 1, 2, 3, 4].map((i) => (
+				<span className='flex items-center gap-0.5' aria-hidden='true'>
+					{[1, 2, 3, 4, 5].map((i) => (
 						<span
 							key={i}
 							className={cn(
-								'w-1.5 h-1.5 rounded-full border',
-								i < clampedLevel
-									? 'bg-brand border-brand'
-									: 'bg-transparent border-brand/40',
+								'h-1 w-1 rounded-full',
+								i <= clampedLevel
+									? 'bg-accent'
+									: 'border border-accent/40',
 							)}
 						/>
 					))}
 				</span>
 			)}
 
-			{/* Optional tiny progress bar */}
 			{typeof clampedPercent === 'number' && (
 				<span
-					className='ml-1 inline-flex items-center w-12 h-1.5 rounded-full bg-brand/10 overflow-hidden'
+					className='h-1 w-10 overflow-hidden rounded-full bg-accent/20'
 					aria-hidden='true'
 				>
 					<span
-						className='h-full bg-brand'
+						className='block h-full rounded-full bg-accent'
 						style={{ width: `${clampedPercent}%` }}
 					/>
 				</span>

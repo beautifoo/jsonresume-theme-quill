@@ -1,18 +1,1 @@
 @import "./styles/globals.css";
-
-/* Basic print adjustments that are hard to do with Tailwind classes */
-@media print {
-	html {
-		-webkit-print-color-adjust: exact !important;
-		print-color-adjust: exact !important;
-	}
-
-	a[href]:after {
-		content: none !important;
-	}
-
-	@page {
-		margin: 0.7cm 0.5cm;
-		size: auto;
-	}
-}

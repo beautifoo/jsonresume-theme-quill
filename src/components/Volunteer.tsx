@@ -4,10 +4,10 @@ import { SectionCard } from './ui/SectionCard'
 import { TimelineEntry } from './ui/TimelineEntry'
 import { TimelineSection } from './ui/TimelineSection'
 
-type Volunteer = NonNullable<ResumeSchema['volunteer']>[number]
+type VolunteerItem = NonNullable<ResumeSchema['volunteer']>[number]
 
 interface VolunteerProps {
-	volunteer?: Volunteer[]
+	volunteer?: VolunteerItem[]
 }
 
 export const Volunteer: FC<VolunteerProps> = ({ volunteer }) => {
@@ -15,19 +15,20 @@ export const Volunteer: FC<VolunteerProps> = ({ volunteer }) => {
 
 	return (
 		<TimelineSection title='sections.volunteer'>
-			{volunteer.map((volunteerItem, index) => (
+			{volunteer.map((item, index) => (
 				<TimelineEntry
-					key={`volunteer-${index}`}
-					startDate={volunteerItem.startDate}
-					endDate={volunteerItem.endDate}
+					key={`${item.organization ?? 'volunteer'}-${index}`}
+					startDate={item.startDate}
+					endDate={item.endDate}
 				>
 					<SectionCard
-						title={volunteerItem.position}
-						subtitle={volunteerItem.organization}
-						url={volunteerItem.url}
-						highlights={volunteerItem.highlights}
-						summary={volunteerItem.summary}
-						actionUrl={volunteerItem.url}
+						title={item.position}
+						subtitle={item.organization}
+						url={item.url}
+						location={item.location as string | undefined}
+						summary={item.summary}
+						highlights={item.highlights}
+						actionUrl={item.url}
 						actionLabelKey='common.visitWebsite'
 					/>
 				</TimelineEntry>

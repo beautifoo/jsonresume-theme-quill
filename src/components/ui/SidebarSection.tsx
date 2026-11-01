@@ -1,55 +1,38 @@
 import type { FC, ReactNode } from 'react'
-import { spacing } from '../../lib/styleTokens'
 import { cn } from '../../lib/utils'
 import { SectionTitle } from './SectionTitle'
 
 interface SidebarSectionProps {
+	/** Translation key, e.g. `sections.skills` */
 	title: string
 	children: ReactNode
 	className?: string
 	contentClassName?: string
 	id?: string
-	disableDefaultSpacing?: boolean
 }
 
+/**
+ * A sidebar section: title, then free-form content. In the `single`
+ * layout mode these follow the main column at full width.
+ */
 export const SidebarSection: FC<SidebarSectionProps> = ({
 	title,
 	children,
 	className,
 	contentClassName,
 	id,
-	disableDefaultSpacing = false,
 }) => {
-	const sectionId = id || `section-${Math.random().toString(36).substr(2, 9)}`
+	const sectionId = id || `section-${title.replace(/\s+/g, '-').toLowerCase()}`
 	const titleId = `${sectionId}-title`
-
-	// Determine if we should apply default spacing
-	// If contentClassName includes "grid", we don't want to apply spacing utilities
-	const hasGrid = contentClassName?.includes('grid')
-	const shouldDisableDefaultSpacing = disableDefaultSpacing || hasGrid
 
 	return (
 		<section
-			className={cn(
-				spacing.section.margin.default,
-				spacing.section.margin.print,
-				className,
-			)}
+			className={cn('mt-9 first:mt-0 print:mt-6 print:first:mt-0', className)}
 			id={sectionId}
 			aria-labelledby={titleId}
 		>
 			<SectionTitle title={title} id={titleId} />
-			<div
-				className={cn(
-					// Only apply spacing utilities if not disabled
-					!shouldDisableDefaultSpacing && spacing.section.item.default,
-					!shouldDisableDefaultSpacing && spacing.section.item.print,
-					!shouldDisableDefaultSpacing && spacing.section.item.mobile,
-					contentClassName,
-				)}
-			>
-				{children}
-			</div>
+			<div className={cn('mt-3 print:mt-2', contentClassName)}>{children}</div>
 		</section>
 	)
 }

@@ -1,30 +1,19 @@
 import type { FC, ReactNode } from 'react'
-import { borders, colors, typography } from '../../lib/styleTokens'
 import { cn } from '../../lib/utils'
 
 interface TagProps {
 	children: ReactNode
 	className?: string
-	variant?: 'default' | 'brand' | 'accent' | 'muted'
 }
 
-export const Tag: FC<TagProps> = ({
-	children,
-	className,
-	variant = 'default',
-}) => {
-	const variantClasses = {
-		default: `${colors.bg.tag.default} ${borders.color.default} ${colors.text.secondary}`,
-		brand: `${colors.bg.tag.brand} ${colors.border.brand} ${colors.text.brand}`,
-		accent: `${colors.bg.tag.accent} ${colors.border.accent} ${colors.text.accent}`,
-		muted: `${colors.bg.tag.muted} ${colors.border.muted} ${colors.text.tertiary}`,
-	}
-
+/**
+ * A quiet chip: one step off the page, hairline border.
+ */
+export const Tag: FC<TagProps> = ({ children, className }) => {
 	return (
 		<span
 			className={cn(
-				`inline-flex items-center px-2 py-0.5 ${typography.size.sm} ${borders.radius.default} ${borders.width.default} print:px-1 print:py-0 ${typography.size.print.sm} ${borders.radius.print}`,
-				variantClasses[variant],
+				'inline-flex items-center rounded-full border border-line bg-surface px-2 py-0.5 text-[0.78rem] leading-tight text-ink-3 print:px-1.5 print:py-0 print:text-[0.68rem]',
 				className,
 			)}
 		>

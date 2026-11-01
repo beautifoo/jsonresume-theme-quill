@@ -1,42 +1,39 @@
-import type React from 'react'
+import type { FC } from 'react'
 import type { ResumeSchema } from '../types/resumeSchema'
 import { SidebarSection } from './ui/SidebarSection'
-import { Tag } from './ui/Tag'
-import { TagList } from './ui/TagList'
 
 interface SkillsProps {
-	skills: ResumeSchema['skills']
+	skills?: ResumeSchema['skills']
 }
 
-export const Skills: React.FC<SkillsProps> = ({ skills }) => {
+/**
+ * Taxonomy rows: label, optional level, then keywords as quiet comma
+ * text — no tag cloud. (Borrowed from `pro`'s taxonomy treatment.)
+ */
+export const Skills: FC<SkillsProps> = ({ skills }) => {
 	if (!skills?.length) return null
 
 	return (
-		<SidebarSection
-			title='sections.skills'
-			contentClassName='grid grid-cols-2 gap-4'
-		>
-			{skills.map((skill, skillIndex) => (
-				<div key={`skill-${skillIndex}`}>
-					<h3 className='text-base font-medium text-foreground'>
-						{skill.name}
-					</h3>
-					{skill.level && (
-						<span className='text-sm text-foreground-tertiary'>
-							{skill.level}
-						</span>
-					)}
-					{skill.keywords && skill.keywords.length > 0 && (
-						<TagList className='mt-1'>
-							{skill.keywords.map((keyword, keywordIndex) => (
-								<Tag key={`keyword-${skillIndex}-${keywordIndex}`}>
-									{keyword}
-								</Tag>
-							))}
-						</TagList>
-					)}
-				</div>
-			))}
+		<SidebarSection title='sections.skills'>
+			<div className='space-y-2.5 print:space-y-2'>
+				{skills.map((skill, i) => (
+					<div key={i}>
+						<h3 className='flex items-baseline justify-between gap-2 text-[0.9rem] font-semibold text-ink'>
+							<span className='min-w-0'>{skill.name}</span>
+							{skill.level && (
+								<span className='folio-meta shrink-0 font-normal'>
+									{skill.level}
+								</span>
+							)}
+						</h3>
+						{skill.keywords && skill.keywords.length > 0 && (
+							<p className='folio-context mt-0.5 leading-relaxed'>
+								{skill.keywords.join(', ')}
+							</p>
+						)}
+					</div>
+				))}
+			</div>
 		</SidebarSection>
 	)
 }

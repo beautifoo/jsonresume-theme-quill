@@ -4,10 +4,10 @@ import { SectionCard } from './ui/SectionCard'
 import { TimelineEntry } from './ui/TimelineEntry'
 import { TimelineSection } from './ui/TimelineSection'
 
-type Education = NonNullable<ResumeSchema['education']>[number]
+type EducationItem = NonNullable<ResumeSchema['education']>[number]
 
 interface EducationProps {
-	education?: Education[]
+	education?: EducationItem[]
 }
 
 export const Education: FC<EducationProps> = ({ education }) => {
@@ -15,22 +15,21 @@ export const Education: FC<EducationProps> = ({ education }) => {
 
 	return (
 		<TimelineSection title='sections.education'>
-			{education.map((education, index) => {
-				const title = education.studyType || education.area || ''
-				const institution = education.institution || ''
+			{education.map((item, index) => {
+				const title = item.studyType || item.area || ''
 				return (
 					<TimelineEntry
-						key={`education-${index}`}
-						startDate={education.startDate}
-						endDate={education.endDate}
+						key={`${item.institution ?? 'education'}-${index}`}
+						startDate={item.startDate}
+						endDate={item.endDate}
 					>
 						<SectionCard
 							title={title}
-							subtitle={institution}
-							url={education.url}
-							location={education.location as string | undefined}
-							summary={education.score ? `GPA: ${education.score}` : undefined}
-							tags={education.courses || []}
+							subtitle={item.institution}
+							url={item.url}
+							location={item.location as string | undefined}
+							summary={item.score ? `GPA: ${item.score}` : undefined}
+							tags={item.courses && item.courses.length > 0 ? item.courses : undefined}
 						/>
 					</TimelineEntry>
 				)

@@ -1,7 +1,6 @@
 import { HouseLineIcon } from '@phosphor-icons/react'
 import { type FC, memo } from 'react'
 import type { ResumeSchema } from '../types/resumeSchema'
-import { Summary } from './Summary'
 import { ContactInfo } from './ui/ContactInfo'
 import { SocialProfiles } from './ui/SocialProfiles'
 
@@ -9,58 +8,52 @@ interface HeaderProps {
 	basics: NonNullable<ResumeSchema['basics']>
 }
 
+/**
+ * Masthead: the name (the one serif moment), label, then a quiet
+ * contact/profile block. The headshot — when present — is a real flex
+ * participant, never floated over the type.
+ */
 export const Header: FC<HeaderProps> = memo(({ basics }) => {
-	const { name, label, email, phone, url, profiles, location, summary, image } =
-		basics
+	const { name, label, location, summary, image } = basics
 
 	return (
-		<header className='relative mb-2 print:mb-0 print:p-0'>
+		<header className='flex items-start gap-6 print:gap-4'>
+			<div className='min-w-0 flex-1'>
+				<h1 className='folio-name break-words'>{name}</h1>
+				{label && <p className='folio-label mt-1.5 print:mt-1'>{label}</p>}
+
+				{location && (
+					<div className='mt-3 flex items-center gap-2 text-[0.9rem] text-ink-3 print:mt-2 print:text-[0.8rem]'>
+						<HouseLineIcon
+							className='h-3.5 w-3.5 shrink-0 text-accent'
+							aria-hidden='true'
+						/>
+						<span>
+							{[
+								location.address,
+								location.city,
+								location.region,
+								location.postalCode,
+							]
+								.filter(Boolean)
+								.join(', ')}
+						</span>
+					</div>
+				)}
+
+				<div className='mt-4 space-y-2 print:mt-2.5 print:space-y-1.5'>
+					<ContactInfo {...basics} />
+					<SocialProfiles profiles={basics.profiles} />
+				</div>
+			</div>
+
 			{image && (
 				<img
 					src={image}
-					alt={`Headshot of ${name}`}
-					className='float-right object-cover mb-2 ml-4 rounded-full w-28 h-28 sm:w-32 sm:h-32 print:w-24 print:h-24 print:rounded-md print:float-none print:m-0'
-					aria-hidden='true'
+					alt={name}
+					className='h-20 w-20 shrink-0 rounded-full object-cover sm:h-24 sm:w-24 print:h-16 print:w-16'
 				/>
 			)}
-			<div>
-				<div>
-					<h1 className='mb-1 text-5xl font-light text-foreground-muted print:mb-0.5 print:text-[32px]'>
-						{name}
-					</h1>
-					{label && (
-						<h2 className='mb-2 text-xl font-normal text-foreground print:mb-1 print:text-[16px]'>
-							{label}
-						</h2>
-					)}
-				</div>
-
-				{location && (
-					<div className='flex items-center gap-2 print:gap-1'>
-						<HouseLineIcon
-							className='w-4 h-4 text-brand print:w-3 print:h-3'
-							aria-hidden='true'
-						/>
-						{[
-							location.address,
-							location.city,
-							location.region,
-							location.postalCode,
-						]
-							.filter(Boolean)
-							.join(', ')}
-					</div>
-				)}
-
-				<ContactInfo email={email} phone={phone} url={url} />
-				<SocialProfiles profiles={profiles} />
-
-				{summary && (
-					<div className='mt-6 leading-relaxed text-foreground-secondary print:my-2 print:py-2'>
-						<Summary summary={summary} />
-					</div>
-				)}
-			</div>
 		</header>
 	)
 })
