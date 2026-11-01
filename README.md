@@ -28,12 +28,13 @@ and variant controls.
 
 Everything is parameterized by `--folio-*` custom properties
 (see `src/styles/globals.css`): the **ink scale** (type hierarchy),
-one **accent**, **surface**, **line**, and the display face. Override them
-on any wrapper — or per resume:
+one **accent**, **surface**, **line**, the layout columns, and the
+display face. Override them on any wrapper — or per resume:
 
 ```css
 :root {
 	--folio-accent: oklch(0.5 0.15 30); /* one line, new identity */
+	--folio-cols-wide: minmax(0, 1fr); /* single-column layout */
 }
 ```
 
@@ -41,7 +42,8 @@ The React API exposes the structural knobs:
 
 ```tsx
 <Resume resume={resume} layout="double" variant="folio" />
-// layout: "double" (default, main + sidebar) | "single"
+// layout: "double" (default, main + sidebar) | "single" —
+//         applied as the layout-* class, which presets --folio-cols-wide
 // variant: "folio" (default) | "folio-monochrome" (zero hue: the accent collapses to ink)
 ```
 

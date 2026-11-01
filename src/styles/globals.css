@@ -32,6 +32,16 @@
 	/* The one accent: section titles, links, timeline rule, indicators */
 	--folio-accent: oklch(0.45 0.13 258);
 
+	/*
+	 * Layout mode: `double` (main column + sidebar, the default) or
+	 * `single` (one column). CSS cannot branch on a variable *value*,
+	 * so the mode is exposed as a `layout-*` class on the resume root
+	 * that presets --folio-cols-wide (see below); hosts switch layout
+	 * by adding the class or overriding the token directly. The DOM
+	 * order is identical in both modes (ATS-safe document order).
+	 */
+	--folio-cols-wide: minmax(0, 5fr) minmax(0, 3fr);
+
 	/* The one serif moment: the candidate's name */
 	--folio-name-font: var(--font-display);
 	--folio-name-weight: 600;
@@ -56,6 +66,14 @@
  */
 .variant-folio-monochrome {
 	--folio-accent: var(--folio-ink);
+}
+
+/*
+ * Layout mode preset: one column at every width. The `layout-double`
+ * mode needs no rule — the :root token above is the double definition.
+ */
+.layout-single {
+	--folio-cols-wide: minmax(0, 1fr);
 }
 
 /* Print: always the light palette */
@@ -185,6 +203,33 @@
 	/* Narrative: summary, highlights, references */
 	.folio-body {
 		@apply text-[0.95rem] leading-[1.55] text-ink-2;
+	}
+
+	/*
+	 * Section columns: one grid whose wide-canvas geometry comes from
+	 * the layout token. Below md (and always in `single`) it is one
+	 * column; the DOM (main, then sidebar) is the source of stacking
+	 * in both modes, so document order is layout-independent.
+	 */
+	.folio-columns {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		row-gap: 2rem;
+	}
+
+	@media (width >= 48rem) {
+		.folio-columns {
+			grid-template-columns: var(--folio-cols-wide);
+			column-gap: 2.25rem;
+			row-gap: 2.25rem;
+		}
+	}
+
+	@media print {
+		.folio-columns {
+			column-gap: 1.5rem;
+			row-gap: 1.5rem;
+		}
 	}
 }
 

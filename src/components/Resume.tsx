@@ -22,8 +22,11 @@ interface ResumeProps {
 	resume: ResumeSchema
 	/**
 	 * `double` (default): main column + sidebar. `single`: everything in
-	 * one column. The DOM order is identical in both — main sections
-	 * first, sidebar after — so the output stays ATS-parseable.
+	 * one column. Applied as the `layout-*` class on the root, which
+	 * presets the `--folio-cols-wide` token — hosts can switch layout
+	 * by setting either, without this prop. The DOM order is identical
+	 * in both — main sections first, sidebar after — so the output stays
+	 * ATS-parseable.
 	 */
 	layout?: LayoutMode
 	/** Visual identity knobs (accent / display face). */
@@ -52,21 +55,17 @@ export const Resume: FC<ResumeProps> = memo(
 		return (
 			<div
 				className={cn(
-					'min-h-dvh bg-bg text-ink-2',
+					'folio-resume min-h-dvh bg-bg text-ink-2',
+					`layout-${layout}`,
 					variant !== 'folio' && `variant-${variant}`,
 				)}
 			>
 				<div className='mx-auto max-w-[850px] px-5 py-10 sm:px-8 print:max-w-none print:px-0 print:py-0'>
 					<Header basics={basics} />
 
-					<div
-						className={cn(
-							'mt-9 flex flex-col gap-8 print:mt-6 print:gap-6',
-							layout === 'double' && 'md:flex-row md:gap-9',
-						)}
-					>
+					<div className='folio-columns mt-9 print:mt-6'>
 						{/* Main column */}
-						<div className={cn('min-w-0', layout === 'double' && 'md:w-[60%]')}>
+						<div className='min-w-0'>
 							{basics.summary && <Summary summary={basics.summary} />}
 							{work && work.length > 0 && <WorkExperience work={work} />}
 							{education && education.length > 0 && (
@@ -81,13 +80,9 @@ export const Resume: FC<ResumeProps> = memo(
 						</div>
 
 						{/* Sidebar: after the main column in the DOM in
-						    both layout modes (ATS-safe document order) */}
-						<div
-							className={cn(
-								'min-w-0',
-								layout === 'double' && 'md:w-[36%] md:pl-1',
-							)}
-						>
+						    both layout modes (ATS-safe document order);
+						    wide-canvas geometry from --folio-cols-wide */}
+						<div className='min-w-0'>
 							{skills && skills.length > 0 && <Skills skills={skills} />}
 							{languages && languages.length > 0 && (
 								<Languages languages={languages} />
