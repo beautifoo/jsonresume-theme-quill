@@ -3,22 +3,25 @@ import type { FC } from 'react'
 import { IntlProvider } from 'use-intl'
 import { Resume } from './components/Resume'
 import { type Locale, locales } from './i18n/config'
+import { resolveLocale } from './i18n/resolveLocale'
 import type { ResumeSchema } from './types/resumeSchema'
 
 interface AppProps {
 	resume: ResumeSchema
+	/** Defaults to the resume's declared language, when we ship it */
 	locale?: Locale
 }
 
-const App: FC<AppProps> = ({ resume, locale = 'en' }) => {
+const App: FC<AppProps> = ({ resume, locale }) => {
 	// Explicitly the viewer's own timezone (same behavior as the
 	// library fallback, minus the SSR-mismatch warning).
 	const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+	const resolvedLocale = locale ?? resolveLocale(resume)
 
 	return (
 		<IntlProvider
-			messages={locales[locale].messages}
-			locale={locale}
+			messages={locales[resolvedLocale].messages}
+			locale={resolvedLocale}
 			timeZone={timeZone}
 		>
 			<IconContext.Provider value={{ weight: 'duotone' }}>

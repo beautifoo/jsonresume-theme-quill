@@ -9,6 +9,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import resume from '../resume.json'
 import { App } from './app'
+import { resolveLocale } from './i18n/resolveLocale'
 
 function start() {
 	const rootEl = document.getElementById('root')
@@ -21,9 +22,8 @@ function start() {
 				? `${resume.basics.name} — ${resume.basics.label}`
 				: resume.basics.name
 	}
-	if (resume.language) {
-		document.documentElement.lang = resume.language
-	}
+	// The rendered language (the resume's when supported, else English)
+	document.documentElement.lang = resolveLocale(resume)
 
 	const root = createRoot(rootEl)
 	root.render(

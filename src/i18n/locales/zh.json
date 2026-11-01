@@ -10,7 +10,8 @@
 		"languages": "语言能力",
 		"interests": "兴趣爱好",
 		"references": "推荐人",
-		"volunteer": "志愿服务"
+		"volunteer": "志愿服务",
+		"about": "关于"
 	},
 	"common": {
 		"present": "至今",
@@ -20,11 +21,9 @@
 		"viewCertificate": "查看证书",
 		"viewAward": "查看奖项",
 		"at": "在",
-		"contactInfo": "联系方式",
 		"email": "电子邮箱",
 		"phone": "电话",
 		"website": "网站",
-		"socialProfiles": "社交媒体",
 		"profile": "主页",
 		"duration": {
 			"year": "年",
@@ -33,18 +32,9 @@
 			"months": "个月",
 			"lessThanMonth": "不到一个月"
 		},
-		"fluency": {
-			"native": "母语",
-			"fluent": "流利",
-			"advanced": "高级",
-			"intermediate": "中级",
-			"basic": "基础"
-		},
 		"roleCount": "{count} 个职位"
 	},
 	"date": {
-		"format": "yyyy年MM月",
-		"range": "{start} – {end}",
 		"present": "{start} – 至今"
 	}
 }

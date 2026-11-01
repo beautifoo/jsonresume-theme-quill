@@ -10,7 +10,8 @@
 		"languages": "Langues",
 		"interests": "Centres d'Intérêt",
 		"references": "Références",
-		"volunteer": "Bénévolat"
+		"volunteer": "Bénévolat",
+		"about": "À propos"
 	},
 	"common": {
 		"present": "Présent",
@@ -20,11 +21,9 @@
 		"viewCertificate": "Voir le Certificat",
 		"viewAward": "Voir la Distinction",
 		"at": "chez",
-		"contactInfo": "Informations de contact",
 		"email": "Email",
 		"phone": "Téléphone",
 		"website": "Site web",
-		"socialProfiles": "Profils sociaux",
 		"profile": "profil",
 		"duration": {
 			"year": "an",
@@ -33,18 +32,9 @@
 			"months": "mois",
 			"lessThanMonth": "Moins d'un mois"
 		},
-		"fluency": {
-			"native": "Langue Maternelle",
-			"fluent": "Courant",
-			"advanced": "Avancé",
-			"intermediate": "Intermédiaire",
-			"basic": "Notions"
-		},
 		"roleCount": "{count} postes"
 	},
 	"date": {
-		"format": "MMM yyyy",
-		"range": "{start} – {end}",
 		"present": "{start} – Présent"
 	}
 }

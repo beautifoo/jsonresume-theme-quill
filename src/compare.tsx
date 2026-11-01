@@ -12,6 +12,7 @@ import { IntlProvider } from 'use-intl'
 import resume from '../resume.json'
 import { type LayoutMode, Resume, type ThemeVariant } from './components/Resume'
 import { type Locale, locales } from './i18n/config'
+import { resolveLocale } from './i18n/resolveLocale'
 import type { ResumeSchema } from './types/resumeSchema'
 
 const Button: FC<{ value: string; active: boolean; onClick: () => void }> = ({
@@ -155,9 +156,8 @@ const ComparePage: FC<{
 }
 
 export const Compare: FC = () => {
-	const lang = (resume as ResumeSchema).language
 	const [locale, setLocale] = useState<Locale>(
-		lang && locales[lang as Locale] ? (lang as Locale) : 'en',
+		resolveLocale(resume as ResumeSchema),
 	)
 
 	return (

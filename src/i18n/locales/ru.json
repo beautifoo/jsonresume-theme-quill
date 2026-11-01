@@ -10,7 +10,8 @@
 		"languages": "Языки",
 		"interests": "Интересы",
 		"references": "Рекомендации",
-		"volunteer": "Волонтёрство"
+		"volunteer": "Волонтёрство",
+		"about": "О себе"
 	},
 	"common": {
 		"present": "Настоящее Время",
@@ -20,19 +21,10 @@
 		"viewCertificate": "Просмотр Сертификата",
 		"viewAward": "Просмотр Награды",
 		"at": "в",
-		"contactInfo": "Контактная Информация",
 		"email": "Электронная Почта",
 		"phone": "Телефон",
 		"website": "Веб-сайт",
-		"socialProfiles": "Социальные Профили",
 		"profile": "профиль",
-		"fluency": {
-			"native": "Родной",
-			"fluent": "Свободный",
-			"advanced": "Продвинутый",
-			"intermediate": "Средний",
-			"basic": "Базовый"
-		},
 		"roleCount": "{count} позиций",
 		"duration": {
 			"year": "год",
@@ -43,9 +35,6 @@
 		}
 	},
 	"date": {
-		"format": "MMM yyyy",
-		"range": "{start} – {end}",
-		"present": "{start} – Настоящее Время",
-		"label": "Дата"
+		"present": "{start} – Настоящее Время"
 	}
 }
