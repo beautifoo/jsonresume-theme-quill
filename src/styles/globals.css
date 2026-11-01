@@ -51,14 +51,9 @@
 
 /*
  * Theme variants: identity knobs only, everything else is shared.
- *  - ink:      sans, light-weight name; ink-blue accent
  *  - folio:    serif name; ink-blue accent        (the default)
  *  - graphite: serif name; accent collapses to ink (zero hue)
  */
-.variant-ink {
-	--folio-name-font: var(--font-sans);
-	--folio-name-weight: 300;
-}
 .variant-graphite {
 	--folio-accent: var(--folio-ink);
 }

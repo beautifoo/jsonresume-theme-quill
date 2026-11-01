@@ -26,7 +26,7 @@ export const SocialProfiles: FC<SocialProfilesProps> = memo(
 							href={profile.url}
 							target='_blank'
 							rel='noopener noreferrer'
-							className='flex items-center gap-1.5 text-[0.9rem] text-ink-3 no-underline hover:text-accent hover:underline hover:decoration-accent/50'
+							className='flex items-center gap-1.5 whitespace-nowrap text-[0.9rem] text-ink-3 no-underline hover:text-accent hover:underline hover:decoration-accent/50'
 							title={`${profile.network} ${t('common.profile')}`}
 						>
 							<span className='text-ink-4' aria-hidden='true'>

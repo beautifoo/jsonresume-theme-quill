@@ -25,7 +25,7 @@ const Item: FC<{
 		</>
 	)
 	return (
-		<span className='flex items-center gap-2'>
+		<span className='flex items-center gap-2 whitespace-nowrap'>
 			{href ? (
 				<a
 					href={href}

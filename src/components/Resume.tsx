@@ -16,7 +16,7 @@ import { Volunteer } from './Volunteer'
 import { WorkExperience } from './WorkExperience'
 
 export type LayoutMode = 'single' | 'double'
-export type ThemeVariant = 'folio' | 'ink' | 'graphite'
+export type ThemeVariant = 'folio' | 'graphite'
 
 interface ResumeProps {
 	resume: ResumeSchema
