@@ -39,11 +39,12 @@
 			"advanced": "高级",
 			"intermediate": "中级",
 			"basic": "基础"
-		}
+		},
+		"roleCount": "{count} 个职位"
 	},
 	"date": {
 		"format": "yyyy年MM月",
-		"range": "{{start}} - {{end}}",
-		"present": "{{start}} - 至今"
+		"range": "{start} – {end}",
+		"present": "{start} – 至今"
 	}
 }

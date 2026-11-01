@@ -39,11 +39,12 @@
 			"advanced": "Avancé",
 			"intermediate": "Intermédiaire",
 			"basic": "Notions"
-		}
+		},
+		"roleCount": "{count} postes"
 	},
 	"date": {
 		"format": "MMM yyyy",
-		"range": "{{start}} - {{end}}",
-		"present": "{{start}} - Présent"
+		"range": "{start} – {end}",
+		"present": "{start} – Présent"
 	}
 }

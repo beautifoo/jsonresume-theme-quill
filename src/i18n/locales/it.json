@@ -49,7 +49,8 @@
 			"advanced": "Avanzato",
 			"intermediate": "Intermedio",
 			"basic": "Base"
-		}
+		},
+		"roleCount": "{count} ruoli"
 	},
 	"titles": {
 		"skills": "Competenze",
@@ -71,8 +72,8 @@
 	},
 	"date": {
 		"format": "MMM yyyy",
-		"range": "{{start}} - {{end}}",
-		"present": "{{start}} - Attuale",
+		"range": "{start} – {end}",
+		"present": "{start} – Attuale",
 		"label": "Data"
 	}
 }

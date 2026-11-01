@@ -42,12 +42,13 @@
 			"month": "Monat",
 			"months": "Monate",
 			"lessThanMonth": "Weniger als ein Monat"
-		}
+		},
+		"roleCount": "{count} Positionen"
 	},
 	"date": {
 		"format": "MMM yyyy",
-		"range": "{{start}} - {{end}}",
-		"present": "{{start}} - Aktuell",
+		"range": "{start} – {end}",
+		"present": "{start} – Aktuell",
 		"label": "Datum"
 	}
 }

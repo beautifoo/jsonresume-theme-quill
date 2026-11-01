@@ -32,11 +32,19 @@
 			"advanced": "Avanzado",
 			"intermediate": "Intermedio",
 			"basic": "Básico"
+		},
+		"roleCount": "{count} puestos",
+		"duration": {
+			"year": "año",
+			"years": "años",
+			"month": "mes",
+			"months": "meses",
+			"lessThanMonth": "Menos de un mes"
 		}
 	},
 	"date": {
 		"format": "MMM yyyy",
-		"range": "{{start}} - {{end}}",
-		"present": "{{start}} - Actual"
+		"range": "{start} – {end}",
+		"present": "{start} – Actual"
 	}
 }

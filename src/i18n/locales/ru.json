@@ -32,12 +32,20 @@
 			"advanced": "Продвинутый",
 			"intermediate": "Средний",
 			"basic": "Базовый"
+		},
+		"roleCount": "{count} позиций",
+		"duration": {
+			"year": "год",
+			"years": "года",
+			"month": "месяц",
+			"months": "месяцев",
+			"lessThanMonth": "Меньше месяца"
 		}
 	},
 	"date": {
 		"format": "MMM yyyy",
-		"range": "{{start}} - {{end}}",
-		"present": "{{start}} - Настоящее Время",
+		"range": "{start} – {end}",
+		"present": "{start} – Настоящее Время",
 		"label": "Дата"
 	}
 }
