@@ -26,7 +26,6 @@
 	"scripts": {
 		"build": "bun run build.ts",
 		"check": "bunx @biomejs/biome check --write",
-		"compare": "bun --hot src/index.tsx",
 		"dev": "bun --hot src/index.tsx",
 		"format": "bunx @biomejs/biome format --write",
 		"lint": "bunx @biomejs/biome lint --write",

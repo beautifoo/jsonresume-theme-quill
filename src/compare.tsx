@@ -48,7 +48,10 @@ const Caption: FC<{ title: string; sub: string }> = ({ title, sub }) => (
 
 const FOIL_VARIANTS: ThemeVariant[] = ['folio', 'folio-monochrome']
 
-const ComparePage: FC = () => {
+const ComparePage: FC<{
+	locale: Locale
+	onLocaleChange: (locale: Locale) => void
+}> = ({ locale, onLocaleChange }) => {
 	const [layout, setLayout] = useState<LayoutMode>('double')
 	const [scheme, setScheme] = useState<'light' | 'dark'>('light')
 	const [variant, setVariant] = useState<ThemeVariant | 'all'>('all')
@@ -125,6 +128,17 @@ const ComparePage: FC = () => {
 							/>
 						))}
 					</div>
+					<Label>language</Label>
+					<div className='flex gap-1.5'>
+						{(Object.keys(locales) as Locale[]).map((l) => (
+							<Button
+								key={l}
+								value={locales[l].name}
+								active={locale === l}
+								onClick={() => onLocaleChange(l)}
+							/>
+						))}
+					</div>
 				</div>
 			</header>
 
@@ -142,12 +156,13 @@ const ComparePage: FC = () => {
 
 export const Compare: FC = () => {
 	const lang = (resume as ResumeSchema).language
-	const locale: Locale =
-		lang && locales[lang as Locale] ? (lang as Locale) : 'en'
+	const [locale, setLocale] = useState<Locale>(
+		lang && locales[lang as Locale] ? (lang as Locale) : 'en',
+	)
 
 	return (
 		<IntlProvider locale={locale} messages={locales[locale].messages}>
-			<ComparePage />
+			<ComparePage locale={locale} onLocaleChange={setLocale} />
 		</IntlProvider>
 	)
 }

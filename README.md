@@ -15,8 +15,7 @@ Folio renders to two equal targets:
 
 ```bash
 bun install
-bun dev            # resume page (uses ./resume.json)
-bun run compare    # same server: open /compare — the theme comparison tool
+bun dev            # the resume page; /compare serves the theme comparison tool
 bun run build      # self-contained dist/
 bun test           # vitest
 ```
