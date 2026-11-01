@@ -27,6 +27,10 @@ A CSS custom property defined in `:root` that parameterizes the theme (ink, acce
 How the theme arranges its sections: `double` (main column + sidebar, the default) or `single` (one column, pro-style). Selected via a token: the `--folio-cols-wide` value, preset by the `layout-single` / `layout-double` class on the resume root — CSS cannot branch on a variable *value*, so the class is the selector form of the token (ADR 0001); hosts may set either. Both must honor the ATS-safe document order.
 _Avoid_: "columns mode", "two-column" — the canonical mode names are **single** and **double**
 
+**Resume date**:
+A date field in a resume document (ISO-8601 with optional month/day, or free text). Always parsed as a *local* date — a UTC-midnight parse would shift the day for viewers west of UTC — and rendered through the i18n provider, so locale, timezone, and "now" all come from it (open-ended durations measure from the provider's "now", never `new Date()`).
+_Avoid_: `new Date(...)` in components
+
 **ATS-safe document order**:
 The flat semantic DOM order: main sections first, sidebar sections after; no tables, floats, or positioned text; icons decorative-only. This is what makes either layout parseable by application-tracking systems.
 

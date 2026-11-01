@@ -1,13 +1,10 @@
 import type { FC } from 'react'
-import { useFormatter, useTranslations } from 'use-intl'
+import { useFormatter, useNow, useTranslations } from 'use-intl'
 import type { ResumeSchema } from '../types/resumeSchema'
 import { GrowthIndicator } from './ui/GrowthIndicator'
+import { formatDuration, parseResumeDate } from './ui/ResumeDate'
 import { SectionCard } from './ui/SectionCard'
-import {
-	formatDuration,
-	parseResumeDate,
-	TimelineEntry,
-} from './ui/TimelineEntry'
+import { TimelineEntry } from './ui/TimelineEntry'
 import { TimelineSection } from './ui/TimelineSection'
 
 // Extend the work item with optional custom growth metadata.
@@ -86,6 +83,7 @@ function roleDates(
 export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
 	const f = useFormatter()
 	const t = useTranslations()
+	const now = useNow()
 
 	if (!work || work.length === 0) return null
 
@@ -122,7 +120,6 @@ export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
 					? starts.reduce((a, b) => (a < b ? a : b))
 					: undefined
 				// Latest end, treating open-ended (current) roles as "now"
-				const now = new Date()
 				const latest = [
 					...ends,
 					...items.filter((i) => !i.endDate).map(() => now),

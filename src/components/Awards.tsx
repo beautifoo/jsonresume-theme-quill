@@ -1,7 +1,8 @@
 import { TrophyIcon } from '@phosphor-icons/react'
 import type { FC } from 'react'
-import { useFormatter, useTranslations } from 'use-intl'
+import { useTranslations } from 'use-intl'
 import type { ResumeSchema } from '../types/resumeSchema'
+import { DateStamp } from './ui/ResumeDate'
 import { SidebarEntry } from './ui/SidebarEntry'
 import { SidebarSection } from './ui/SidebarSection'
 
@@ -12,7 +13,6 @@ interface AwardsProps {
 }
 
 export const Awards: FC<AwardsProps> = ({ awards }) => {
-	const f = useFormatter()
 	const t = useTranslations()
 
 	if (!awards?.length) return null
@@ -31,14 +31,11 @@ export const Awards: FC<AwardsProps> = ({ awards }) => {
 								: undefined
 						}
 						date={
-							award.date || award.awardDate || award.startDate
-								? f.dateTime(
-										new Date(
-											award.date || award.awardDate || award.startDate || '',
-										),
-										{ month: 'short', year: 'numeric' },
-									)
-								: undefined
+							award.date || award.awardDate || award.startDate ? (
+								<DateStamp
+									date={award.date || award.awardDate || award.startDate}
+								/>
+							) : undefined
 						}
 						url={award.url}
 						urlLabel={t('common.viewAward')}

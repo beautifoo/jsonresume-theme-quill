@@ -1,7 +1,8 @@
 import { CertificateIcon } from '@phosphor-icons/react'
 import type { FC } from 'react'
-import { useFormatter, useTranslations } from 'use-intl'
+import { useTranslations } from 'use-intl'
 import type { ResumeSchema } from '../types/resumeSchema'
+import { DateStamp } from './ui/ResumeDate'
 import { SidebarEntry } from './ui/SidebarEntry'
 import { SidebarSection } from './ui/SidebarSection'
 
@@ -12,7 +13,6 @@ interface CertificatesProps {
 }
 
 export const Certificates: FC<CertificatesProps> = ({ certificates }) => {
-	const f = useFormatter()
 	const t = useTranslations()
 
 	if (!certificates?.length) return null
@@ -31,12 +31,9 @@ export const Certificates: FC<CertificatesProps> = ({ certificates }) => {
 								: undefined
 						}
 						date={
-							certificate.startDate || certificate.date
-								? f.dateTime(
-										new Date(certificate.startDate || certificate.date || ''),
-										{ month: 'short', year: 'numeric' },
-									)
-								: undefined
+							certificate.startDate || certificate.date ? (
+								<DateStamp date={certificate.startDate || certificate.date} />
+							) : undefined
 						}
 						url={certificate.url}
 						urlLabel={t('common.viewCertificate')}

@@ -1,7 +1,8 @@
 import { type FC, memo } from 'react'
-import { useFormatter, useTranslations } from 'use-intl'
+import { useTranslations } from 'use-intl'
 import type { ResumeSchema } from '../types/resumeSchema'
 import { Markdown } from './ui/Markdown'
+import { DateStamp } from './ui/ResumeDate'
 import { SidebarEntry } from './ui/SidebarEntry'
 import { SidebarSection } from './ui/SidebarSection'
 
@@ -10,7 +11,6 @@ interface PublicationsProps {
 }
 
 export const Publications: FC<PublicationsProps> = memo(({ publications }) => {
-	const f = useFormatter()
 	const t = useTranslations()
 
 	if (!publications?.length) return null
@@ -24,14 +24,12 @@ export const Publications: FC<PublicationsProps> = memo(({ publications }) => {
 						title={publication.name}
 						subtitle={publication.publisher || publication.organization}
 						date={
-							publication.releaseDate || publication.startDate
-								? f.dateTime(
-										new Date(
-											publication.releaseDate || publication.startDate || '',
-										),
-										{ year: 'numeric' },
-									)
-								: undefined
+							publication.releaseDate || publication.startDate ? (
+								<DateStamp
+									precision='year'
+									date={publication.releaseDate || publication.startDate}
+								/>
+							) : undefined
 						}
 						url={publication.url || undefined}
 						urlLabel={t('common.viewPublication')}
