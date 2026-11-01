@@ -1,0 +1,80 @@
+{
+	"sections": {
+		"about": "Sobre Mim",
+		"work": "Experiência Profissional",
+		"education": "Formação",
+		"skills": "Competências",
+		"projects": "Projetos",
+		"awards": "Prémios",
+		"certificates": "Certificados",
+		"publications": "Publicações",
+		"languages": "Idiomas",
+		"interests": "Interesses",
+		"references": "Referências",
+		"volunteer": "Voluntariado"
+	},
+	"common": {
+		"present": "Atual",
+		"visitWebsite": "Visitar o Site",
+		"viewPublication": "Ver Publicação",
+		"viewProject": "Ver Projeto",
+		"viewCertificate": "Ver Certificado",
+		"viewAward": "Ver Prémio",
+		"viewProfile": "Ver Perfil",
+		"view": "Ver",
+		"at": "em",
+		"awardedBy": "Concedido por",
+		"issuedBy": "Emitido por",
+		"contactInfo": "Informações de Contacto",
+		"email": "E-mail",
+		"phone": "Telefone",
+		"website": "Website",
+		"socialProfiles": "Perfis Sociais",
+		"profile": "perfil",
+		"lessThanAMonth": "Menos de um mês",
+		"terms": "Termos Comuns",
+		"currentPosition": "Cargo Atual",
+		"pastPosition": "Cargo Anterior",
+		"shortPosition": "Cargo Curto",
+		"duration": {
+			"year": "ano",
+			"years": "anos",
+			"month": "mês",
+			"months": "meses",
+			"lessThanMonth": "Menos de um mês"
+		},
+		"fluency": {
+			"native": "Nativo",
+			"fluent": "Fluente",
+			"advanced": "Avançado",
+			"professional": "Profissional",
+			"intermediate": "Intermédio",
+			"basic": "Básico",
+			"beginner": "Iniciante"
+		},
+		"roleCount": "{count} posições"
+	},
+	"titles": {
+		"skills": "Competências",
+		"languages": "Idiomas",
+		"education": "Formação"
+	},
+	"language": {
+		"testTitle": "Teste de Suporte a Idiomas",
+		"testDescription": "Este componente demonstra como o currículo se apresenta em diferentes idiomas. Altere o parâmetro da URL para testar outros idiomas.",
+		"currentLanguage": "Idioma Atual",
+		"switchInstructions": "Altere o parâmetro da URL para mudar o idioma:"
+	},
+	"fluency": {
+		"native": "Nativo",
+		"fluent": "Fluente",
+		"intermediate": "Intermédio",
+		"beginner": "Iniciante"
+	},
+	"date": {
+		"format": "MMM yyyy",
+		"range": "{start} – {end}",
+		"present": "{start} – Atual",
+		"label": "Data"
+	}
+}

@@ -3,10 +3,11 @@ import en from './locales/en.json'
 import esTranslations from './locales/es.json'
 import frTranslations from './locales/fr.json'
 import itTranslations from './locales/it.json'
+import ptTranslations from './locales/pt.json'
 import ruTranslations from './locales/ru.json'
 import zhTranslations from './locales/zh.json'
 
-export type Locale = 'en' | 'de' | 'fr' | 'es' | 'it' | 'ru' | 'zh'
+export type Locale = 'en' | 'de' | 'fr' | 'es' | 'it' | 'pt' | 'ru' | 'zh'
 
 export const locales = {
 	en: {
@@ -28,6 +29,10 @@ export const locales = {
 	it: {
 		messages: itTranslations,
 		name: 'Italiano',
+	},
+	pt: {
+		messages: ptTranslations,
+		name: 'Português',
 	},
 	ru: {
 		messages: ruTranslations,
