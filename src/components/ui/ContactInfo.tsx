@@ -16,28 +16,26 @@ const Item: FC<{
 	href?: string
 	children: React.ReactNode
 }> = ({ icon, label, href, children }) => {
+	// The icon svg is display:block (preflight), so icon + value must be a
+	// flex item pair — inline flow would push the value to a new line.
 	const body = (
-		<>
+		<span className='inline-flex items-center gap-2 whitespace-nowrap'>
 			<span className='shrink-0 text-accent' aria-hidden='true'>
 				{icon}
 			</span>
 			{children}
-		</>
-	)
-	return (
-		<span className='flex items-center gap-2 whitespace-nowrap'>
-			{href ? (
-				<a
-					href={href}
-					aria-label={label}
-					className='text-ink-3 no-underline hover:text-accent hover:underline hover:decoration-accent/50'
-				>
-					{body}
-				</a>
-			) : (
-				body
-			)}
 		</span>
+	)
+	return href ? (
+		<a
+			href={href}
+			aria-label={label}
+			className='text-ink-3 no-underline hover:text-accent hover:underline hover:decoration-accent/50'
+		>
+			{body}
+		</a>
+	) : (
+		body
 	)
 }
 
