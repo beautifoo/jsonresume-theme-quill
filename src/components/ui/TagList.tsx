@@ -10,12 +10,7 @@ interface TagListProps {
 
 export const TagList: FC<TagListProps> = ({ children, className }) => {
 	return (
-		<div
-			className={cn(
-				'flex flex-wrap gap-1.5 print:gap-1',
-				className,
-			)}
-		>
+		<div className={cn('flex flex-wrap gap-1.5 print:gap-1', className)}>
 			{Array.isArray(children)
 				? children.map((tag, i) => <Tag key={i}>{tag}</Tag>)
 				: children}

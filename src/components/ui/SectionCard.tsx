@@ -4,7 +4,6 @@ import { useTranslations } from 'use-intl'
 import { cn } from '../../lib/utils'
 import { Markdown } from './Markdown'
 import { TagList } from './TagList'
-import { Tag } from './Tag'
 
 interface SectionCardProps {
 	title?: string
@@ -71,7 +70,10 @@ export const SectionCard: FC<SectionCardProps> = memo(
 
 					{location && (
 						<div className='folio-context flex items-center gap-1.5'>
-							<MapPinIcon className='h-3.5 w-3.5 shrink-0 text-ink-4' aria-hidden='true' />
+							<MapPinIcon
+								className='h-3.5 w-3.5 shrink-0 text-ink-4'
+								aria-hidden='true'
+							/>
 							{location}
 						</div>
 					)}
@@ -89,7 +91,10 @@ export const SectionCard: FC<SectionCardProps> = memo(
 					{highlights && highlights.length > 0 && (
 						<ul className='mt-2 space-y-1.5 pl-4 print:mt-1.5 print:space-y-1 print:pl-3'>
 							{highlights.map((highlight, i) => (
-								<li key={i} className='folio-body list-disc marker:text-accent/70'>
+								<li
+									key={i}
+									className='folio-body list-disc marker:text-accent/70'
+								>
 									<Markdown content={highlight} metrics />
 								</li>
 							))}

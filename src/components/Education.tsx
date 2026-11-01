@@ -28,8 +28,21 @@ export const Education: FC<EducationProps> = ({ education }) => {
 							subtitle={item.institution}
 							url={item.url}
 							location={item.location as string | undefined}
-							summary={item.score ? `GPA: ${item.score}` : undefined}
-							tags={item.courses && item.courses.length > 0 ? item.courses : undefined}
+							summary={
+								// The score field is free text: only prefix bare numbers.
+								item.score
+									? /(GPA|Laude|Honor|Distinction)/i.test(item.score)
+										? item.score
+										: /^\d/.test(item.score)
+											? `GPA: ${item.score}`
+											: item.score
+									: undefined
+							}
+							tags={
+								item.courses && item.courses.length > 0
+									? item.courses
+									: undefined
+							}
 						/>
 					</TimelineEntry>
 				)

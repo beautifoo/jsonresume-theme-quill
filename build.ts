@@ -124,6 +124,8 @@ const start = performance.now()
 const entrypoints = [...new Bun.Glob('**.html').scanSync('src')]
 	.map((a) => path.resolve('src', a))
 	.filter((dir) => !dir.includes('node_modules'))
+	// compare.html is a dev tool (src/compare) — never part of the theme
+	.filter((dir) => !dir.includes(`${path.sep}compare`))
 console.log(
 	`📄 Found ${entrypoints.length} HTML ${entrypoints.length === 1 ? 'file' : 'files'} to process\n`,
 )

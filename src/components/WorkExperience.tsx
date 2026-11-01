@@ -1,10 +1,13 @@
 import type { FC } from 'react'
 import { useFormatter, useTranslations } from 'use-intl'
 import type { ResumeSchema } from '../types/resumeSchema'
-import { formatDuration, parseResumeDate } from './ui/TimelineEntry'
 import { GrowthIndicator } from './ui/GrowthIndicator'
 import { SectionCard } from './ui/SectionCard'
-import { TimelineEntry } from './ui/TimelineEntry'
+import {
+	formatDuration,
+	parseResumeDate,
+	TimelineEntry,
+} from './ui/TimelineEntry'
 import { TimelineSection } from './ui/TimelineSection'
 
 // Extend the work item with optional custom growth metadata.
@@ -53,6 +56,33 @@ const GroupHeader: FC<{
  * employer merges into one block, and unsorted input renders correctly
  * either way.
  */
+
+/** Per-role date line, only used inside multi-role company groups. */
+function roleDates(
+	item: Work,
+	t: ReturnType<typeof useTranslations>,
+	f: ReturnType<typeof useFormatter>,
+	now: Date,
+) {
+	if (!item.startDate) return null
+	const start = parseResumeDate(item.startDate)
+	if (!start) return null
+	const end = item.endDate ? parseResumeDate(item.endDate) : undefined
+	const fmt = (d: Date) => f.dateTime(d, { month: 'short', year: 'numeric' })
+
+	return (
+		<div className='mb-1.5 flex items-baseline gap-2 print:mb-1'>
+			<time dateTime={item.startDate} className='folio-meta'>
+				{fmt(start)}
+				{end ? ` – ${fmt(end)}` : ` – ${t('common.present')}`}
+			</time>
+			<span className='folio-meta opacity-80'>
+				({formatDuration(start, end ?? now, t)})
+			</span>
+		</div>
+	)
+}
+
 export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
 	const f = useFormatter()
 	const t = useTranslations()
@@ -93,17 +123,15 @@ export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
 					: undefined
 				// Latest end, treating open-ended (current) roles as "now"
 				const now = new Date()
-				const latest = [...ends, ...items.filter((i) => !i.endDate).map(() => now)]
-					.reduce((a, b) => (a > b ? a : b))
+				const latest = [
+					...ends,
+					...items.filter((i) => !i.endDate).map(() => now),
+				].reduce((a, b) => (a > b ? a : b))
 
 				return (
 					<TimelineEntry
 						key={company}
-						startDate={
-							showHeader && earliest
-								? undefined
-								: items[0]?.startDate
-						}
+						startDate={showHeader && earliest ? undefined : items[0]?.startDate}
 						endDate={showHeader ? undefined : items[0]?.endDate}
 					>
 						{showHeader && (
@@ -117,47 +145,7 @@ export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
 						<div className='space-y-5 print:space-y-3.5'>
 							{items.map((workItem, wi) => (
 								<div key={wi}>
-									{/* Individual dates only within a multi-role group */}
-									{showHeader && workItem.startDate && (
-										<div className='mb-1.5 flex items-baseline gap-2 print:mb-1'>
-											<time
-												dateTime={workItem.startDate}
-												className='folio-meta'
-											>
-												{f.dateTime(
-													parseResumeDate(workItem.startDate)!,
-													{ month: 'short', year: 'numeric' },
-												)}
-												{workItem.endDate && (
-													<>
-														{' – '}
-														{f.dateTime(
-															parseResumeDate(workItem.endDate)!,
-															{ month: 'short', year: 'numeric' },
-														)}
-													</>
-												)}
-												{workItem.endDate ? (
-													''
-												) : (
-													<> – {t('common.present')}</>
-												)}
-											</time>
-											{workItem.startDate && (
-												<span className='folio-meta opacity-80'>
-													(
-													{formatDuration(
-														parseResumeDate(workItem.startDate)!,
-														workItem.endDate
-															? parseResumeDate(workItem.endDate)!
-															: now,
-														t,
-													)}
-													)
-												</span>
-											)}
-										</div>
-									)}
+									{showHeader && roleDates(workItem, t, f, now)}
 									<SectionCard
 										title={workItem.position}
 										subtitle={showHeader ? undefined : workItem.name}

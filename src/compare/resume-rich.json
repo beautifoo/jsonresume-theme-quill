@@ -1,0 +1,225 @@
+{
+	"language": "en",
+	"basics": {
+		"name": "Johanna Kowalska-Nielsen",
+		"label": "Senior Frontend Engineer",
+		"email": "johanna@example.com",
+		"phone": "+45 31 22 44 66",
+		"url": "https://johanna.example.com",
+		"image": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='192'%20height='192'%3E%3Crect%20width='192'%20height='192'%20fill='%23e8e6e3'/%3E%3Ccircle%20cx='96'%20cy='74'%20r='34'%20fill='%238f8a84'/%3E%3Cpath%20d='M28%20192%20a68%2068%200%200%201%20136%200'%20fill='%238f8a84'/%3E%3C/svg%3E",
+		"summary": "Senior frontend engineer with 11 years of experience building design systems and data-heavy web applications. Led the 2024 rewrite of a customer analytics platform, cutting median page load from 4.2s to 1.1s and lifting weekly active usage by 18%. Cares about typography, performance budgets, and interfaces that respect their readers.",
+		"location": {
+			"address": "Bredgade 42",
+			"postalCode": "1260",
+			"city": "Copenhagen",
+			"countryCode": "DK"
+		},
+		"profiles": [
+			{
+				"network": "GitHub",
+				"username": "jkowalska",
+				"url": "https://github.com/jkowalska"
+			},
+			{
+				"network": "LinkedIn",
+				"username": "johanna-kn",
+				"url": "https://linkedin.com/in/johanna-kn"
+			},
+			{
+				"network": "X",
+				"username": "jk_builds",
+				"url": "https://x.com/jk_builds"
+			}
+		]
+	},
+	"work": [
+		{
+			"name": "Nordlys Analytics",
+			"position": "Staff Frontend Engineer",
+			"url": "https://nordlys.example.com",
+			"location": "Copenhagen, Denmark",
+			"startDate": "2021-04-12",
+			"summary": "Own the frontend architecture of a customer analytics platform serving 40k weekly users across 12 markets.",
+			"keywords": ["TypeScript", "React", "Design systems"],
+			"highlights": [
+				"Led a 6-person team through a full rewrite of the dashboard, cutting median page load from 4.2s to 1.1s",
+				"Introduced a performance budget gate in CI that blocked 14 regressions before release",
+				"Grew weekly active usage by 18% through onboarding and empty-state redesign"
+			],
+			"growth": { "label": "3 promotions", "level": 4 }
+		},
+		{
+			"name": "Nordlys Analytics",
+			"position": "Senior Frontend Engineer",
+			"url": "https://nordlys.example.com",
+			"location": "Copenhagen, Denmark",
+			"startDate": "2019-08-01",
+			"endDate": "2021-04-11",
+			"highlights": [
+				"Built the component library used by 5 product teams (62 components, 91% test coverage)",
+				"Reduced bundle size by 38% via route-level code splitting"
+			]
+		},
+		{
+			"name": "Brightpath",
+			"position": "Frontend Engineer",
+			"url": "https://brightpath.example.com",
+			"location": "Aarhus, Denmark",
+			"startDate": "2017-02-01",
+			"endDate": "2019-07-31",
+			"highlights": [
+				"Shipped the company's first public web store, reaching DKK 12M in first-year revenue"
+			]
+		},
+		{
+			"name": "Brightpath",
+			"position": "Junior Web Developer",
+			"startDate": "2016-05-01",
+			"endDate": "2017-01-31",
+			"highlights": [
+				"Fixed 200+ tickets while learning the codebase; took over the CSS system"
+			]
+		},
+		{
+			"name": "Copenhagen Free Software Meetup",
+			"position": "Website Volunteer",
+			"startDate": "2015-09-01",
+			"endDate": "2016-04-30",
+			"highlights": ["Rebuilt the meetup site; doubled mobile traffic"]
+		}
+	],
+	"volunteer": [
+		{
+			"organization": "Open Source Denmark",
+			"position": "Mentor",
+			"location": "Remote",
+			"startDate": "2020-01-15",
+			"highlights": [
+				"Mentored 9 first-time open-source contributors to their merged PRs"
+			]
+		}
+	],
+	"education": [
+		{
+			"institution": "Aarhus University",
+			"studyType": "MSc",
+			"area": "Computer Science",
+			"startDate": "2013-08-20",
+			"endDate": "2015-06-30",
+			"score": "12.4"
+		},
+		{
+			"institution": "Aarhus University",
+			"studyType": "BSc",
+			"area": "Interactive Media",
+			"startDate": "2010-08-20",
+			"endDate": "2013-06-30",
+			"courses": [
+				"Human-Computer Interaction",
+				"JavaScript",
+				"Information Architecture"
+			]
+		}
+	],
+	"skills": [
+		{
+			"name": "Languages",
+			"level": "Expert",
+			"keywords": ["TypeScript", "JavaScript", "CSS", "HTML", "Python"]
+		},
+		{
+			"name": "Frameworks",
+			"keywords": ["React", "Next.js", "Vite", "Node.js", "Playwright"]
+		},
+		{
+			"name": "Practices",
+			"keywords": ["Design systems", "Accessibility", "Performance", "i18n"]
+		}
+	],
+	"projects": [
+		{
+			"name": "gridsheet",
+			"entity": "open source",
+			"url": "https://github.com/jkowalska/gridsheet",
+			"description": "A CSS grid layout generator that exports production-ready, minimal CSS.",
+			"keywords": ["CSS", "CLI", "DX"],
+			"highlights": ["2.1k GitHub stars; used in production by 3 design teams"]
+		},
+		{
+			"name": "type-scale",
+			"entity": "open source",
+			"url": "https://github.com/jkowalska/type-scale",
+			"description": "Generates harmonic typographic scales from a base size and ratio.",
+			"keywords": ["Typography", "CSS"]
+		},
+		{
+			"name": "Nordlys Docs",
+			"entity": "Nordlys Analytics",
+			"url": "https://docs.nordlys.example.com",
+			"description": "Documentation site for the internal component library, serving 1.4k developers.",
+			"startDate": "2022-01-10",
+			"highlights": [
+				"Cut onboarding time for new frontend hires from 3 weeks to 1"
+			]
+		}
+	],
+	"languages": [
+		{ "language": "Danish", "fluency": "Native" },
+		{ "language": "English", "fluency": "Fluent" },
+		{ "language": "German", "fluency": "Conversational" }
+	],
+	"interests": [
+		{ "name": "Typography", "keywords": ["Serif revivals", "Variable fonts"] },
+		{ "name": "Cycling", "keywords": ["Long distance"] },
+		{ "name": "Coffee", "keywords": ["Pour over", "Konnict-style cupping"] }
+	],
+	"awards": [
+		{
+			"title": "Danish Developer Awards — Best Engineering Team",
+			"awardDate": "2024-11-02",
+			"awarder": "Danish IT Association"
+		},
+		{
+			"title": "CSS Design Awards — Site of the Day",
+			"date": "2023-05-18",
+			"awarder": "CSSDA"
+		}
+	],
+	"certificates": [
+		{
+			"name": "AWS Certified Developer — Associate",
+			"issuer": "Amazon Web Services",
+			"date": "2023-03-14"
+		},
+		{
+			"name": "W3C Web Accessibility (WCAG 22)",
+			"issuer": "Deque University",
+			"date": "2022-10-01"
+		}
+	],
+	"publications": [
+		{
+			"name": "The Quiet Interface: Density and Rest in Data UIs",
+			"publisher": "Frontend Focus",
+			"releaseDate": "2024-02-20",
+			"summary": "On designing dashboards that show more by shouting less."
+		},
+		{
+			"name": "CSS Grid, Finally",
+			"publisher": "CSS Weekly",
+			"releaseDate": "2022-08-09"
+		}
+	],
+	"references": [
+		{
+			"name": "Mette Andersen",
+			"reference": "Johanna is the engineer I call when 'elegant' and 'shipped' have to be the same sentence.",
+			"organization": "CTO, Nordlys Analytics"
+		},
+		{
+			"name": "Lars Sørensen",
+			"reference": "Available on request.",
+			"organization": "Design Director, Brightpath"
+		}
+	]
+}

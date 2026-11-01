@@ -1,7 +1,7 @@
 import { type FC, memo } from 'react'
 import { useTranslations } from 'use-intl'
-import type { ResumeSchema } from '../../types/resumeSchema'
 import { cn } from '../../lib/utils'
+import type { ResumeSchema } from '../../types/resumeSchema'
 import { NetworkIcon } from './NetworkIcon'
 
 interface SocialProfilesProps {

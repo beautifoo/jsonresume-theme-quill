@@ -1,6 +1,6 @@
 import { type FC, memo } from 'react'
-import type { ResumeSchema } from '../types/resumeSchema'
 import { cn } from '../lib/utils'
+import type { ResumeSchema } from '../types/resumeSchema'
 import { Awards } from './Awards'
 import { Certificates } from './Certificates'
 import { Education } from './Education'

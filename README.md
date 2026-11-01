@@ -1,110 +1,73 @@
 # jsonresume-theme-folio
 
-A modern, responsive React-based theme for [JSON Resume](https://jsonresume.org/), built with Bun, TypeScript, and React.
+A quiet, typographic [JSON Resume](https://jsonresume.org/) theme: one accent,
+a real type hierarchy, and a single embedded serif moment (the name). Built
+with Bun, TypeScript, React 19, and Tailwind CSS v4.
 
-## Features
+Folio renders to two equal targets:
 
-- 🚀 **Modern Stack**: Built with Bun, TypeScript, and React 19
-- 🌐 **Multilingual Support**: Built-in internationalization with `use-intl`
-- 🎨 **Modern UI**: Clean, professional design with Tailwind CSS
-- 📱 **Responsive Design**: Optimized for all devices
-- 📝 **Markdown Support**: Rich text formatting in descriptions
-- 🖨️ **Print-Friendly**: Optimized for PDF generation
-- 🔍 **Type Safety**: Full TypeScript support with generated types
+- **Screen** — any viewport, light or dark (`prefers-color-scheme`), fully
+  self-contained (no CDN, no network, no webfont requests)
+- **Print** — PDF from an ~850px canvas, always the light palette, at a
+  denser scale, with page-break-safe entries
 
 ## Development
 
-### Prerequisites
-
-- `bun` ^1.2.0
-
-### Getting Started
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/LRNZ09/jsonresume-theme-folio.git
-   cd jsonresume-theme-folio
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   bun install
-   ```
-
-3. Start the development server:
-
-   ```bash
-   bun dev
-   ```
-
-4. Create your resume:
-
-   - Place your `resume.json` file in the project root
-   - For multiple languages, create files like `resume-fr.json`, `resume-de.json`, etc.
-
-5. Build and render your resume:
-
-   ```bash
-   bun run render:resumed
-   ```
-
-   This will:
-   - Build the theme
-   - Render your resume
-   - Output to `public/index.html`
-
-### Multilingual Support
-
-The theme supports multiple languages using the `language` property within your `resume.json` file. The theme uses `i18next` for internationalization, and translations are located in the `src/i18n` directory.
-
-#### How it Works
-
-1.  **Set the Language in `resume.json`:**
-    Inside your `resume.json` file, specify the desired language code (e.g., `en`, `fr`, `de`) at the root level:
-
-    ```json
-    {
-      "language": "fr", // Set this to the desired language
-      "basics": {
-        // ... your basic info
-      }
-      // ... rest of your resume data
-    }
-    ```
-
-2.  **Rendering:**
-    When you run the render script (`bun run render:local` or using `resumed`), the theme will read the root `language` property and load the corresponding translations.
-
-    The rendered output file (`public/index.html` by default) will be in the language specified in the JSON.
-
-3.  **Development Server:**
-    The development server (`bun dev`) will also respect the root `language` set in the `resume.json` file used for preview.
-
-**Note:** While you _can_ maintain separate files like `resume-en.json`, `resume-fr.json` for organizational purposes, the theme itself only cares about the root `language` property within the specific JSON file being rendered or previewed.
-
-### Available Scripts
-
-- `bun dev`: Start development server
-- `bun build`: Build the theme for production
-- `bun run render:resumed`: Build and render your resume
-- `bun run generate-types`: Generate TypeScript types from JSON schema
-- `bun run test`: Run test suite
-- `bun run check`: Run Biome
-- `bun run lint`: Lint with Biome
-- `bun run format`: Format with Biome
-
-## Project Structure
-
+```bash
+bun install
+bun dev            # resume page (uses ./resume.json)
+bun run compare    # same server: open /compare — the theme comparison tool
+bun run build      # self-contained dist/
+bun test           # vitest
 ```
-├── src/
-│   ├── components/     # React components
-│   ├── i18n/          # Internationalization
-│   ├── styles/        # CSS and Tailwind config
-│   ├── types/         # TypeScript types
-│   └── utils/         # Utility functions
-├── scripts/           # Build and render scripts
-├── public/            # Static assets
-└── resume.json        # Sample resume
+
+The compare page renders Folio's three variants (folio / ink / graphite)
+next to the registry reference themes for the same resume, with layout
+(single/double), scheme, and variant controls.
+
+## Theming
+
+Everything is parameterized by `--folio-*` custom properties
+(see `src/styles/globals.css`): the **ink scale** (type hierarchy),
+one **accent**, **surface**, **line**, and the display face. Override them
+on any wrapper — or per resume:
+
+```css
+:root {
+	--folio-accent: oklch(0.5 0.15 30); /* one line, new identity */
+}
 ```
+
+The React API exposes the structural knobs:
+
+```tsx
+<Resume resume={resume} layout="double" variant="folio" />
+// layout: "double" (default, main + sidebar) | "single"
+// variant: "folio" (serif name) | "ink" (sans, light name) | "graphite" (no hue)
+```
+
+The DOM is one flat semantic flow (main sections first, sidebar after —
+no tables, floats, or positioned text) in **both** layouts, so the output
+stays parseable by application-tracking systems. See `docs/adr/` for the
+decisions behind the design.
+
+## The name font
+
+The name renders in **Folio Serif** — Source Serif 4 (Adobe, OFL 1.1)
+instantiated at SemiBold/48 and subset to Latin + Latin-Extended, embedded
+as base64 (~47 KB). It is a *modified* version, so per the OFL Reserved
+Font Name clause it ships renamed. Regenerate with
+`python3 scripts/embed-fonts.py` (needs `fonttools` + `brotli`).
+
+## Notes
+
+- Dates parse as local dates and format in the viewer's timezone;
+  open-ended roles read `… – Present` (localized).
+- Work history groups by company regardless of contiguity and sorts
+  reverse-chronologically.
+- Numbers in summaries and highlights are auto-bolded, so quantified
+  results stand out.
+
+## License
+
+MIT (the embedded font is SIL OFL 1.1 — see `src/styles/fonts/LICENSE.md`)

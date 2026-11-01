@@ -45,9 +45,7 @@ export const GrowthIndicator = ({
 							key={i}
 							className={cn(
 								'h-1 w-1 rounded-full',
-								i <= clampedLevel
-									? 'bg-accent'
-									: 'border border-accent/40',
+								i <= clampedLevel ? 'bg-accent' : 'border border-accent/40',
 							)}
 						/>
 					))}

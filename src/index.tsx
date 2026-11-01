@@ -1,8 +1,11 @@
 import { serve } from 'bun'
+import compare from './compare.html'
 import index from './index.html'
 
 const server = serve({
 	routes: {
+		// Dev-only theme comparison tool (excluded from the dist build)
+		'/compare': compare,
 		// Serve index.html for all unmatched routes.
 		'/*': index,
 	},
@@ -17,3 +20,4 @@ const server = serve({
 })
 
 console.log(`🚀 Server running at ${server.url}`)
+console.log(`🔎 Theme comparison at ${server.url}compare`)

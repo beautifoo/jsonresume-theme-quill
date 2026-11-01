@@ -10,12 +10,12 @@ interface ContactInfoProps {
 	className?: string
 }
 
-const Item: FC<{ icon: React.ReactNode; label: string; href?: string; children: React.ReactNode }> = ({
-	icon,
-	label,
-	href,
-	children,
-}) => {
+const Item: FC<{
+	icon: React.ReactNode
+	label: string
+	href?: string
+	children: React.ReactNode
+}> = ({ icon, label, href, children }) => {
 	const body = (
 		<>
 			<span className='shrink-0 text-accent' aria-hidden='true'>
@@ -35,7 +35,7 @@ const Item: FC<{ icon: React.ReactNode; label: string; href?: string; children: 
 					{body}
 				</a>
 			) : (
-				<span aria-label={label}>{body}</span>
+				body
 			)}
 		</span>
 	)
@@ -45,7 +45,12 @@ const Item: FC<{ icon: React.ReactNode; label: string; href?: string; children: 
  * The header contact row: location is rendered by the Header; this is
  * email / phone / website, with the accent reserved for the icons.
  */
-export const ContactInfo: FC<ContactInfoProps> = ({ email, phone, url, className }) => {
+export const ContactInfo: FC<ContactInfoProps> = ({
+	email,
+	phone,
+	url,
+	className,
+}) => {
 	const t = useTranslations()
 
 	if (!email && !phone && !url) return null

@@ -21,11 +21,7 @@ export function parseResumeDate(value: string): Date | undefined {
 		return Number.isNaN(fallback.getTime()) ? undefined : fallback
 	}
 	const [, year, month, day] = match
-	return new Date(
-		Number(year),
-		Number(month ?? '1') - 1,
-		Number(day ?? '1'),
-	)
+	return new Date(Number(year), Number(month ?? '1') - 1, Number(day ?? '1'))
 }
 
 /**
@@ -97,7 +93,10 @@ export const TimelineEntry: FC<TimelineEntryProps> = ({
 		<article className={cn('break-inside-avoid', className)}>
 			{range && (
 				<div className='mb-2 flex items-baseline gap-2 print:mb-1.5'>
-					<time dateTime={startDate} className='folio-meta font-medium text-ink-3'>
+					<time
+						dateTime={startDate}
+						className='folio-meta font-medium text-ink-3'
+					>
 						{range}
 					</time>
 					{duration && (

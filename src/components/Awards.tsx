@@ -26,7 +26,9 @@ export const Awards: FC<AwardsProps> = ({ awards }) => {
 						icon={<TrophyIcon className='h-3.5 w-3.5' />}
 						title={award.title}
 						subtitle={
-							award.awarder ? `${t('common.awardedBy')} ${award.awarder}` : undefined
+							award.awarder
+								? `${t('common.awardedBy')} ${award.awarder}`
+								: undefined
 						}
 						date={
 							award.date

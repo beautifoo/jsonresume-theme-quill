@@ -14,7 +14,7 @@ interface HeaderProps {
  * participant, never floated over the type.
  */
 export const Header: FC<HeaderProps> = memo(({ basics }) => {
-	const { name, label, location, summary, image } = basics
+	const { name, label, location, image } = basics
 
 	return (
 		<header className='flex items-start gap-6 print:gap-4'>

@@ -11,10 +11,16 @@ interface AppProps {
 }
 
 const App: FC<AppProps> = ({ resume, locale = 'en' }) => {
+	// Explicitly the viewer's own timezone (same behavior as the
+	// library fallback, minus the SSR-mismatch warning).
+	const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+
 	return (
-		// No timeZone: a resume viewed on screen should show dates in the
-		// viewer's own timezone. (The print canvas renders in UTC anyway.)
-		<IntlProvider messages={locales[locale].messages} locale={locale}>
+		<IntlProvider
+			messages={locales[locale].messages}
+			locale={locale}
+			timeZone={timeZone}
+		>
 			<IconContext.Provider value={{ weight: 'duotone' }}>
 				<Resume resume={resume} />
 			</IconContext.Provider>

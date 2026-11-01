@@ -1,7 +1,7 @@
+import type { Root } from 'mdast'
 import type React from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import type { Root } from 'mdast'
 import type { Node, Parent } from 'unist'
 import { visit } from 'unist-util-visit'
 import { cn } from '../../lib/utils'
@@ -29,9 +29,8 @@ const remarkMetrics = () => (tree: Root) => {
 		const parts: Node[] = []
 		const re = /\d[\d,.]*(?:%|\s?×)?/g
 		let last = 0
-		let match: RegExpExecArray | null
-
-		while ((match = re.exec(value))) {
+		let match: RegExpExecArray | null = re.exec(value)
+		while (match) {
 			if (match.index > last) {
 				parts.push({ type: 'text', value: value.slice(last, match.index) })
 			}
@@ -41,6 +40,7 @@ const remarkMetrics = () => (tree: Root) => {
 			})
 			last = match.index + match[0].length
 			if (match[0].length === 1) re.lastIndex++ // avoid zero-length loops
+			match = re.exec(value)
 		}
 		if (last < value.length) {
 			parts.push({ type: 'text', value: value.slice(last) })
@@ -50,7 +50,11 @@ const remarkMetrics = () => (tree: Root) => {
 	})
 }
 
-export const Markdown: React.FC<MarkdownProps> = ({ content, className, metrics }) => {
+export const Markdown: React.FC<MarkdownProps> = ({
+	content,
+	className,
+	metrics,
+}) => {
 	if (!content) return null
 
 	return (

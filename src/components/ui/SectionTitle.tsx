@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from 'react'
+import type { FC } from 'react'
 import { useTranslations } from 'use-intl'
 import { cn } from '../../lib/utils'
 
@@ -13,7 +13,11 @@ interface SectionTitleProps {
  * Section heading: the accent is allowed to appear here, followed by a
  * hairline rule that leads the eye into the section.
  */
-export const SectionTitle: FC<SectionTitleProps> = ({ title, id, className }) => {
+export const SectionTitle: FC<SectionTitleProps> = ({
+	title,
+	id,
+	className,
+}) => {
 	const t = useTranslations()
 
 	return (

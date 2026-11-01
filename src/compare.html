@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Folio — theme comparison</title>
+    <link rel="stylesheet" href="./index.css" />
+    <script>
+      // The compare page is judged by hand, so it always starts light.
+      document.documentElement.classList.remove('dark')
+    </script>
+  </head>
+  <body>
+    <div id="compare-root"></div>
+    <script type="module" src="./compare.tsx"></script>
+  </body>
+</html>

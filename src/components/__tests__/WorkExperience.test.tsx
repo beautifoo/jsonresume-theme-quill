@@ -1,8 +1,8 @@
-import en from '../../i18n/locales/en.json'
 import { render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { IntlProvider } from 'use-intl'
 import { describe, expect, it } from 'vitest'
+import en from '../../i18n/locales/en.json'
 import { WorkExperience } from '../WorkExperience'
 
 const wrap = (children: ReactNode) => {

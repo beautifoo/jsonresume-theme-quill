@@ -16,10 +16,7 @@ export const Languages: FC<LanguagesProps> = ({ languages }) => {
 		<SidebarSection title='sections.languages'>
 			<div className='space-y-1.5 print:space-y-1'>
 				{languages.map((language, i) => (
-					<div
-						key={i}
-						className='flex items-baseline justify-between gap-3'
-					>
+					<div key={i} className='flex items-baseline justify-between gap-3'>
 						<span className='min-w-0 text-[0.9rem] text-ink'>
 							{language.language}
 						</span>
