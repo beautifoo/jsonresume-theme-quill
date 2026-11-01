@@ -51,10 +51,10 @@
 
 /*
  * Theme variants: identity knobs only, everything else is shared.
- *  - folio:    serif name; ink-blue accent        (the default)
- *  - graphite: serif name; accent collapses to ink (zero hue)
+ *  - folio:    serif name; ink-blue accent (the default)
+ *  - folio-monochrome: zero hue — the accent collapses to ink
  */
-.variant-graphite {
+.variant-folio-monochrome {
 	--folio-accent: var(--folio-ink);
 }
 

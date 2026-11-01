@@ -84,7 +84,7 @@ const Caption: FC<{ title: string; sub: string }> = ({ title, sub }) => (
 	</div>
 )
 
-const FOIL_VARIANTS: ThemeVariant[] = ['folio', 'graphite']
+const FOIL_VARIANTS: ThemeVariant[] = ['folio', 'folio-monochrome']
 
 const ComparePage: FC = () => {
 	const [resumeName, setResumeName] = useState<'sample' | 'rich'>('rich')

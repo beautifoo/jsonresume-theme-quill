@@ -21,7 +21,7 @@ bun run build      # self-contained dist/
 bun test           # vitest
 ```
 
-The compare page renders Folio's variants (folio / graphite)
+The compare page renders Folio's variants (folio / folio-monochrome)
 next to the registry reference themes for the same resume, with layout
 (single/double), scheme, and variant controls.
 
@@ -43,7 +43,7 @@ The React API exposes the structural knobs:
 ```tsx
 <Resume resume={resume} layout="double" variant="folio" />
 // layout: "double" (default, main + sidebar) | "single"
-// variant: "folio" (default) | "graphite" (accent collapses to ink — zero hue)
+// variant: "folio" (default) | "folio-monochrome" (zero hue: the accent collapses to ink)
 ```
 
 The DOM is one flat semantic flow (main sections first, sidebar after —
