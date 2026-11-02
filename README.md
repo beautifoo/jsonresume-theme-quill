@@ -54,11 +54,11 @@ decisions behind the design.
 
 ## The name font
 
-The name renders in **Folio Serif** — Source Serif 4 (Adobe, OFL 1.1)
-instantiated at SemiBold/48 and subset to Latin + Latin-Extended, embedded
-as base64 (~47 KB). It is a *modified* version, so per the OFL Reserved
-Font Name clause it ships renamed. Regenerate with
-`python3 scripts/embed-fonts.py` (needs `fonttools` + `brotli`).
+The name renders in a **system serif** — `"New York", Georgia, "Times
+New Roman", serif` — with no embedded font: the built page and the PDF
+carry zero font payload, and there is no font file, license, or
+generation script to maintain. The exact face differs between macOS and
+Windows, but the role (one quiet serif moment, semi-bold ink) does not.
 
 ## Notes
 
@@ -71,4 +71,4 @@ Font Name clause it ships renamed. Regenerate with
 
 ## License
 
-MIT (the embedded font is SIL OFL 1.1 — see `src/styles/fonts/LICENSE.md`)
+MIT

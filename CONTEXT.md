@@ -64,7 +64,7 @@ Optional non-standard metadata on a work item (`label` / 1–5 `level` / 0–100
 _Avoid_: "promotion badge", "indicator"
 
 **Display face**:
-The single embedded serif used for the name and nowhere else.
+The single system serif (the `--font-display` stack) used for the name and nowhere else.
 _Avoid_: "the font" (the body is the system sans stack — see ADR 0002)
 
 ## Flagged ambiguities
