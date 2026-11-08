@@ -1,9 +1,9 @@
-import { cleanup, render, screen } from '@testing-library/react'
 import type { ResumeBasics } from '@jsonresume/types'
+import { cleanup, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
-import { Header } from '../Header'
 import { FolioProvider } from '../FolioProvider'
+import { Header } from '../Header'
 
 const wrap = (children: ReactNode) => <FolioProvider>{children}</FolioProvider>
 
@@ -12,9 +12,7 @@ afterEach(cleanup)
 
 describe('Header — the masthead', () => {
 	it('renders the name as the document heading', () => {
-		render(
-			wrap(<Header basics={{ name: 'Johanna K.' } as ResumeBasics} />),
-		)
+		render(wrap(<Header basics={{ name: 'Johanna K.' } as ResumeBasics} />))
 		expect(
 			screen.getByRole('heading', { level: 1, name: 'Johanna K.' }),
 		).toBeInTheDocument()

@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest'
 import type { Resume as ResumeDocument } from '@jsonresume/types'
+import { describe, expect, it } from 'vitest'
 import { resolveLocale } from '../resolveLocale'
 
 describe('resolveLocale', () => {

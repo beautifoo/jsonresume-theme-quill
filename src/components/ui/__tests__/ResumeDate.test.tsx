@@ -1,8 +1,8 @@
 import { cleanup, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
-import { FolioProvider } from '../../FolioProvider'
 import { dateSpan, parseResumeDate } from '../../../lib/dates'
+import { FolioProvider } from '../../FolioProvider'
 import { DateRange, DateStamp } from '../ResumeDate'
 
 // Pinned "now" — open-ended durations must be pin-able, never the wall

@@ -1,9 +1,9 @@
-import { ArrowSquareOutIcon, MapPinIcon } from '@phosphor-icons/react'
 import type { Location } from '@jsonresume/types'
+import { ArrowSquareOutIcon, MapPinIcon } from '@phosphor-icons/react'
 import { type FC, memo, type ReactNode } from 'react'
 import { useTranslations } from 'use-intl'
-import { cn } from '../../lib/utils'
 import { formatLocation } from '../../lib/location'
+import { cn } from '../../lib/utils'
 import { Markdown } from './Markdown'
 import { TagList } from './TagList'
 

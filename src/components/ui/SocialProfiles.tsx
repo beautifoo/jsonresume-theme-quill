@@ -1,7 +1,7 @@
+import type { Resume as ResumeDocument } from '@jsonresume/types'
 import { type FC, memo } from 'react'
 import { useTranslations } from 'use-intl'
 import { cn } from '../../lib/utils'
-import type { Resume as ResumeDocument } from '@jsonresume/types'
 import { NetworkIcon } from './NetworkIcon'
 
 interface SocialProfilesProps {

@@ -31,7 +31,8 @@ export function checkResumeContract(path: string = 'resume.json'): void {
 			console.error(
 				`\n❌ ${path} is not a stable (2.x) resume — ${stable.length} violation${stable.length === 1 ? '' : 's'}:`,
 			)
-			for (const issue of stable) console.error(`   • ${issue.path}: ${issue.message}`)
+			for (const issue of stable)
+				console.error(`   • ${issue.path}: ${issue.message}`)
 			process.exit(1)
 		}
 

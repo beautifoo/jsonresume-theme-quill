@@ -16,7 +16,9 @@ export interface DocumentMetadata {
 	lang: string
 }
 
-export function resumeDocumentMetadata(resume: ResumeDocument): DocumentMetadata {
+export function resumeDocumentMetadata(
+	resume: ResumeDocument,
+): DocumentMetadata {
 	const name = resume.basics?.name
 	const label = resume.basics?.label
 	return {

@@ -7,11 +7,18 @@
  */
 import type { Location } from '@jsonresume/types'
 
-export function formatLocation(location?: string | Location): string | undefined {
+export function formatLocation(
+	location?: string | Location,
+): string | undefined {
 	if (!location) return undefined
 	if (typeof location === 'string') return location || undefined
 
-	const line = [location.address, location.city, location.region, location.postalCode]
+	const line = [
+		location.address,
+		location.city,
+		location.region,
+		location.postalCode,
+	]
 		.filter(Boolean)
 		.join(', ')
 	return line || undefined

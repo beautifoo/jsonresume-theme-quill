@@ -14,9 +14,9 @@
  * bundle.
  */
 
-import { getDotPath } from 'valibot'
 import * as v from 'valibot'
-import { findLegacyFields, legacySchema, type LegacyIssue } from './legacy'
+import { getDotPath } from 'valibot'
+import { findLegacyFields, type LegacyIssue, legacySchema } from './legacy'
 import { resumeSchema } from './schema'
 
 type StableIssue = {

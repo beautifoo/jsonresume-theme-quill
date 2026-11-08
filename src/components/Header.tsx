@@ -1,6 +1,6 @@
+import type { Resume as ResumeDocument } from '@jsonresume/types'
 import { HouseLineIcon } from '@phosphor-icons/react'
 import { type FC, memo } from 'react'
-import type { Resume as ResumeDocument } from '@jsonresume/types'
 import { formatLocation } from '../lib/location'
 import { ContactInfo } from './ui/ContactInfo'
 import { SocialProfiles } from './ui/SocialProfiles'

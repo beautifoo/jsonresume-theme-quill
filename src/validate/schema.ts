@@ -10,25 +10,25 @@
  * published bundle: valibot is a devDependency.
  */
 
-import * as v from 'valibot'
 import type {
-	Resume as ResumeTypes,
-	ResumeBasics,
-	ResumeLocation,
-	ResumeProfile,
-	WorkItem,
-	VolunteerItem,
-	EducationItem,
 	AwardItem,
 	CertificateItem,
-	PublicationItem,
-	SkillItem,
-	LanguageItem,
+	EducationItem,
 	InterestItem,
-	ReferenceItem,
+	LanguageItem,
 	ProjectItem,
+	PublicationItem,
+	ReferenceItem,
+	ResumeBasics,
+	ResumeLocation,
 	ResumeMeta,
+	ResumeProfile,
+	Resume as ResumeTypes,
+	SkillItem,
+	VolunteerItem,
+	WorkItem,
 } from '@jsonresume/types'
+import * as v from 'valibot'
 
 /**
  * ISO-8601 with each section after the year optional (2023, 2023-04,

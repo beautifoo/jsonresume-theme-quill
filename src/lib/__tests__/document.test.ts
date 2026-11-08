@@ -4,7 +4,9 @@ import { resumeDocumentMetadata } from '../document'
 describe('resumeDocumentMetadata', () => {
 	it('announces "name — label" when both are present', () => {
 		expect(
-			resumeDocumentMetadata({ basics: { name: 'Johanna K.', label: 'Engineer' } }),
+			resumeDocumentMetadata({
+				basics: { name: 'Johanna K.', label: 'Engineer' },
+			}),
 		).toEqual({ title: 'Johanna K. — Engineer', lang: 'en' })
 	})
 
@@ -20,8 +22,8 @@ describe('resumeDocumentMetadata', () => {
 	})
 
 	it('takes the document language from the resolved locale', () => {
-		expect(resumeDocumentMetadata({ basics: { name: 'X' }, language: 'fr' }).lang).toBe(
-			'fr',
-		)
+		expect(
+			resumeDocumentMetadata({ basics: { name: 'X' }, language: 'fr' }).lang,
+		).toBe('fr')
 	})
 })
