@@ -1,15 +1,12 @@
 import { cleanup, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
-import { IntlProvider } from 'use-intl'
 import { afterEach, describe, expect, it } from 'vitest'
-import en from '../../i18n/locales/en.json'
 import { Education } from '../Education'
 import { Projects } from '../Projects'
+import { IntlTestProvider } from '../../test/intl'
 
 const wrap = (children: ReactNode) => (
-	<IntlProvider locale='en' now={new Date(2024, 0, 1)} messages={en}>
-		{children}
-	</IntlProvider>
+	<IntlTestProvider>{children}</IntlTestProvider>
 )
 
 // Vitest runs without globals, so RTL's automatic cleanup never registers.

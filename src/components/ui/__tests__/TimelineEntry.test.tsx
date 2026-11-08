@@ -1,18 +1,11 @@
 import { cleanup, render, screen } from '@testing-library/react'
-import { IntlProvider } from 'use-intl'
+import type { ReactNode } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
-import en from '../../../i18n/locales/en.json'
 import { TimelineEntry } from '../TimelineEntry'
+import { IntlTestProvider } from '../../../test/intl'
 
-const wrap = (children: React.ReactNode) => (
-	// No pinned timeZone: the provider falls back to the viewer's own
-	// timezone, which pairs with the local date parse — the design is
-	// timezone-immune precisely because both sides use the viewer's TZ.
-	// `now` is a local midnight: `new Date('2024-01-01')` would be UTC
-	// midnight, shifting a month on west-of-UTC machines.
-	<IntlProvider locale='en' now={new Date(2024, 0, 1)} messages={en}>
-		{children}
-	</IntlProvider>
+const wrap = (children: ReactNode) => (
+	<IntlTestProvider>{children}</IntlTestProvider>
 )
 
 // Vitest runs without globals, so RTL's automatic cleanup never registers.
