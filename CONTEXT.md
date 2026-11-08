@@ -75,6 +75,10 @@ _Avoid_: "promotion badge", "indicator"
 The single system serif (the `--font-display` stack) used for the name and nowhere else.
 _Avoid_: "the font" (the body is the system sans stack — see ADR 0002)
 
+**Work group**:
+The work items held at one employer, rendered as a single timeline block with a company header. Grouping is by employer name, regardless of contiguity — a return to a former employer merges into one block. Defined in `src/components/workGrouping.ts`.
+_Avoid_: "company block", "role cluster"
+
 ## Flagged ambiguities
 
 - "brand" was used for the accent hue, the `--brand` tag style, and the upstream project name — resolved: **Accent** for the color, no "brand" in new code.

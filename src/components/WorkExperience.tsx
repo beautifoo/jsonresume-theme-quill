@@ -2,10 +2,11 @@ import type { FC } from 'react'
 import { useFormatter, useNow, useTranslations } from 'use-intl'
 import type { Work } from '../types/resume'
 import { GrowthIndicator } from './ui/GrowthIndicator'
-import { DateRange, dateSpan, parseResumeDate } from './ui/ResumeDate'
+import { DateRange } from './ui/ResumeDate'
 import { Section } from './ui/Section'
 import { SectionCard } from './ui/SectionCard'
 import { TimelineEntry } from './ui/TimelineEntry'
+import { groupWork } from './workGrouping'
 
 interface WorkExperienceProps {
 	work?: Work[]
@@ -37,61 +38,40 @@ const GroupHeader: FC<{
 }
 
 /**
- * Work history. Entries are sorted reverse-chronologically and grouped
- * **by company, regardless of contiguity** — a return to a former
- * employer merges into one block, and unsorted input renders correctly
- * either way. All date rendering (rows, spans, durations) is the
- * ResumeDate module's business; this component only groups.
+ * Work history: a presentation over the **Work group** rule — the
+ * grouping itself (sort, by employer, regardless of contiguity) is
+ * the `workGrouping` module's business. Single-role blocks render a
+ * plain date row; grouped blocks get a company header with the total
+ * span, and a quiet date row per role.
  */
-
 export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
 	const now = useNow()
 
 	if (!work || work.length === 0) return null
 
-	const sorted = [...work].sort((a, b) => {
-		const as = a.startDate ? parseResumeDate(a.startDate) : undefined
-		const bs = b.startDate ? parseResumeDate(b.startDate) : undefined
-		if (!as && !bs) return 0
-		if (!as) return 1
-		if (!bs) return -1
-		return bs.getTime() - as.getTime()
-	})
-
-	const groups = new Map<string, Work[]>()
-	for (const item of sorted) {
-		const company = item.name || ''
-		const group = groups.get(company)
-		if (group) group.push(item)
-		else groups.set(company, [item])
-	}
-
 	return (
 		<Section title='sections.work' variant='timeline'>
-			{[...groups.entries()].map(([company, items]) => {
-				const showHeader = items.length > 1
-				// Span of the whole group for the header metadata:
-				// earliest start, latest end, open-ended roles count as "now".
-				const span = dateSpan(items, now)
+			{groupWork(work, now).map((group) => {
+				const showHeader = group.grouped
 
 				return (
 					<TimelineEntry
-						key={company}
+						key={group.company}
 						startDate={
-							showHeader && span.start ? undefined : items[0]?.startDate
+							showHeader && group.start ? undefined : group.items[0]?.startDate
 						}
-						endDate={showHeader ? undefined : items[0]?.endDate}
+						endDate={showHeader ? undefined : group.items[0]?.endDate}
 					>
 						{showHeader && (
 							<GroupHeader
-								company={company}
-								start={span.start}
-								end={span.end}
-								roles={items.length}
+								company={group.company}
+								start={group.start}
+								end={group.end}
+								roles={group.items.length}
 							/>
 						)}
 						<div className='space-y-5 print:space-y-3.5'>
-							{items.map((workItem, wi) => (
+							{group.items.map((workItem, wi) => (
 								<div key={wi}>
 									{showHeader && (
 										<DateRange
