@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import { IntlTestProvider } from '../../../test/intl'
+import { FolioProvider } from '../../FolioProvider'
 import { Section } from '../Section'
 
 const wrap = (children: React.ReactNode) => (
-	<IntlTestProvider>{children}</IntlTestProvider>
+	<FolioProvider>{children}</FolioProvider>
 )
 
 describe('Section — the shared section scaffolding', () => {

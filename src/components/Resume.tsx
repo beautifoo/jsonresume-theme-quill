@@ -1,9 +1,11 @@
 import { type FC, Fragment, memo, type ReactNode } from 'react'
-import type { ResumeDocument } from '../types/resume'
+import type { Locale } from '../i18n/config'
 import { cn } from '../lib/utils'
+import type { ResumeDocument } from '../types/resume'
 import { Awards } from './Awards'
 import { Certificates } from './Certificates'
 import { Education } from './Education'
+import { FolioProvider } from './FolioProvider'
 import { Header } from './Header'
 import { Interests } from './Interests'
 import { Languages } from './Languages'
@@ -31,7 +33,10 @@ interface SectionDef {
 }
 
 const MAIN_SECTIONS: SectionDef[] = [
-	{ key: 'summary', render: (r) => <Summary summary={r.basics?.summary ?? ''} /> },
+	{
+		key: 'summary',
+		render: (r) => <Summary summary={r.basics?.summary ?? ''} />,
+	},
 	{ key: 'work', render: (r) => <WorkExperience work={r.work} /> },
 	{ key: 'education', render: (r) => <Education education={r.education} /> },
 	{ key: 'projects', render: (r) => <Projects projects={r.projects} /> },
@@ -41,10 +46,19 @@ const MAIN_SECTIONS: SectionDef[] = [
 const SIDEBAR_SECTIONS: SectionDef[] = [
 	{ key: 'skills', render: (r) => <Skills skills={r.skills} /> },
 	{ key: 'languages', render: (r) => <Languages languages={r.languages} /> },
-	{ key: 'publications', render: (r) => <Publications publications={r.publications} /> },
-	{ key: 'certificates', render: (r) => <Certificates certificates={r.certificates} /> },
+	{
+		key: 'publications',
+		render: (r) => <Publications publications={r.publications} />,
+	},
+	{
+		key: 'certificates',
+		render: (r) => <Certificates certificates={r.certificates} />,
+	},
 	{ key: 'awards', render: (r) => <Awards awards={r.awards} /> },
-	{ key: 'references', render: (r) => <References references={r.references} /> },
+	{
+		key: 'references',
+		render: (r) => <References references={r.references} />,
+	},
 	{ key: 'interests', render: (r) => <Interests interests={r.interests} /> },
 ]
 
@@ -61,44 +75,63 @@ interface ResumeProps {
 	layout?: LayoutMode
 	/** Visual identity knobs (accent / display face). */
 	variant?: ThemeVariant
+	/** Explicit locale — otherwise the resume's declared language, else English */
+	locale?: Locale
+	/** Pinned "now" (tests) — open-ended durations measure from it */
+	now?: Date
 }
 
-export const Resume: FC<ResumeProps> = memo(({ resume, layout = 'double', variant = 'folio' }) => {
-	const { basics } = resume
+/**
+ * A resume document, rendered to the Folio theme. The i18n/icon
+ * runtime (the **Folio provider**) is installed behind the interface —
+ * callers and tests need only know `resume`, plus the optional
+ * `locale` / `now` overrides; the Resume date contract is enforced
+ * inside, not by the caller.
+ */
+export const Resume: FC<ResumeProps> = memo(
+	({ resume, layout = 'double', variant = 'folio', locale, now }) => {
+		const { basics } = resume
 
-	if (!basics) return null
+		if (!basics) return null
 
-	return (
-		<div
-			className={cn(
-				'folio-resume min-h-dvh bg-bg text-ink-2',
-				`layout-${layout}`,
-				variant !== 'folio' && `variant-${variant}`,
-			)}
-		>
-			<div className='mx-auto max-w-[850px] px-5 py-10 sm:px-8 print:max-w-none print:px-0 print:py-0'>
-				<Header basics={basics} />
+		return (
+			<FolioProvider resume={resume} locale={locale} now={now}>
+				<div
+					className={cn(
+						'folio-resume min-h-dvh bg-bg text-ink-2',
+						`layout-${layout}`,
+						variant !== 'folio' && `variant-${variant}`,
+					)}
+				>
+					<div className='mx-auto max-w-[850px] px-5 py-10 sm:px-8 print:max-w-none print:px-0 print:py-0'>
+						<Header basics={basics} />
 
-				<div className='folio-columns mt-9 print:mt-6'>
-					{/* Main column */}
-					<div className='min-w-0'>
-						{MAIN_SECTIONS.map((section) => (
-							<Fragment key={section.key}>{section.render(resume)}</Fragment>
-						))}
-					</div>
+						<div className='folio-columns mt-9 print:mt-6'>
+							{/* Main column */}
+							<div className='min-w-0'>
+								{MAIN_SECTIONS.map((section) => (
+									<Fragment key={section.key}>
+										{section.render(resume)}
+									</Fragment>
+								))}
+							</div>
 
-					{/* Sidebar: after the main column in the DOM in both
-					    layout modes (ATS-safe document order);
-					    wide-canvas geometry from --folio-cols-wide */}
-					<div className='min-w-0'>
-						{SIDEBAR_SECTIONS.map((section) => (
-							<Fragment key={section.key}>{section.render(resume)}</Fragment>
-						))}
+							{/* Sidebar: after the main column in the DOM in both
+							    layout modes (ATS-safe document order);
+							    wide-canvas geometry from --folio-cols-wide */}
+							<div className='min-w-0'>
+								{SIDEBAR_SECTIONS.map((section) => (
+									<Fragment key={section.key}>
+										{section.render(resume)}
+									</Fragment>
+								))}
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	)
-})
+			</FolioProvider>
+		)
+	},
+)
 
 export default Resume

@@ -2,18 +2,19 @@
  * Theme comparison page — a development tool, excluded from dist.
  *
  * Renders the theme's variants side by side for the repo's sample
- * resume, with layout/scheme controls, at full resolution for a human
- * eye.
+ * resume, with layout/scheme/variant/language controls, at full
+ * resolution for a human eye. Each panel is a self-contained `Resume`
+ * (its own Folio provider), so the matrix previews exactly what the
+ * published page renders — same icon weight, same date semantics.
  */
 
+import type { Resume as ResumeDocument } from '@jsonresume/types'
 import { type FC, StrictMode, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { IntlProvider } from 'use-intl'
 import resume from '../resume.json'
 import { type LayoutMode, Resume, type ThemeVariant } from './components/Resume'
 import { type Locale, locales } from './i18n/config'
 import { resolveLocale } from './i18n/resolveLocale'
-import type { Resume as ResumeDocument } from '@jsonresume/types'
 
 const Button: FC<{ value: string; active: boolean; onClick: () => void }> = ({
 	value,
@@ -49,13 +50,13 @@ const Caption: FC<{ title: string; sub: string }> = ({ title, sub }) => (
 
 const FOIL_VARIANTS: ThemeVariant[] = ['folio', 'folio-monochrome']
 
-const ComparePage: FC<{
-	locale: Locale
-	onLocaleChange: (locale: Locale) => void
-}> = ({ locale, onLocaleChange }) => {
+const Compare: FC = () => {
 	const [layout, setLayout] = useState<LayoutMode>('double')
 	const [scheme, setScheme] = useState<'light' | 'dark'>('light')
 	const [variant, setVariant] = useState<ThemeVariant | 'all'>('all')
+	const [locale, setLocale] = useState<Locale>(
+		resolveLocale(resume as ResumeDocument),
+	)
 
 	const resumeData = resume as ResumeDocument
 	const folioVariants = FOIL_VARIANTS.filter(
@@ -73,11 +74,16 @@ const ComparePage: FC<{
 							(scheme === 'dark' ? 'dark' : '')
 						}
 					>
-						<Resume resume={resumeData} variant={v} layout={layout} />
+						<Resume
+							resume={resumeData}
+							variant={v}
+							layout={layout}
+							locale={locale}
+						/>
 					</div>
 				</figure>
 			)),
-		[resumeData, layout, scheme, folioVariants],
+		[resumeData, layout, scheme, locale, folioVariants],
 	)
 
 	return (
@@ -136,7 +142,7 @@ const ComparePage: FC<{
 								key={l}
 								value={locales[l].name}
 								active={locale === l}
-								onClick={() => onLocaleChange(l)}
+								onClick={() => setLocale(l)}
 							/>
 						))}
 					</div>
@@ -155,18 +161,7 @@ const ComparePage: FC<{
 	)
 }
 
-export const Compare: FC = () => {
-	const [locale, setLocale] = useState<Locale>(
-		resolveLocale(resume as ResumeDocument),
-	)
-
-	return (
-		<IntlProvider locale={locale} messages={locales[locale].messages}>
-			<ComparePage locale={locale} onLocaleChange={setLocale} />
-		</IntlProvider>
-	)
-}
-
+export { Compare }
 export default Compare
 
 // Mount when served as a page (compare.html)

@@ -1,20 +1,17 @@
 import { cleanup, render, screen, within } from '@testing-library/react'
-import type { ReactNode } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
 import resume from '../../../resume.json'
 import { Resume } from '../Resume'
-import { IntlTestProvider } from '../../test/intl'
-
-const wrap = (children: ReactNode) => (
-	<IntlTestProvider>{children}</IntlTestProvider>
-)
 
 // Vitest runs without globals, so RTL's automatic cleanup never registers.
 afterEach(cleanup)
 
+// `Resume` installs its own Folio provider (the Resume date contract
+// is enforced behind its interface), so tests render it bare.
+
 describe('Resume — the ATS-safe document order (ADR 0001)', () => {
 	it('renders main sections first, sidebar sections after, in registry order', () => {
-		render(wrap(<Resume resume={resume} />))
+		render(<Resume resume={resume} />)
 
 		const titles = screen
 			.getAllByRole('heading', { level: 2 })
@@ -37,7 +34,7 @@ describe('Resume — the ATS-safe document order (ADR 0001)', () => {
 	})
 
 	it('keeps the document order identical in single layout mode', () => {
-		render(wrap(<Resume resume={resume} layout='single' />))
+		render(<Resume resume={resume} layout='single' />)
 
 		const titles = screen
 			.getAllByRole('heading', { level: 2 })
@@ -48,7 +45,7 @@ describe('Resume — the ATS-safe document order (ADR 0001)', () => {
 	})
 
 	it('renders nothing without basics', () => {
-		const { container } = render(wrap(<Resume resume={{}} />))
+		const { container } = render(<Resume resume={{}} />)
 		expect(container.querySelector('.folio-resume')).toBeNull()
 	})
 })

@@ -2,11 +2,15 @@ import { cleanup, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
 import { Education } from '../Education'
+import { FolioProvider } from '../FolioProvider'
 import { Projects } from '../Projects'
-import { IntlTestProvider } from '../../test/intl'
+
+// Pinned "now" — open-ended durations must be pin-able, never the wall
+// clock. Local midnight, timezone-immune.
+const NOW = new Date(2024, 0, 1)
 
 const wrap = (children: ReactNode) => (
-	<IntlTestProvider>{children}</IntlTestProvider>
+	<FolioProvider now={NOW}>{children}</FolioProvider>
 )
 
 // Vitest runs without globals, so RTL's automatic cleanup never registers.
@@ -36,7 +40,9 @@ describe('Education — the 2.x field semantics', () => {
 		render(
 			wrap(
 				<Education
-					education={[{ institution: 'A High School', studyType: 'Baccalaureate' }]}
+					education={[
+						{ institution: 'A High School', studyType: 'Baccalaureate' },
+					]}
 				/>,
 			),
 		)
@@ -48,7 +54,12 @@ describe('Education — the 2.x field semantics', () => {
 			wrap(
 				<Education
 					education={[
-						{ institution: 'X', area: 'Y', summary: 'Thesis on typography', score: '12.4' },
+						{
+							institution: 'X',
+							area: 'Y',
+							summary: 'Thesis on typography',
+							score: '12.4',
+						},
 					]}
 				/>,
 			),
@@ -79,7 +90,9 @@ describe('Projects — the schema-mandated summary precedence (#296)', () => {
 
 	it('renders the description when summary is absent', () => {
 		render(
-			wrap(<Projects projects={[{ name: 'P', description: 'Only the alias' }]} />),
+			wrap(
+				<Projects projects={[{ name: 'P', description: 'Only the alias' }]} />,
+			),
 		)
 		expect(screen.getByText(/Only the alias/)).toBeInTheDocument()
 	})
