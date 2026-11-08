@@ -56,6 +56,18 @@ describe('SectionCard — the main-column entry contract, one prop per test', ()
 		expect(screen.getByText(/Baker Street 21, London/)).toBeInTheDocument()
 	})
 
+	it('renders the postal code in the location line, like the masthead does', () => {
+		render(
+			wrap(
+				<SectionCard
+					title='Engineer'
+					location={{ city: 'Copenhagen', postalCode: '2000' }}
+				/>,
+			),
+		)
+		expect(screen.getByText('Copenhagen, 2000')).toBeInTheDocument()
+	})
+
 	it('renders the context beside the location, separated', () => {
 		render(
 			wrap(<SectionCard title='Engineer' location='London' context='MSc' />),

@@ -3,6 +3,7 @@ import type { Location } from '@jsonresume/types'
 import { type FC, memo, type ReactNode } from 'react'
 import { useTranslations } from 'use-intl'
 import { cn } from '../../lib/utils'
+import { formatLocation } from '../../lib/location'
 import { Markdown } from './Markdown'
 import { TagList } from './TagList'
 
@@ -47,15 +48,9 @@ export const SectionCard: FC<SectionCardProps> = memo(
 	}) => {
 		const t = useTranslations()
 
-		// A 2.x location object renders as a compact line, like a string.
-		const locationText =
-			typeof location === 'string'
-				? location
-				: location
-					? [location.address, location.city, location.region]
-							.filter(Boolean)
-							.join(', ')
-					: undefined
+		// A 2.x location object renders as a compact line, like a string —
+		// the theme-wide rule in `lib/location`, shared with the masthead.
+		const locationText = formatLocation(location)
 
 		return (
 			<article className={cn('break-inside-avoid', className)}>

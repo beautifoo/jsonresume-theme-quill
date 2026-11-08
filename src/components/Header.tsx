@@ -1,6 +1,7 @@
 import { HouseLineIcon } from '@phosphor-icons/react'
 import { type FC, memo } from 'react'
 import type { Resume as ResumeDocument } from '@jsonresume/types'
+import { formatLocation } from '../lib/location'
 import { ContactInfo } from './ui/ContactInfo'
 import { SocialProfiles } from './ui/SocialProfiles'
 
@@ -14,7 +15,8 @@ interface HeaderProps {
  * participant, never floated over the type.
  */
 export const Header: FC<HeaderProps> = memo(({ basics }) => {
-	const { name, label, location, image } = basics
+	const { name, label, image } = basics
+	const locationLine = formatLocation(basics.location)
 
 	return (
 		<header className='flex items-start gap-6 print:gap-4'>
@@ -22,22 +24,13 @@ export const Header: FC<HeaderProps> = memo(({ basics }) => {
 				<h1 className='folio-name break-words'>{name}</h1>
 				{label && <p className='folio-label mt-1.5 print:mt-1'>{label}</p>}
 
-				{location && (
+				{locationLine && (
 					<div className='mt-3 flex items-center gap-2 text-[0.9rem] text-ink-3 print:mt-2 print:text-[0.8rem]'>
 						<HouseLineIcon
 							className='h-3.5 w-3.5 shrink-0 text-accent'
 							aria-hidden='true'
 						/>
-						<span>
-							{[
-								location.address,
-								location.city,
-								location.region,
-								location.postalCode,
-							]
-								.filter(Boolean)
-								.join(', ')}
-						</span>
+						<span>{locationLine}</span>
 					</div>
 				)}
 
