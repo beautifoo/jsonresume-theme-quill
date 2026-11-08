@@ -55,7 +55,13 @@ If you have an idea for an enhancement, please create an issue with the followin
 
 ## Testing
 
-The project is tested with Vitest (`bun run test`), and the resume contract is enforced at build time (`bun run build`). When submitting changes, run `bun run lint`, `bun run typecheck`, `bun run test`, and `bun run build`, and check the rendered theme with your own resume data.
+The project is tested with Vitest (`bun run test`), and the resume contract (ADR 0003) is enforced at build time (`bun run build`) — or in isolation while editing a resume with `bun run validate [path]` (see the How it works notes below): stable (2.x) violations fail, legacy (1.x) fields print a migration checklist. When submitting changes, run `bun run lint`, `bun run typecheck`, `bun run test`, and `bun run build`, and check the rendered theme with your own resume data.
+
+## How it works
+
+- **Resume contract (2.x-only, ADR 0003):** the theme renders stable (2.x) JSON Resume fields. `src/validate/` holds the valibot stable schema, the 1.x legacy table, and `cli.ts` (`bun run validate [path]` for instant feedback while editing a resume). The build runs the same gate: stable violations fail, legacy (1.x) fields print a migration checklist. valibot is a devDependency, so it never reaches the published bundle.
+- **Theme identity:** the Tailwind v4 theme in `src/styles/index.css` maps the design tokens (Ink scale, folio accents, Layout mode) into Tailwind utilities. The component tree lives in `src/components/`; the published entry is `src/frontend.tsx` (a `bun build` target — never `bun --bun`).
+- **Language:** `src/i18n/` (locale registry + messages). Section titles and date units are translated; dates are viewer-zone via the i18n provider, which is what keeps the output timezone-immune.
 
 ## Documentation
 
