@@ -14,7 +14,17 @@ export const Education: FC<EducationProps> = ({ education }) => {
 	return (
 		<TimelineSection title='sections.education'>
 			{education.map((item, index) => {
-				const title = item.studyType || item.area || ''
+				// The 2.x schema separates the two: `area` is the field of
+				// study (the title); `studyType` is the degree/school type
+				// (context). The score stays free text: only prefix bare numbers.
+				const gpa = item.score
+					? /(GPA|Laude|Honor|Distinction)/i.test(item.score)
+						? item.score
+						: /^\d/.test(item.score)
+							? `GPA: ${item.score}`
+							: item.score
+					: undefined
+
 				return (
 					<TimelineEntry
 						key={`${item.institution ?? 'education'}-${index}`}
@@ -22,20 +32,12 @@ export const Education: FC<EducationProps> = ({ education }) => {
 						endDate={item.endDate}
 					>
 						<SectionCard
-							title={title}
+							title={item.area || item.studyType || ''}
 							subtitle={item.institution}
 							url={item.url}
 							location={item.location}
-							summary={
-								// The score field is free text: only prefix bare numbers.
-								item.score
-									? /(GPA|Laude|Honor|Distinction)/i.test(item.score)
-										? item.score
-										: /^\d/.test(item.score)
-											? `GPA: ${item.score}`
-											: item.score
-									: undefined
-							}
+							context={item.area ? item.studyType : undefined}
+							summary={item.summary || gpa}
 							tags={
 								item.courses && item.courses.length > 0
 									? item.courses

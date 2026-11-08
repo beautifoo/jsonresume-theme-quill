@@ -29,8 +29,8 @@ export const Certificates: FC<CertificatesProps> = ({ certificates }) => {
 								: undefined
 						}
 						date={
-							certificate.startDate || certificate.date ? (
-								<DateStamp date={certificate.startDate || certificate.date} />
+							certificate.date ? (
+								<DateStamp date={certificate.date} />
 							) : undefined
 						}
 						url={certificate.url}

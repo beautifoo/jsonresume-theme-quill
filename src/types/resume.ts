@@ -1,36 +1,41 @@
 /**
  * The resume document as the theme consumes it.
  *
- * `resumeSchema.ts` is generated from @jsonresume/schema (do not edit
- * it), but resumes in the wild still use *legacy* 1.x field names
- * alongside the current 2.x ones (`title`/`name`, `description`/
- * `summary`, …). The theme deliberately renders both. These
- * hand-written views type that tolerance: each extends the generated
- * base with the extra names the components read, so a resume written
- * in either era is fully typed — and the type-check gate (CI)
- * verifies the seam.
+ * The theme renders **stable** (JSON Resume 2.x) resumes only (ADR 0003):
+ * the base types come from `@jsonresume/types` (generated upstream from
+ * `@jsonresume/schema`), and 1.x field names are detected and warned
+ * about by the build-time gate in `src/validate/` — never read here.
+ *
+ * What remains hand-written are the theme's *non-standard* extensions —
+ * fields no JSON Resume era declares:
+ *
+ * - `Work.growth` — screen-only progress garnish (the **Growth** metadata)
+ * - `Award.url` — the 2.x award has no URL
+ * - `Reference.label` / `position` / `summary` — free-text context the
+ *   schema leaves to `relationship` / `organization`
  */
 
-import type { Iso8601, ResumeSchema } from './resumeSchema'
+import type {
+	AwardItem,
+	CertificateItem,
+	EducationItem,
+	Iso8601,
+	ProjectItem,
+	PublicationItem,
+	ReferenceItem,
+	Resume,
+	VolunteerItem,
+	WorkItem,
+} from '@jsonresume/types'
 
-export type Resume = ResumeSchema
-
-type BaseWork = NonNullable<Resume['work']>[number]
-type BaseEducation = NonNullable<Resume['education']>[number]
-type BaseAward = NonNullable<Resume['awards']>[number]
-type BaseCertificate = NonNullable<Resume['certificates']>[number]
-type BasePublication = NonNullable<Resume['publications']>[number]
-type BaseReference = NonNullable<Resume['references']>[number]
-type BaseProject = NonNullable<Resume['projects']>[number]
-type BaseVolunteer = NonNullable<Resume['volunteer']>[number]
+/** A stable resume document. */
+export type ResumeDocument = Resume
 
 /**
- * A work item with the theme's non-standard extensions: `keywords`
- * (rendered as the tag row) and `growth` (a screen-only progress
- * garnish). Both optional — plain schema work data is assignable.
+ * A work item with the theme's non-standard `growth` extension.
+ * (`keywords` is stable in 2.x, #293 — plain schema work data renders.)
  */
-export type Work = BaseWork & {
-	keywords?: string[]
+export type Work = WorkItem & {
 	growth?: {
 		label?: string // e.g., "3 Promotions" or "Rapid Growth"
 		level?: number // 1-5 discrete representation
@@ -38,47 +43,26 @@ export type Work = BaseWork & {
 	}
 }
 
-/** Education entries: the theme also reads a `location` the schema doesn't declare. */
-export type Education = BaseEducation & {
-	location?: string
-}
-
-/** Awards: 1.x `name` of `title`; `awardDate` / `startDate` / `issuer` as alternates of `date` / `awarder`; `url` (not in the schema). */
-export type Award = BaseAward & {
-	name?: string
-	awardDate?: Iso8601
-	startDate?: Iso8601
-	issuer?: string
+/** Awards: the 2.x schema has no URL; the theme reads one when present. */
+export type Award = AwardItem & {
 	url?: string
 }
 
-/** Certificates: `startDate` as an alternate of `date`. */
-export type Certificate = BaseCertificate & {
-	startDate?: Iso8601
-}
-
-/** Publications: 1.x `organization` of `publisher`; `startDate` of `releaseDate`; `authors` (not in the schema). */
-export type Publication = BasePublication & {
-	organization?: string
-	startDate?: Iso8601
-	authors?: string[]
-}
-
-/** References: 1.x context fields the schema leaves to free text. */
-export type Reference = BaseReference & {
+/**
+ * References: free-text context the schema leaves to `relationship` /
+ * `organization` — the theme reads them alongside the stable fields.
+ */
+export type Reference = ReferenceItem & {
 	label?: string
 	position?: string
-	organization?: string
 	summary?: string
 }
 
-/** Projects: 1.x `position` and `summary` (of `roles` / `description`). */
-export type Project = BaseProject & {
-	position?: string
-	summary?: string
-}
+/** Education, volunteer, projects, publications, and certificates render as-is. */
+export type Education = EducationItem
+export type Volunteer = VolunteerItem
+export type Project = ProjectItem
+export type Certificate = CertificateItem
+export type Publication = PublicationItem
 
-/** Volunteer entries: the theme also reads a `location` the schema doesn't declare. */
-export type Volunteer = BaseVolunteer & {
-	location?: string
-}
+export type { Iso8601 }

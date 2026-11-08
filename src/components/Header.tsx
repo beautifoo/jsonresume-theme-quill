@@ -1,11 +1,11 @@
 import { HouseLineIcon } from '@phosphor-icons/react'
 import { type FC, memo } from 'react'
-import type { ResumeSchema } from '../types/resumeSchema'
+import type { Resume as ResumeDocument } from '@jsonresume/types'
 import { ContactInfo } from './ui/ContactInfo'
 import { SocialProfiles } from './ui/SocialProfiles'
 
 interface HeaderProps {
-	basics: NonNullable<ResumeSchema['basics']>
+	basics: NonNullable<ResumeDocument['basics']>
 }
 
 /**

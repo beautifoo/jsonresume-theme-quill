@@ -22,13 +22,10 @@ export const Publications: FC<PublicationsProps> = memo(({ publications }) => {
 					<SidebarEntry
 						key={index}
 						title={publication.name}
-						subtitle={publication.publisher || publication.organization}
+						subtitle={publication.publisher}
 						date={
-							publication.releaseDate || publication.startDate ? (
-								<DateStamp
-									precision='year'
-									date={publication.releaseDate || publication.startDate}
-								/>
+							publication.releaseDate ? (
+								<DateStamp precision='year' date={publication.releaseDate} />
 							) : undefined
 						}
 						url={publication.url || undefined}

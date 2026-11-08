@@ -1,9 +1,9 @@
 import type { FC } from 'react'
-import type { ResumeSchema } from '../types/resumeSchema'
+import type { Resume as ResumeDocument } from '@jsonresume/types'
 import { SidebarSection } from './ui/SidebarSection'
 
 interface SkillsProps {
-	skills?: ResumeSchema['skills']
+	skills?: ResumeDocument['skills']
 }
 
 /**

@@ -22,19 +22,13 @@ export const Awards: FC<AwardsProps> = ({ awards }) => {
 					<SidebarEntry
 						key={index}
 						icon={<TrophyIcon className='h-3.5 w-3.5' />}
-						title={award.title || award.name}
+						title={award.title}
 						subtitle={
-							award.awarder || award.issuer
-								? `${t('common.awardedBy')} ${award.awarder || award.issuer}`
+							award.awarder
+								? `${t('common.awardedBy')} ${award.awarder}`
 								: undefined
 						}
-						date={
-							award.date || award.awardDate || award.startDate ? (
-								<DateStamp
-									date={award.date || award.awardDate || award.startDate}
-								/>
-							) : undefined
-						}
+						date={award.date ? <DateStamp date={award.date} /> : undefined}
 						url={award.url}
 						urlLabel={t('common.viewAward')}
 						content={award.summary}

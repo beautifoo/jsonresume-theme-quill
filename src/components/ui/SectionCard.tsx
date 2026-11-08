@@ -1,4 +1,5 @@
 import { ArrowSquareOutIcon, MapPinIcon } from '@phosphor-icons/react'
+import type { Location } from '@jsonresume/types'
 import { type FC, memo, type ReactNode } from 'react'
 import { useTranslations } from 'use-intl'
 import { cn } from '../../lib/utils'
@@ -9,7 +10,10 @@ interface SectionCardProps {
 	title?: string
 	subtitle?: string | ReactNode
 	url?: string
-	location?: string
+	/** The 2.x schema allows a string or a location object */
+	location?: string | Location
+	/** Quiet context beside the location (e.g. an education `studyType`) */
+	context?: string
 	tags?: string[]
 	highlights?: string[]
 	summary?: string
@@ -32,6 +36,7 @@ export const SectionCard: FC<SectionCardProps> = memo(
 		subtitle,
 		url,
 		location,
+		context,
 		tags,
 		highlights,
 		summary,
@@ -41,6 +46,16 @@ export const SectionCard: FC<SectionCardProps> = memo(
 		className,
 	}) => {
 		const t = useTranslations()
+
+		// A 2.x location object renders as a compact line, like a string.
+		const locationText =
+			typeof location === 'string'
+				? location
+				: location
+					? [location.address, location.city, location.region]
+							.filter(Boolean)
+							.join(', ')
+					: undefined
 
 		return (
 			<article className={cn('break-inside-avoid', className)}>
@@ -68,13 +83,19 @@ export const SectionCard: FC<SectionCardProps> = memo(
 						</div>
 					)}
 
-					{location && (
+					{(locationText || context) && (
 						<div className='folio-context flex items-center gap-1.5'>
-							<MapPinIcon
-								className='h-3.5 w-3.5 shrink-0 text-ink-4'
-								aria-hidden='true'
-							/>
-							{location}
+							{locationText && (
+								<>
+									<MapPinIcon
+										className='h-3.5 w-3.5 shrink-0 text-ink-4'
+										aria-hidden='true'
+									/>
+									{locationText}
+								</>
+							)}
+							{locationText && context && <span aria-hidden='true'>•</span>}
+							{context}
 						</div>
 					)}
 

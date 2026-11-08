@@ -19,7 +19,10 @@ export const References: FC<ReferencesProps> = ({ references }) => {
 						key={index}
 						title={reference.name}
 						subtitle={
-							reference.label || reference.position || reference.organization
+							reference.label ||
+							reference.position ||
+							reference.relationship ||
+							reference.organization
 						}
 						content={
 							reference.summary || reference.reference ? (

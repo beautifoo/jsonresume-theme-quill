@@ -41,9 +41,9 @@ If you have an idea for an enhancement, please create an issue with the followin
 ## Development Setup
 
 1. Clone the repository
-2. Install dependencies: `npm install`
-3. Create your resume.json in the root directory
-4. Start the development server: `npm run dev -- --lang=en`
+2. Install dependencies: `bun install`
+3. Create your resume.json in the root directory — the build validates it against the resume contract (ADR 0003): it must be a stable (2.x) resume, and known 1.x field names produce a migration checklist at build time
+4. Start the development server: `bun run dev`
 
 ## Style Guidelines
 
@@ -55,7 +55,7 @@ If you have an idea for an enhancement, please create an issue with the followin
 
 ## Testing
 
-Currently, the project does not have automated tests. When submitting changes, please manually test your changes with different resume data and ensure they work as expected.
+The project is tested with Vitest (`bun run test`), and the resume contract is enforced at build time (`bun run build`). When submitting changes, run `bun run lint`, `bun run typecheck`, `bun run test`, and `bun run build`, and check the rendered theme with your own resume data.
 
 ## Documentation
 

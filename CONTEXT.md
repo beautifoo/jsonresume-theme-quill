@@ -40,8 +40,16 @@ On-screen rendering (any viewport, light or dark via `prefers-color-scheme`), in
 **Print target**:
 PDF output rendered from an 850px-wide canvas. Always the light palette, regardless of `prefers-color-scheme`.
 
+**Stable fields**:
+The current JSON Resume 2.x field names — the era the theme guarantees to render. **Stable** is the canonical side of the stable/legacy pair.
+_Avoid_: "2.x fields", "current fields"
+
 **Legacy fields**:
-The JSON Resume 1.x field names the theme reads alongside their 2.x successors (`title`/`name`, `description`/`summary`, `publisher`/`organization`, …). Both eras of resumes appear in the wild, so the theme renders either; the tolerance is typed in `src/types/resume.ts` (hand-written views over the generated schema, which stays unedited) and verified by the type-check gate.
+The JSON Resume 1.x field names the theme does not read (`title`, `bio`, `website`, `links`, `photo`, …). A 1.x resume renders with those fields absent; the build gate detects the known 1.x names and warns, naming each field's stable successor (`src/validate/legacy.ts` — the full 1.x-minus-2.x set difference, so a missed name is a gate hole, not a judgment call).
+_Avoid_: "deprecated fields" — deprecated is a stable 2.x field pointing at another stable one (`projects.description` → `summary`, no warning); **legacy** is 1.x, warned about
+
+**Resume contract**:
+The theme's typed commitment to the resume document: the **stable** (2.x) valibot schema in `src/validate/schema.ts`, validated at build time — violations fail the build — plus the **legacy** (1.x) detection — warnings only. The gate runs at build time only; valibot is a devDependency and never ships in the published bundle. Types come from `@jsonresume/types` (generated upstream from `@jsonresume/schema`), which retires the frozen local snapshot; the hand-written valibot schema is pinned to those types by the type-check gate.
 
 ## Relationships
 
@@ -49,7 +57,7 @@ The JSON Resume 1.x field names the theme reads alongside their 2.x successors (
 - A resume document renders to one **Screen target** view and one **Print target** view; layout decisions that only affect one must be marked as such
 - **Accent** appears at most a handful of times per page; everything else is **Ink scale** or **Surface**
 - Both layout modes share one **ATS-safe document order**; `double` repositions the sidebar visually, never reorders the DOM
-- A resume from either era (current 2.x or **legacy fields**) renders the same; the naming difference lives only in the typed views, never in the components
+- The theme consumes **stable** (2.x) resumes only; **legacy** (1.x) names are detected and warned about at build time, never rendered (ADR 0003)
 
 ## Example dialogue
 
@@ -60,7 +68,7 @@ The JSON Resume 1.x field names the theme reads alongside their 2.x successors (
 > **Expert:** "No. Cards are surfaces, one step off the background. Accent tint is for tags and indicators only."
 
 **Growth**:
-Optional non-standard metadata on a work item (`label` / 1–5 `level` / 0–100 `percent`) hinting at progression — rendered as a small accent pill, screen-only (hidden in print). Defined in `src/types/work.ts`.
+Optional non-standard metadata on a work item (`label` / 1–5 `level` / 0–100 `percent`) hinting at progression — rendered as a small accent pill, screen-only (hidden in print). Defined in `src/types/resume.ts`.
 _Avoid_: "promotion badge", "indicator"
 
 **Display face**:
@@ -71,3 +79,5 @@ _Avoid_: "the font" (the body is the system sans stack — see ADR 0002)
 
 - "brand" was used for the accent hue, the `--brand` tag style, and the upstream project name — resolved: **Accent** for the color, no "brand" in new code.
 - `bg-surface` / `bg-color` / `bg-color-secondary` all meant "a card background" at various points in the migration — resolved: **Surface**.
+- "legacy field" briefly meant both a 1.x name and a deprecated 2.x alias (`projects.description`) — resolved: **legacy** is 1.x only; a deprecated stable alias is not warned about.
+- The glossary once promised "both eras render" — reversed by ADR 0003: the theme is 2.x-only, with a build-time legacy warning.

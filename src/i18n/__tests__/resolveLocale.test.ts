@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { ResumeSchema } from '../../types/resumeSchema'
+import type { Resume as ResumeDocument } from '@jsonresume/types'
 import { resolveLocale } from '../resolveLocale'
 
 describe('resolveLocale', () => {
@@ -12,7 +12,7 @@ describe('resolveLocale', () => {
 		expect(resolveLocale({ language: 'xx' })).toBe('en')
 		expect(resolveLocale({ language: 'Danish' })).toBe('en')
 		expect(resolveLocale({})).toBe('en')
-		expect(resolveLocale({ language: 42 } as unknown as ResumeSchema)).toBe(
+		expect(resolveLocale({ language: 42 } as unknown as ResumeDocument)).toBe(
 			'en',
 		)
 	})

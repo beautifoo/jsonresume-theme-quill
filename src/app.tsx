@@ -4,10 +4,10 @@ import { IntlProvider } from 'use-intl'
 import { Resume } from './components/Resume'
 import { type Locale, locales } from './i18n/config'
 import { resolveLocale } from './i18n/resolveLocale'
-import type { ResumeSchema } from './types/resumeSchema'
+import type { Resume as ResumeDocument } from '@jsonresume/types'
 
 interface AppProps {
-	resume: ResumeSchema
+	resume: ResumeDocument
 	/** Defaults to the resume's declared language, when we ship it */
 	locale?: Locale
 }

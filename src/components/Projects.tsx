@@ -21,10 +21,10 @@ export const Projects: FC<ProjectsProps> = ({ projects }) => {
 				>
 					<SectionCard
 						title={project.name}
-						subtitle={project.position || project.entity}
+						subtitle={project.roles?.[0] || project.entity}
 						url={project.url}
-						// Both names are common: summary (2.1) / description (1.x samples)
-						summary={project.description || project.summary}
+						// The 2.x schema mandates the order: summary wins when both are set (#296)
+						summary={project.summary || project.description}
 						highlights={project.highlights}
 						tags={project.keywords}
 						actionUrl={project.url}

@@ -160,7 +160,7 @@
 		{
 			"name": "gridsheet",
 			"entity": "open source",
-			"position": "Author",
+			"roles": ["Author"],
 			"url": "https://github.com/jkowalska/gridsheet",
 			"summary": "A CSS grid layout generator that exports production-ready, minimal CSS.",
 			"keywords": ["CSS", "CLI", "DX"],
@@ -169,7 +169,7 @@
 		{
 			"name": "Nordlys Docs",
 			"entity": "Nordlys Analytics",
-			"position": "Docs lead",
+			"roles": ["Docs lead"],
 			"url": "https://docs.nordlys.example.com",
 			"startDate": "2022-01-10",
 			"summary": "Documentation site for the internal component library, serving 1.4k developers.",
@@ -213,13 +213,13 @@
 		{
 			"name": "AWS Certified Developer — Associate",
 			"issuer": "Amazon Web Services",
-			"startDate": "2023-03-14",
+			"date": "2023-03-14",
 			"url": "https://aws.amazon.com/certification/certified-developer-associate"
 		},
 		{
 			"name": "W3C Web Accessibility (WCAG 22)",
 			"issuer": "Deque University",
-			"startDate": "2022-10-01"
+			"date": "2022-10-01"
 		}
 	],
 	"publications": [
@@ -241,7 +241,6 @@
 		{
 			"name": "Mette Andersen",
 			"label": "CTO, Nordlys Analytics",
-			"email": "mette@nordlys.example.com",
 			"summary": "Johanna is the engineer I call when 'elegant' and 'shipped' have to be the same sentence."
 		},
 		{

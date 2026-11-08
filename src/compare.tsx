@@ -13,7 +13,7 @@ import resume from '../resume.json'
 import { type LayoutMode, Resume, type ThemeVariant } from './components/Resume'
 import { type Locale, locales } from './i18n/config'
 import { resolveLocale } from './i18n/resolveLocale'
-import type { ResumeSchema } from './types/resumeSchema'
+import type { Resume as ResumeDocument } from '@jsonresume/types'
 
 const Button: FC<{ value: string; active: boolean; onClick: () => void }> = ({
 	value,
@@ -57,7 +57,7 @@ const ComparePage: FC<{
 	const [scheme, setScheme] = useState<'light' | 'dark'>('light')
 	const [variant, setVariant] = useState<ThemeVariant | 'all'>('all')
 
-	const resumeData = resume as ResumeSchema
+	const resumeData = resume as ResumeDocument
 	const folioVariants = FOIL_VARIANTS.filter(
 		(v) => variant === 'all' || v === variant,
 	)
@@ -157,7 +157,7 @@ const ComparePage: FC<{
 
 export const Compare: FC = () => {
 	const [locale, setLocale] = useState<Locale>(
-		resolveLocale(resume as ResumeSchema),
+		resolveLocale(resume as ResumeDocument),
 	)
 
 	return (

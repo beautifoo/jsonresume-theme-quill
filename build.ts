@@ -1,8 +1,10 @@
 #!/usr/bin/env bun
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { rm } from 'node:fs/promises'
 import path from 'node:path'
 import plugin from 'bun-plugin-tailwind'
+import { legacyMessage } from './src/validate/legacy'
+import { validateResume } from './src/validate/resume'
 
 if (process.argv.includes('--help') || process.argv.includes('-h')) {
 	console.log(`
@@ -115,7 +117,39 @@ const formatFileSize = (bytes: number): string => {
 	return `${size.toFixed(2)} ${units[unitIndex]}`
 }
 
+/**
+ * The resume contract (ADR 0003): the shipped resume must be stable (2.x);
+ * legacy (1.x) fields surface as a migration checklist. valibot is a
+ * devDependency, so this never reaches the published bundle.
+ */
+function checkResumeContract() {
+	try {
+		const document = JSON.parse(readFileSync('resume.json', 'utf8'))
+		const { stable, legacy } = validateResume(document)
+
+		if (legacy.length > 0) {
+			console.log(
+				`\n⚠️  ${legacy.length} legacy (1.x) field${legacy.length === 1 ? '' : 's'} — the theme renders 2.x, migrate these:`,
+			)
+			for (const issue of legacy) console.log(`   • ${legacyMessage(issue)}`)
+			console.log()
+		}
+
+		if (stable.length > 0) {
+			console.error(
+				`\n❌ resume.json is not a stable (2.x) resume — ${stable.length} violation${stable.length === 1 ? '' : 's'}:`,
+			)
+			for (const issue of stable)
+				console.error(`   • ${issue.path}: ${issue.message}`)
+			process.exit(1)
+		}
+	} catch {
+		// resume.json is optional for a build; the dev sample is the main consumer.
+	}
+}
 console.log('\n🚀 Starting build process...\n')
+
+checkResumeContract()
 
 const cliConfig = parseArgs()
 const outdir = cliConfig.outdir || path.join(process.cwd(), 'dist')

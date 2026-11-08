@@ -1,6 +1,6 @@
 import { type FC, memo } from 'react'
 import { cn } from '../lib/utils'
-import type { ResumeSchema } from '../types/resumeSchema'
+import type { Resume as ResumeDocument } from '@jsonresume/types'
 import { Awards } from './Awards'
 import { Certificates } from './Certificates'
 import { Education } from './Education'
@@ -19,7 +19,7 @@ export type LayoutMode = 'single' | 'double'
 export type ThemeVariant = 'folio' | 'folio-monochrome'
 
 interface ResumeProps {
-	resume: ResumeSchema
+	resume: ResumeDocument
 	/**
 	 * `double` (default): main column + sidebar. `single`: everything in
 	 * one column. Applied as the `layout-*` class on the root, which

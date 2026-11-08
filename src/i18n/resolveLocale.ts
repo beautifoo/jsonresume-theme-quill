@@ -1,4 +1,4 @@
-import type { ResumeSchema } from '../types/resumeSchema'
+import type { Resume as ResumeDocument } from '@jsonresume/types'
 import { type Locale, locales } from './config'
 
 /**
@@ -7,7 +7,7 @@ import { type Locale, locales } from './config'
  * field predates the current JSON Resume schema, so it arrives as
  * `unknown` via the top-level index signature.
  */
-export function resolveLocale(resume: ResumeSchema): Locale {
+export function resolveLocale(resume: ResumeDocument): Locale {
 	const lang = resume.language
 	return typeof lang === 'string' && locales[lang as Locale]
 		? (lang as Locale)
