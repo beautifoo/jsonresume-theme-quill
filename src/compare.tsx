@@ -8,7 +8,7 @@
  * published page renders — same icon weight, same date semantics.
  */
 
-import type { Resume as ResumeDocument } from '@jsonresume/types'
+import type { ResumeDocument } from './types/resume'
 import { type FC, StrictMode, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import resume from '../resume.json'

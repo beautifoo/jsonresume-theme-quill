@@ -1,4 +1,4 @@
-import type { Resume as ResumeDocument } from '@jsonresume/types'
+import type { ResumeDocument } from '../types/resume'
 import { IconContext } from '@phosphor-icons/react'
 import type { FC, ReactNode } from 'react'
 import { IntlProvider } from 'use-intl'

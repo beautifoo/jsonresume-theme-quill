@@ -32,6 +32,16 @@ import type {
 export type ResumeDocument = Resume
 
 /**
+ * The upstream shapes the app consumes, re-exported so this module is
+ * the *one* address for the resume document's types. App code imports
+ * from here, never from `@jsonresume/types` directly — the one other
+ * importer is the resume contract's type-check gate in `validate/schema.ts`,
+ * which must name the upstream types to pin the valibot transcription
+ * against them.
+ */
+export type { Location, ResumeBasics } from '@jsonresume/types'
+
+/**
  * A work item with the theme's non-standard `growth` extension.
  * (`keywords` is stable in 2.x, #293 — plain schema work data renders.)
  */

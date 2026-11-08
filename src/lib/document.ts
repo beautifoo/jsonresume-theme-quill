@@ -6,7 +6,7 @@
  * render the theme inside an existing document keep their own title.
  */
 
-import type { Resume as ResumeDocument } from '@jsonresume/types'
+import type { ResumeDocument } from '../types/resume'
 import { resolveLocale } from '../i18n/resolveLocale'
 
 export interface DocumentMetadata {

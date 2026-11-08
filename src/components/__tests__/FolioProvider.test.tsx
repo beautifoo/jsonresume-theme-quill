@@ -1,4 +1,4 @@
-import type { Resume as ResumeDocument } from '@jsonresume/types'
+import type { ResumeDocument } from '../../types/resume'
 import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 import { FolioProvider } from '../FolioProvider'

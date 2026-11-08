@@ -1,4 +1,4 @@
-import type { ResumeBasics } from '@jsonresume/types'
+import type { ResumeBasics } from '../../types/resume'
 import { cleanup, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'

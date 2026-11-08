@@ -1,4 +1,4 @@
-import type { Resume as ResumeDocument } from '@jsonresume/types'
+import type { ResumeDocument } from '../../types/resume'
 import { type FC, memo } from 'react'
 import { useTranslations } from 'use-intl'
 import { cn } from '../../lib/utils'

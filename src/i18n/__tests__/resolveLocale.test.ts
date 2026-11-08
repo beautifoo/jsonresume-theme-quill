@@ -1,4 +1,4 @@
-import type { Resume as ResumeDocument } from '@jsonresume/types'
+import type { ResumeDocument } from '../../types/resume'
 import { describe, expect, it } from 'vitest'
 import { resolveLocale } from '../resolveLocale'
 

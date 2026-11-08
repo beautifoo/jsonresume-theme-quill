@@ -5,7 +5,7 @@
  * omitted. The masthead and the main-column entries render locations
  * this way, so they can never drift apart.
  */
-import type { Location } from '@jsonresume/types'
+import type { Location } from '../types/resume'
 
 export function formatLocation(
 	location?: string | Location,
