@@ -1,8 +1,8 @@
 import type { FC } from 'react'
 import type { Education as EducationItem } from '../types/resume'
+import { Section } from './ui/Section'
 import { SectionCard } from './ui/SectionCard'
 import { TimelineEntry } from './ui/TimelineEntry'
-import { TimelineSection } from './ui/TimelineSection'
 
 interface EducationProps {
 	education?: EducationItem[]
@@ -12,7 +12,7 @@ export const Education: FC<EducationProps> = ({ education }) => {
 	if (!education || education.length === 0) return null
 
 	return (
-		<TimelineSection title='sections.education'>
+		<Section title='sections.education' variant='timeline'>
 			{education.map((item, index) => {
 				// The 2.x schema separates the two: `area` is the field of
 				// study (the title); `studyType` is the degree/school type
@@ -47,6 +47,6 @@ export const Education: FC<EducationProps> = ({ education }) => {
 					</TimelineEntry>
 				)
 			})}
-		</TimelineSection>
+		</Section>
 	)
 }

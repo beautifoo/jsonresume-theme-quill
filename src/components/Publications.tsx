@@ -3,8 +3,8 @@ import { useTranslations } from 'use-intl'
 import type { Publication } from '../types/resume'
 import { Markdown } from './ui/Markdown'
 import { DateStamp } from './ui/ResumeDate'
+import { Section } from './ui/Section'
 import { SidebarEntry } from './ui/SidebarEntry'
-import { SidebarSection } from './ui/SidebarSection'
 
 interface PublicationsProps {
 	publications?: Publication[]
@@ -16,7 +16,7 @@ export const Publications: FC<PublicationsProps> = memo(({ publications }) => {
 	if (!publications?.length) return null
 
 	return (
-		<SidebarSection title='sections.publications'>
+		<Section title='sections.publications' variant='list'>
 			<div className='space-y-3 print:space-y-2.5'>
 				{publications.map((publication, index) => (
 					<SidebarEntry
@@ -42,6 +42,6 @@ export const Publications: FC<PublicationsProps> = memo(({ publications }) => {
 					/>
 				))}
 			</div>
-		</SidebarSection>
+		</Section>
 	)
 })

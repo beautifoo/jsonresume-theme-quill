@@ -1,10 +1,11 @@
 import type { FC } from 'react'
 import { useTranslations } from 'use-intl'
+import type { SectionTitleKey } from '../../i18n/config'
 import { cn } from '../../lib/utils'
 
 interface SectionTitleProps {
 	/** Translation key, e.g. `sections.work` */
-	title: string
+	title: SectionTitleKey
 	id?: string
 	className?: string
 }

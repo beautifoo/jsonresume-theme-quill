@@ -3,8 +3,8 @@ import type { FC } from 'react'
 import { useTranslations } from 'use-intl'
 import type { Certificate } from '../types/resume'
 import { DateStamp } from './ui/ResumeDate'
+import { Section } from './ui/Section'
 import { SidebarEntry } from './ui/SidebarEntry'
-import { SidebarSection } from './ui/SidebarSection'
 
 interface CertificatesProps {
 	certificates?: Certificate[]
@@ -16,7 +16,7 @@ export const Certificates: FC<CertificatesProps> = ({ certificates }) => {
 	if (!certificates?.length) return null
 
 	return (
-		<SidebarSection title='sections.certificates'>
+		<Section title='sections.certificates' variant='list'>
 			<div className='space-y-3 print:space-y-2.5'>
 				{certificates.map((certificate, index) => (
 					<SidebarEntry
@@ -38,6 +38,6 @@ export const Certificates: FC<CertificatesProps> = ({ certificates }) => {
 					/>
 				))}
 			</div>
-		</SidebarSection>
+		</Section>
 	)
 }

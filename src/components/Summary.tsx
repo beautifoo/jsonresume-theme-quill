@@ -1,6 +1,6 @@
 import { type FC, memo } from 'react'
 import { Markdown } from './ui/Markdown'
-import { SectionTitle } from './ui/SectionTitle'
+import { Section } from './ui/Section'
 
 interface SummaryProps {
 	summary: string
@@ -13,14 +13,14 @@ export const Summary: FC<SummaryProps> = memo(({ summary }) => {
 	if (!summary) return null
 
 	return (
-		<section
-			className='mt-9 first:mt-0 print:mt-6 print:first:mt-0'
-			aria-labelledby='section-title-about'
+		<Section
+			title='sections.about'
+			variant='list'
+			contentClassName='max-w-[62ch]'
 		>
-			<SectionTitle title='sections.about' id='section-title-about' />
-			<div className='folio-body mt-3 max-w-[62ch] print:mt-2'>
+			<div className='folio-body'>
 				<Markdown content={summary} metrics />
 			</div>
-		</section>
+		</Section>
 	)
 })

@@ -3,9 +3,9 @@ import { useFormatter, useNow, useTranslations } from 'use-intl'
 import type { Work } from '../types/resume'
 import { GrowthIndicator } from './ui/GrowthIndicator'
 import { DateRange, dateSpan, parseResumeDate } from './ui/ResumeDate'
+import { Section } from './ui/Section'
 import { SectionCard } from './ui/SectionCard'
 import { TimelineEntry } from './ui/TimelineEntry'
-import { TimelineSection } from './ui/TimelineSection'
 
 interface WorkExperienceProps {
 	work?: Work[]
@@ -67,7 +67,7 @@ export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
 	}
 
 	return (
-		<TimelineSection title='sections.work'>
+		<Section title='sections.work' variant='timeline'>
 			{[...groups.entries()].map(([company, items]) => {
 				const showHeader = items.length > 1
 				// Span of the whole group for the header metadata:
@@ -77,7 +77,9 @@ export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
 				return (
 					<TimelineEntry
 						key={company}
-						startDate={showHeader && span.start ? undefined : items[0]?.startDate}
+						startDate={
+							showHeader && span.start ? undefined : items[0]?.startDate
+						}
 						endDate={showHeader ? undefined : items[0]?.endDate}
 					>
 						{showHeader && (
@@ -119,6 +121,6 @@ export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
 					</TimelineEntry>
 				)
 			})}
-		</TimelineSection>
+		</Section>
 	)
 }

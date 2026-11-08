@@ -1,5 +1,6 @@
 import type { FC } from 'react'
-import { SidebarSection } from './SidebarSection'
+import type { SectionTitleKey } from '../../i18n/config'
+import { Section } from './Section'
 
 export interface TaxonomyEntry {
 	name: string
@@ -11,7 +12,7 @@ export interface TaxonomyEntry {
 
 interface TaxonomyProps {
 	/** Translation key, e.g. `sections.skills` */
-	title: string
+	title: SectionTitleKey
 	entries: TaxonomyEntry[]
 }
 
@@ -23,14 +24,16 @@ interface TaxonomyProps {
  * identical, per the theme's own rule.
  */
 export const Taxonomy: FC<TaxonomyProps> = ({ title, entries }) => (
-	<SidebarSection title={title}>
+	<Section title={title} variant='list'>
 		<div className='space-y-2.5 print:space-y-2'>
 			{entries.map((entry, i) => (
 				<div key={i}>
 					<h3 className='flex items-baseline justify-between gap-2 text-[0.9rem] font-semibold text-ink'>
 						<span className='min-w-0'>{entry.name}</span>
 						{entry.value && (
-							<span className='folio-meta shrink-0 font-normal'>{entry.value}</span>
+							<span className='folio-meta shrink-0 font-normal'>
+								{entry.value}
+							</span>
 						)}
 					</h3>
 					{entry.keywords && entry.keywords.length > 0 && (
@@ -41,5 +44,5 @@ export const Taxonomy: FC<TaxonomyProps> = ({ title, entries }) => (
 				</div>
 			))}
 		</div>
-	</SidebarSection>
+	</Section>
 )

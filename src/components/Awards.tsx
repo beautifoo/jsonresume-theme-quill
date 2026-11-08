@@ -3,8 +3,8 @@ import type { FC } from 'react'
 import { useTranslations } from 'use-intl'
 import type { Award } from '../types/resume'
 import { DateStamp } from './ui/ResumeDate'
+import { Section } from './ui/Section'
 import { SidebarEntry } from './ui/SidebarEntry'
-import { SidebarSection } from './ui/SidebarSection'
 
 interface AwardsProps {
 	awards?: Award[]
@@ -16,7 +16,7 @@ export const Awards: FC<AwardsProps> = ({ awards }) => {
 	if (!awards?.length) return null
 
 	return (
-		<SidebarSection title='sections.awards'>
+		<Section title='sections.awards' variant='list'>
 			<div className='space-y-3 print:space-y-2.5'>
 				{awards.map((award, index) => (
 					<SidebarEntry
@@ -35,6 +35,6 @@ export const Awards: FC<AwardsProps> = ({ awards }) => {
 					/>
 				))}
 			</div>
-		</SidebarSection>
+		</Section>
 	)
 }

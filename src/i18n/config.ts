@@ -9,6 +9,12 @@ import zhTranslations from './locales/zh.json'
 
 export type Locale = 'en' | 'de' | 'fr' | 'es' | 'it' | 'pt' | 'ru' | 'zh'
 
+/**
+ * The closed set of section-title translation keys (`sections.*`),
+ * derived from the English catalog — a mistyped key is a type error.
+ */
+export type SectionTitleKey = `sections.${keyof typeof en.sections}`
+
 export const locales = {
 	en: {
 		messages: en,
