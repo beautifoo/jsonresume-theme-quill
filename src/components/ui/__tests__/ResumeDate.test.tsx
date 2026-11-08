@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import { IntlProvider } from 'use-intl'
 import { afterEach, describe, expect, it } from 'vitest'
 import en from '../../../i18n/locales/en.json'
-import { DateRange, DateStamp, parseResumeDate } from '../ResumeDate'
+import { DateRange, DateStamp, dateSpan, parseResumeDate } from '../ResumeDate'
 
 const wrap = (children: ReactNode) => (
 	// No pinned timeZone: the provider falls back to the viewer's own
@@ -54,6 +54,35 @@ describe('DateRange', () => {
 	it('renders nothing without a parseable start date', () => {
 		const { container } = render(wrap(<DateRange start='someday' />))
 		expect(container.querySelector('div')).toBeNull()
+	})
+})
+
+describe('dateSpan', () => {
+	it('spans a group from the earliest start to the latest end', () => {
+		const { start, end } = dateSpan(
+			[
+				{ startDate: '2022-01', endDate: '2023-12' },
+				{ startDate: '2024-01', endDate: '2024-12' },
+			],
+			new Date(2024, 0, 1),
+		)
+		expect(start?.getFullYear()).toBe(2022)
+		expect(end?.getFullYear()).toBe(2024)
+	})
+
+	it('treats open-ended items as the provider now, never the wall clock', () => {
+		const now = new Date(2024, 0, 1)
+		const { end } = dateSpan([{ startDate: '2021-03' }], now)
+		expect(end?.getTime()).toBe(now.getTime())
+	})
+
+	it('returns empty dates when nothing parses', () => {
+		expect(
+			dateSpan(
+				[{ startDate: 'someday', endDate: 'someday' }],
+				new Date(2024, 0, 1),
+			),
+		).toEqual({ start: undefined, end: undefined })
 	})
 })
 

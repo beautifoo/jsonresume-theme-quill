@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { useFormatter, useNow, useTranslations } from 'use-intl'
 import type { Work } from '../types/resume'
 import { GrowthIndicator } from './ui/GrowthIndicator'
-import { formatDuration, parseResumeDate } from './ui/ResumeDate'
+import { DateRange, dateSpan, parseResumeDate } from './ui/ResumeDate'
 import { SectionCard } from './ui/SectionCard'
 import { TimelineEntry } from './ui/TimelineEntry'
 import { TimelineSection } from './ui/TimelineSection'
@@ -40,38 +40,11 @@ const GroupHeader: FC<{
  * Work history. Entries are sorted reverse-chronologically and grouped
  * **by company, regardless of contiguity** — a return to a former
  * employer merges into one block, and unsorted input renders correctly
- * either way.
+ * either way. All date rendering (rows, spans, durations) is the
+ * ResumeDate module's business; this component only groups.
  */
 
-/** Per-role date line, only used inside multi-role company groups. */
-function roleDates(
-	item: Work,
-	t: ReturnType<typeof useTranslations>,
-	f: ReturnType<typeof useFormatter>,
-	now: Date,
-) {
-	if (!item.startDate) return null
-	const start = parseResumeDate(item.startDate)
-	if (!start) return null
-	const end = item.endDate ? parseResumeDate(item.endDate) : undefined
-	const fmt = (d: Date) => f.dateTime(d, { month: 'short', year: 'numeric' })
-
-	return (
-		<div className='mb-1.5 flex items-baseline gap-2 print:mb-1'>
-			<time dateTime={item.startDate} className='folio-meta'>
-				{fmt(start)}
-				{end ? ` – ${fmt(end)}` : ` – ${t('common.present')}`}
-			</time>
-			<span className='folio-meta opacity-80'>
-				({formatDuration(start, end ?? now, t)})
-			</span>
-		</div>
-	)
-}
-
 export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
-	const f = useFormatter()
-	const t = useTranslations()
 	const now = useNow()
 
 	if (!work || work.length === 0) return null
@@ -97,41 +70,35 @@ export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
 		<TimelineSection title='sections.work'>
 			{[...groups.entries()].map(([company, items]) => {
 				const showHeader = items.length > 1
-
-				// Span of the whole group for the header metadata
-				const starts = items
-					.map((i) => (i.startDate ? parseResumeDate(i.startDate) : undefined))
-					.filter((d): d is Date => Boolean(d))
-				const ends = items
-					.map((i) => (i.endDate ? parseResumeDate(i.endDate) : undefined))
-					.filter((d): d is Date => Boolean(d))
-				const earliest = starts.length
-					? starts.reduce((a, b) => (a < b ? a : b))
-					: undefined
-				// Latest end, treating open-ended (current) roles as "now"
-				const latest = [
-					...ends,
-					...items.filter((i) => !i.endDate).map(() => now),
-				].reduce((a, b) => (a > b ? a : b))
+				// Span of the whole group for the header metadata:
+				// earliest start, latest end, open-ended roles count as "now".
+				const span = dateSpan(items, now)
 
 				return (
 					<TimelineEntry
 						key={company}
-						startDate={showHeader && earliest ? undefined : items[0]?.startDate}
+						startDate={showHeader && span.start ? undefined : items[0]?.startDate}
 						endDate={showHeader ? undefined : items[0]?.endDate}
 					>
 						{showHeader && (
 							<GroupHeader
 								company={company}
-								start={earliest}
-								end={latest}
+								start={span.start}
+								end={span.end}
 								roles={items.length}
 							/>
 						)}
 						<div className='space-y-5 print:space-y-3.5'>
 							{items.map((workItem, wi) => (
 								<div key={wi}>
-									{showHeader && roleDates(workItem, t, f, now)}
+									{showHeader && (
+										<DateRange
+											start={workItem.startDate}
+											end={workItem.endDate}
+											className='mb-1.5 print:mb-1'
+											rangeClassName='folio-meta'
+										/>
+									)}
 									<SectionCard
 										title={workItem.position}
 										subtitle={showHeader ? undefined : workItem.name}

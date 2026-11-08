@@ -54,10 +54,41 @@ export function formatDuration(
 	return parts.join(', ')
 }
 
+interface DatedItem {
+	startDate?: string
+	endDate?: string
+}
+
+/**
+ * The date span of a group of dated items, the theme-wide way:
+ * the earliest start, and the latest end where an *open-ended*
+ * item counts as the provider's "now" (never the wall clock).
+ */
+export function dateSpan(items: DatedItem[], now: Date): { start?: Date; end?: Date } {
+	const starts = items
+		.map((i) => (i.startDate ? parseResumeDate(i.startDate) : undefined))
+		.filter((d): d is Date => Boolean(d))
+	const ends = [
+		...items
+			.map((i) => (i.endDate ? parseResumeDate(i.endDate) : undefined))
+			.filter((d): d is Date => Boolean(d)),
+		...items.filter((i) => !i.endDate).map(() => now),
+	]
+	return {
+		start: starts.length ? starts.reduce((a, b) => (a < b ? a : b)) : undefined,
+		end: ends.length ? ends.reduce((a, b) => (a > b ? a : b)) : undefined,
+	}
+}
+
 interface DateRangeProps {
 	start?: string
 	end?: string
 	className?: string
+	/**
+	 * Styling of the range itself — the default is the timeline row
+	 * (emphasized); grouped entries use the quiet `folio-meta` form.
+	 */
+	rangeClassName?: string
 }
 
 /**
@@ -65,7 +96,12 @@ interface DateRangeProps {
  * Present") with an approximate duration. Open-ended ranges read
  * `… – Present` and measure their duration from the provider's "now".
  */
-export const DateRange: FC<DateRangeProps> = ({ start, end, className }) => {
+export const DateRange: FC<DateRangeProps> = ({
+	start,
+	end,
+	className,
+	rangeClassName = 'folio-meta font-medium text-ink-3',
+}) => {
 	const f = useFormatter()
 	const t = useTranslations()
 	const now = useNow()
@@ -91,7 +127,7 @@ export const DateRange: FC<DateRangeProps> = ({ start, end, className }) => {
 		<div
 			className={cn('mb-2 flex items-baseline gap-2 print:mb-1.5', className)}
 		>
-			<time dateTime={start} className='folio-meta font-medium text-ink-3'>
+			<time dateTime={start} className={rangeClassName}>
 				{range}
 			</time>
 			{duration && <time className='folio-meta opacity-80'>({duration})</time>}
