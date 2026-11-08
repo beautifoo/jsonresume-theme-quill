@@ -1,14 +1,14 @@
+/**
+ * The Resume date rendering seam: the i18n-backed presenters of the
+ * date contract — `DateRange` (a row with range + duration) and
+ * `DateStamp` (a single localized date). The pure side of the contract
+ * (parsing, durations, spans) lives in the `dates` module.
+ */
+
 import type { FC } from 'react'
 import { useFormatter, useNow, useTranslations } from 'use-intl'
 import { formatDuration, parseResumeDate } from '../../lib/dates'
 import { cn } from '../../lib/utils'
-
-/**
- * The Resume date rendering seam: the pure date functions
- * (parsing, duration, spans) live in the `dates` module and are
- * re-exported so existing importers keep resolving here.
- */
-export { dateSpan, formatDuration, parseResumeDate } from '../../lib/dates'
 
 interface DateRangeProps {
 	start?: string
