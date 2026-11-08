@@ -1,66 +1,13 @@
-import { type FC, Fragment, memo, type ReactNode } from 'react'
+import { type FC, Fragment, memo } from 'react'
 import type { Locale } from '../i18n/config'
 import { cn } from '../lib/utils'
 import type { ResumeDocument } from '../types/resume'
-import { Awards } from './Awards'
-import { Certificates } from './Certificates'
-import { Education } from './Education'
 import { FolioProvider } from './FolioProvider'
 import { Header } from './Header'
-import { Interests } from './Interests'
-import { Languages } from './Languages'
-import { Projects } from './Projects'
-import { Publications } from './Publications'
-import { References } from './References'
-import { Skills } from './Skills'
-import { Summary } from './Summary'
-import { Volunteer } from './Volunteer'
-import { WorkExperience } from './WorkExperience'
+import { MAIN_SECTIONS, SIDEBAR_SECTIONS } from './sections'
 
 export type LayoutMode = 'single' | 'double'
 export type ThemeVariant = 'folio' | 'folio-monochrome'
-
-/**
- * The **ATS-safe document order** as one table (ADR 0001): main
- * sections first, sidebar sections after, in a flat semantic flow.
- * The `double` layout repositions the sidebar visually, never the DOM.
- * Each section owns its emptiness guard — an empty section renders
- * nothing, the order does not shift.
- */
-interface SectionDef {
-	key: string
-	render: (resume: ResumeDocument) => ReactNode
-}
-
-const MAIN_SECTIONS: SectionDef[] = [
-	{
-		key: 'summary',
-		render: (r) => <Summary summary={r.basics?.summary ?? ''} />,
-	},
-	{ key: 'work', render: (r) => <WorkExperience work={r.work} /> },
-	{ key: 'education', render: (r) => <Education education={r.education} /> },
-	{ key: 'projects', render: (r) => <Projects projects={r.projects} /> },
-	{ key: 'volunteer', render: (r) => <Volunteer volunteer={r.volunteer} /> },
-]
-
-const SIDEBAR_SECTIONS: SectionDef[] = [
-	{ key: 'skills', render: (r) => <Skills skills={r.skills} /> },
-	{ key: 'languages', render: (r) => <Languages languages={r.languages} /> },
-	{
-		key: 'publications',
-		render: (r) => <Publications publications={r.publications} />,
-	},
-	{
-		key: 'certificates',
-		render: (r) => <Certificates certificates={r.certificates} />,
-	},
-	{ key: 'awards', render: (r) => <Awards awards={r.awards} /> },
-	{
-		key: 'references',
-		render: (r) => <References references={r.references} />,
-	},
-	{ key: 'interests', render: (r) => <Interests interests={r.interests} /> },
-]
 
 interface ResumeProps {
 	resume: ResumeDocument
@@ -82,11 +29,12 @@ interface ResumeProps {
 }
 
 /**
- * A resume document, rendered to the Folio theme. The i18n/icon
- * runtime (the **Folio provider**) is installed behind the interface —
- * callers and tests need only know `resume`, plus the optional
- * `locale` / `now` overrides; the Resume date contract is enforced
- * inside, not by the caller.
+ * A resume document, rendered to the Folio theme. The section order
+ * comes from the **section registry** (`sections.tsx`) — main column
+ * first, sidebar after, in a flat semantic flow (ADR 0001); the i18n
+ * and icon runtime (the **Folio provider**) is installed behind the
+ * interface, so callers and tests need only know `resume`, plus the
+ * optional `layout` / `variant` / `locale` / `now` overrides.
  */
 export const Resume: FC<ResumeProps> = memo(
 	({ resume, layout = 'double', variant = 'folio', locale, now }) => {

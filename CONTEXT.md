@@ -56,7 +56,7 @@ The theme's typed commitment to the resume document: the **stable** (2.x) valibo
 - The **Folio** identity is expressed entirely through **Tokens**
 - A resume document renders to one **Screen target** view and one **Print target** view; layout decisions that only affect one must be marked as such
 - **Accent** appears at most a handful of times per page; everything else is **Ink scale** or **Surface**
-- Both layout modes share one **ATS-safe document order**; `double` repositions the sidebar visually, never reorders the DOM
+- Both layout modes share one **ATS-safe document order**, owned by the **Section registry**; `double` repositions the sidebar visually, never reorders the DOM
 - The theme consumes **stable** (2.x) resumes only; **legacy** (1.x) names are detected and warned about at build time, never rendered (ADR 0003)
 
 ## Example dialogue
@@ -82,6 +82,10 @@ _Avoid_: "company block", "role cluster"
 **Folio provider**:
 The theme's runtime configuration, owned once behind the Resume interface (`src/components/FolioProvider.tsx`): the i18n message catalog, locale resolution, the viewer's timezone, "now", and the duotone icon weight. The **Resume date** contract — locale, timezone, and "now" all from the provider — is enforced here, not by callers. `Resume` installs it behind its own interface; tests use it directly with a pinned "now".
 _Avoid_: "intl setup", "the providers"
+
+**Section registry**:
+The table of the resume's sections (a key plus its treatment): the main column first, the sidebar after — the **ATS-safe document order** (ADR 0001) as one module (`src/components/sections.tsx`), which `Resume` consumes to compose its two columns. The emptiness guard stays with each section treatment: an empty section renders nothing, and the order does not shift.
+_Avoid_: "section list", "the columns"
 
 ## Flagged ambiguities
 

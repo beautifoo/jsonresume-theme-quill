@@ -1,9 +1,9 @@
-import type { ResumeDocument } from '../types/resume'
 import { IconContext } from '@phosphor-icons/react'
 import type { FC, ReactNode } from 'react'
 import { IntlProvider } from 'use-intl'
 import { type Locale, locales } from '../i18n/config'
 import { resolveLocale } from '../i18n/resolveLocale'
+import type { ResumeDocument } from '../types/resume'
 
 interface FolioProviderProps {
 	/** The resume document — its declared language is the locale default */

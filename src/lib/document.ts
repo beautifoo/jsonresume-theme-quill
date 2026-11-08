@@ -6,8 +6,8 @@
  * render the theme inside an existing document keep their own title.
  */
 
-import type { ResumeDocument } from '../types/resume'
 import { resolveLocale } from '../i18n/resolveLocale'
+import type { ResumeDocument } from '../types/resume'
 
 export interface DocumentMetadata {
 	/** `Name — Label`, or the name alone; undefined when there is no name */

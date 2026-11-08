@@ -1,5 +1,5 @@
-import type { ResumeDocument } from '../../types/resume'
 import { describe, expect, it } from 'vitest'
+import type { ResumeDocument } from '../../types/resume'
 import { resolveLocale } from '../resolveLocale'
 
 describe('resolveLocale', () => {

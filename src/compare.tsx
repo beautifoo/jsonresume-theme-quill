@@ -8,13 +8,13 @@
  * published page renders — same icon weight, same date semantics.
  */
 
-import type { ResumeDocument } from './types/resume'
 import { type FC, StrictMode, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import resume from '../resume.json'
 import { type LayoutMode, Resume, type ThemeVariant } from './components/Resume'
 import { type Locale, locales } from './i18n/config'
 import { resolveLocale } from './i18n/resolveLocale'
+import type { ResumeDocument } from './types/resume'
 
 const Button: FC<{ value: string; active: boolean; onClick: () => void }> = ({
 	value,

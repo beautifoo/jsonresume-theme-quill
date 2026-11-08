@@ -1,7 +1,7 @@
-import type { ResumeDocument } from '../types/resume'
 import { HouseLineIcon } from '@phosphor-icons/react'
 import { type FC, memo } from 'react'
 import { formatLocation } from '../lib/location'
+import type { ResumeDocument } from '../types/resume'
 import { ContactInfo } from './ui/ContactInfo'
 import { SocialProfiles } from './ui/SocialProfiles'
 

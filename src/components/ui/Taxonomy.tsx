@@ -23,26 +23,31 @@ interface TaxonomyProps {
  * typographic role: the treatment is identical because the meaning is
  * identical, per the theme's own rule.
  */
-export const Taxonomy: FC<TaxonomyProps> = ({ title, entries }) => (
-	<Section title={title} variant='list'>
-		<div className='space-y-2.5 print:space-y-2'>
-			{entries.map((entry, i) => (
-				<div key={i}>
-					<h3 className='flex items-baseline justify-between gap-2 text-[0.9rem] font-semibold text-ink'>
-						<span className='min-w-0'>{entry.name}</span>
-						{entry.value && (
-							<span className='folio-meta shrink-0 font-normal'>
-								{entry.value}
-							</span>
+export const Taxonomy: FC<TaxonomyProps> = ({ title, entries }) => {
+	// An empty taxonomy renders nothing — the order does not shift (ADR 0001).
+	if (entries.length === 0) return null
+
+	return (
+		<Section title={title} variant='list'>
+			<div className='space-y-2.5 print:space-y-2'>
+				{entries.map((entry, i) => (
+					<div key={i}>
+						<h3 className='flex items-baseline justify-between gap-2 text-[0.9rem] font-semibold text-ink'>
+							<span className='min-w-0'>{entry.name}</span>
+							{entry.value && (
+								<span className='folio-meta shrink-0 font-normal'>
+									{entry.value}
+								</span>
+							)}
+						</h3>
+						{entry.keywords && entry.keywords.length > 0 && (
+							<p className='folio-context mt-0.5 leading-relaxed'>
+								{entry.keywords.join(', ')}
+							</p>
 						)}
-					</h3>
-					{entry.keywords && entry.keywords.length > 0 && (
-						<p className='folio-context mt-0.5 leading-relaxed'>
-							{entry.keywords.join(', ')}
-						</p>
-					)}
-				</div>
-			))}
-		</div>
-	</Section>
-)
+					</div>
+				))}
+			</div>
+		</Section>
+	)
+}
