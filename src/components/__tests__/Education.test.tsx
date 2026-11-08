@@ -67,6 +67,32 @@ describe('Education — the 2.x field semantics', () => {
 		expect(screen.getByText(/Thesis on typography/)).toBeInTheDocument()
 		expect(screen.queryByText(/GPA: 12.4/)).not.toBeInTheDocument()
 	})
+
+	it('prefixes a bare score with a "GPA:" label for readability', () => {
+		render(
+			wrap(
+				<Education
+					education={[{ institution: 'X', area: 'Y', score: '12.4' }]}
+				/>,
+			),
+		)
+		// The metrics rule bolds the score, splitting the summary text.
+		const bold = screen.getByText('12.4')
+		expect(bold.tagName).toBe('STRONG')
+		expect(bold.closest('p')).toHaveTextContent('GPA: 12.4')
+	})
+
+	it('passes a non-numeric score through untouched', () => {
+		render(
+			wrap(
+				<Education
+					education={[{ institution: 'X', area: 'Y', score: 'Laude' }]}
+				/>,
+			),
+		)
+		expect(screen.getByText('Laude')).toBeInTheDocument()
+		expect(screen.queryByText(/GPA: Laude/)).not.toBeInTheDocument()
+	})
 })
 
 describe('Projects — the schema-mandated summary precedence (#296)', () => {
@@ -95,5 +121,22 @@ describe('Projects — the schema-mandated summary precedence (#296)', () => {
 			),
 		)
 		expect(screen.getByText(/Only the alias/)).toBeInTheDocument()
+	})
+
+	it('maps the first role to the subtitle, falling back to the entity', () => {
+		render(
+			wrap(
+				<Projects
+					projects={[
+						{ name: 'P', roles: ['Maintainer', 'Author'], entity: 'Acme' },
+					]}
+				/>,
+			),
+		)
+		expect(screen.getByText(/Maintainer/)).toBeInTheDocument()
+		expect(screen.queryByText(/Author/)).not.toBeInTheDocument()
+
+		render(wrap(<Projects projects={[{ name: 'Q', entity: 'Acme' }]} />))
+		expect(screen.getByText(/Acme/)).toBeInTheDocument()
 	})
 })

@@ -76,3 +76,45 @@ describe('WorkExperience grouping', () => {
 		expect(screen.getByText('Promoted')).toBeInTheDocument()
 	})
 })
+
+describe('WorkExperience — the field→role mapping', () => {
+	it('maps position to the title and company to the subtitle', () => {
+		render(
+			wrap(
+				<WorkExperience
+					work={[
+						{
+							name: 'Acme',
+							position: 'Analyst',
+							startDate: '2022-01',
+						},
+					]}
+				/>,
+			),
+		)
+		expect(
+			screen.getByRole('heading', { level: 3, name: /Analyst/ }),
+		).toBeInTheDocument()
+		expect(screen.getByText(/at Acme/)).toBeInTheDocument()
+	})
+
+	it('maps keywords to tags and location to the context row', () => {
+		render(
+			wrap(
+				<WorkExperience
+					work={[
+						{
+							name: 'Acme',
+							position: 'Analyst',
+							location: 'Copenhagen',
+							keywords: ['SQL', 'Dashboards'],
+						},
+					]}
+				/>,
+			),
+		)
+		expect(screen.getByText('SQL')).toBeInTheDocument()
+		expect(screen.getByText('Dashboards')).toBeInTheDocument()
+		expect(screen.getByText(/Copenhagen/)).toBeInTheDocument()
+	})
+})
