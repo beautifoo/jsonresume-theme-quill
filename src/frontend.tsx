@@ -9,21 +9,14 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import resume from '../resume.json'
 import { App } from './app'
-import { resolveLocale } from './i18n/resolveLocale'
+import { applyDocumentMetadata } from './lib/document'
 
 function start() {
 	const rootEl = document.getElementById('root')
 	if (!rootEl) return
 
 	// A published resume page should announce itself properly.
-	if (resume.basics?.name) {
-		document.title =
-			resume.basics.label != null
-				? `${resume.basics.name} — ${resume.basics.label}`
-				: resume.basics.name
-	}
-	// The rendered language (the resume's when supported, else English)
-	document.documentElement.lang = resolveLocale(resume)
+	applyDocumentMetadata(resume)
 
 	const root = createRoot(rootEl)
 	root.render(
