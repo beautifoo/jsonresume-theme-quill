@@ -7,7 +7,7 @@ import ptTranslations from './locales/pt.json'
 import ruTranslations from './locales/ru.json'
 import zhTranslations from './locales/zh.json'
 
-export type Locale = 'en' | 'de' | 'fr' | 'es' | 'it' | 'pt' | 'ru' | 'zh'
+export type Locale = 'en' | 'it' | 'de' | 'fr' | 'es' | 'pt' | 'ru' | 'zh'
 
 /**
  * The closed set of section-title translation keys (`sections.*`),
@@ -15,10 +15,16 @@ export type Locale = 'en' | 'de' | 'fr' | 'es' | 'it' | 'pt' | 'ru' | 'zh'
  */
 export type SectionTitleKey = `sections.${keyof typeof en.sections}`
 
+// The locale set is deliberately ordered, not alphabetical: English
+// first, Italian right after it, the rest alphabetical.
 export const locales = {
 	en: {
 		messages: en,
 		name: 'English',
+	},
+	it: {
+		messages: itTranslations,
+		name: 'Italiano',
 	},
 	de: {
 		messages: deTranslations,
@@ -31,10 +37,6 @@ export const locales = {
 	es: {
 		messages: esTranslations,
 		name: 'Español',
-	},
-	it: {
-		messages: itTranslations,
-		name: 'Italiano',
 	},
 	pt: {
 		messages: ptTranslations,
