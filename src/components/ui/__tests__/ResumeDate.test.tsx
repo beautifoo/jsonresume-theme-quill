@@ -1,7 +1,6 @@
 import { cleanup, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
-import { dateSpan, parseResumeDate } from '../../../lib/dates'
 import { FolioProvider } from '../../FolioProvider'
 import { DateRange, DateStamp } from '../ResumeDate'
 
@@ -16,26 +15,10 @@ const wrap = (children: ReactNode) => (
 // Vitest runs without globals, so RTL's automatic cleanup never registers.
 afterEach(cleanup)
 
-describe('parseResumeDate', () => {
-	it('parses ISO dates as local dates, immune to the viewer timezone', () => {
-		// A UTC-midnight parse of the same string would shift the day
-		// for viewers west of UTC; the local parse must not.
-		const d = parseResumeDate('2021-03-05')
-		expect(d?.getFullYear()).toBe(2021)
-		expect(d?.getMonth()).toBe(2)
-		expect(d?.getDate()).toBe(5)
-	})
-
-	it('parses year-month dates to the first of the month', () => {
-		const d = parseResumeDate('2021-03')
-		expect(d?.getMonth()).toBe(2)
-		expect(d?.getDate()).toBe(1)
-	})
-
-	it('returns undefined for unparseable values', () => {
-		expect(parseResumeDate('someday')).toBeUndefined()
-	})
-})
+// The pure side of the date contract (`parseResumeDate`, `formatDuration`,
+// `dateSpan`) is tested directly in `lib/__tests__/dates.test.ts` — this
+// file covers the seam: the presenters rendered through the Folio provider,
+// including the wiring that resolves the duration words from the catalog.
 
 describe('DateRange', () => {
 	it('renders a closed range with its duration', () => {
@@ -53,35 +36,6 @@ describe('DateRange', () => {
 	it('renders nothing without a parseable start date', () => {
 		const { container } = render(wrap(<DateRange start='someday' />))
 		expect(container.querySelector('div')).toBeNull()
-	})
-})
-
-describe('dateSpan', () => {
-	it('spans a group from the earliest start to the latest end', () => {
-		const { start, end } = dateSpan(
-			[
-				{ startDate: '2022-01', endDate: '2023-12' },
-				{ startDate: '2024-01', endDate: '2024-12' },
-			],
-			new Date(2024, 0, 1),
-		)
-		expect(start?.getFullYear()).toBe(2022)
-		expect(end?.getFullYear()).toBe(2024)
-	})
-
-	it('treats open-ended items as the provider now, never the wall clock', () => {
-		const now = new Date(2024, 0, 1)
-		const { end } = dateSpan([{ startDate: '2021-03' }], now)
-		expect(end?.getTime()).toBe(now.getTime())
-	})
-
-	it('returns empty dates when nothing parses', () => {
-		expect(
-			dateSpan(
-				[{ startDate: 'someday', endDate: 'someday' }],
-				new Date(2024, 0, 1),
-			),
-		).toEqual({ start: undefined, end: undefined })
 	})
 })
 

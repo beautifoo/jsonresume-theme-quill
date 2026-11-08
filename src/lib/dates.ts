@@ -6,12 +6,13 @@
  *
  * Rendering happens through the i18n provider
  * (`DateRange` / `DateStamp` in `components/ui/ResumeDate.tsx`), so
- * locale and timezone come from it; "now" is always *passed in*
- * (never `new Date()`), which keeps open-ended durations pin-able in
- * tests and consumers like work grouping deterministic.
+ * locale and timezone come from it. The two values the presenters
+ * need are always *passed in* rather than read: "now" (never
+ * `new Date()`) keeps open-ended durations pin-able in tests and
+ * consumers like work grouping deterministic, and the duration words
+ * (the `DurationMessages` record, resolved from the catalog at the
+ * seam) keep this module free of the i18n adapter.
  */
-
-import type { useTranslations } from 'use-intl'
 
 export function parseResumeDate(value: string): Date | undefined {
 	const match = value.match(/^(\d{4})(?:-(\d{2})(?:-(\d{2}))?)?/)
@@ -24,13 +25,28 @@ export function parseResumeDate(value: string): Date | undefined {
 }
 
 /**
- * A localized, approximate duration ("3 years, 2 months") built from
- * the i18n duration messages instead of date-fns' hardwired English.
+ * The localized duration words — resolved from the i18n catalog at the
+ * rendering seam and passed in as data. The module never imports the
+ * i18n adapter; a locale missing one of these surfaces as a wrong word,
+ * policed by the catalog key-parity test, not here.
+ */
+export interface DurationMessages {
+	year: string
+	years: string
+	month: string
+	months: string
+	/** The whole span is under a month */
+	lessThanMonth: string
+}
+
+/**
+ * An approximate duration ("3 years, 2 months"), localized through the
+ * passed-in words instead of date-fns' hardwired English.
  */
 export function formatDuration(
 	start: Date,
 	end: Date,
-	t: ReturnType<typeof useTranslations>,
+	messages: DurationMessages,
 ): string {
 	let months =
 		(end.getFullYear() - start.getFullYear()) * 12 +
@@ -40,18 +56,14 @@ export function formatDuration(
 	const years = Math.floor(months / 12)
 	const rest = months % 12
 
-	if (months === 0) return t('common.duration.lessThanMonth')
+	if (months === 0) return messages.lessThanMonth
 
 	const parts: string[] = []
 	if (years > 0) {
-		parts.push(
-			`${years} ${years === 1 ? t('common.duration.year') : t('common.duration.years')}`,
-		)
+		parts.push(`${years} ${years === 1 ? messages.year : messages.years}`)
 	}
 	if (rest > 0) {
-		parts.push(
-			`${rest} ${rest === 1 ? t('common.duration.month') : t('common.duration.months')}`,
-		)
+		parts.push(`${rest} ${rest === 1 ? messages.month : messages.months}`)
 	}
 	return parts.join(', ')
 }

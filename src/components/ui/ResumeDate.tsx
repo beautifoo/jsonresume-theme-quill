@@ -2,7 +2,9 @@
  * The Resume date rendering seam: the i18n-backed presenters of the
  * date contract — `DateRange` (a row with range + duration) and
  * `DateStamp` (a single localized date). The pure side of the contract
- * (parsing, durations, spans) lives in the `dates` module.
+ * (parsing, durations, spans) lives in the `dates` module, framework-free:
+ * the duration words are resolved from the i18n catalog here, at the seam,
+ * and passed to it as data.
  */
 
 import type { FC } from 'react'
@@ -51,7 +53,13 @@ export const DateRange: FC<DateRangeProps> = ({
 				year: 'numeric',
 			})
 		: t('date.present', { start: startLabel })
-	const duration = formatDuration(parsedStart, parsedEnd ?? now, t)
+	const duration = formatDuration(parsedStart, parsedEnd ?? now, {
+		year: t('common.duration.year'),
+		years: t('common.duration.years'),
+		month: t('common.duration.month'),
+		months: t('common.duration.months'),
+		lessThanMonth: t('common.duration.lessThanMonth'),
+	})
 
 	return (
 		<div
