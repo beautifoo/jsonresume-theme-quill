@@ -1,6 +1,6 @@
-import { type FC, memo } from 'react'
+import { type FC, Fragment, memo, type ReactNode } from 'react'
+import type { ResumeDocument } from '../types/resume'
 import { cn } from '../lib/utils'
-import type { Resume as ResumeDocument } from '@jsonresume/types'
 import { Awards } from './Awards'
 import { Certificates } from './Certificates'
 import { Education } from './Education'
@@ -18,6 +18,36 @@ import { WorkExperience } from './WorkExperience'
 export type LayoutMode = 'single' | 'double'
 export type ThemeVariant = 'folio' | 'folio-monochrome'
 
+/**
+ * The **ATS-safe document order** as one table (ADR 0001): main
+ * sections first, sidebar sections after, in a flat semantic flow.
+ * The `double` layout repositions the sidebar visually, never the DOM.
+ * Each section owns its emptiness guard — an empty section renders
+ * nothing, the order does not shift.
+ */
+interface SectionDef {
+	key: string
+	render: (resume: ResumeDocument) => ReactNode
+}
+
+const MAIN_SECTIONS: SectionDef[] = [
+	{ key: 'summary', render: (r) => <Summary summary={r.basics?.summary ?? ''} /> },
+	{ key: 'work', render: (r) => <WorkExperience work={r.work} /> },
+	{ key: 'education', render: (r) => <Education education={r.education} /> },
+	{ key: 'projects', render: (r) => <Projects projects={r.projects} /> },
+	{ key: 'volunteer', render: (r) => <Volunteer volunteer={r.volunteer} /> },
+]
+
+const SIDEBAR_SECTIONS: SectionDef[] = [
+	{ key: 'skills', render: (r) => <Skills skills={r.skills} /> },
+	{ key: 'languages', render: (r) => <Languages languages={r.languages} /> },
+	{ key: 'publications', render: (r) => <Publications publications={r.publications} /> },
+	{ key: 'certificates', render: (r) => <Certificates certificates={r.certificates} /> },
+	{ key: 'awards', render: (r) => <Awards awards={r.awards} /> },
+	{ key: 'references', render: (r) => <References references={r.references} /> },
+	{ key: 'interests', render: (r) => <Interests interests={r.interests} /> },
+]
+
 interface ResumeProps {
 	resume: ResumeDocument
 	/**
@@ -33,79 +63,42 @@ interface ResumeProps {
 	variant?: ThemeVariant
 }
 
-export const Resume: FC<ResumeProps> = memo(
-	({ resume, layout = 'double', variant = 'folio' }) => {
-		const {
-			basics,
-			work,
-			education,
-			skills,
-			projects,
-			awards,
-			certificates,
-			publications,
-			languages,
-			interests,
-			references,
-			volunteer,
-		} = resume
+export const Resume: FC<ResumeProps> = memo(({ resume, layout = 'double', variant = 'folio' }) => {
+	const { basics } = resume
 
-		if (!basics) return null
+	if (!basics) return null
 
-		return (
-			<div
-				className={cn(
-					'folio-resume min-h-dvh bg-bg text-ink-2',
-					`layout-${layout}`,
-					variant !== 'folio' && `variant-${variant}`,
-				)}
-			>
-				<div className='mx-auto max-w-[850px] px-5 py-10 sm:px-8 print:max-w-none print:px-0 print:py-0'>
-					<Header basics={basics} />
+	return (
+		<div
+			className={cn(
+				'folio-resume min-h-dvh bg-bg text-ink-2',
+				`layout-${layout}`,
+				variant !== 'folio' && `variant-${variant}`,
+			)}
+		>
+			<div className='mx-auto max-w-[850px] px-5 py-10 sm:px-8 print:max-w-none print:px-0 print:py-0'>
+				<Header basics={basics} />
 
-					<div className='folio-columns mt-9 print:mt-6'>
-						{/* Main column */}
-						<div className='min-w-0'>
-							{basics.summary && <Summary summary={basics.summary} />}
-							{work && work.length > 0 && <WorkExperience work={work} />}
-							{education && education.length > 0 && (
-								<Education education={education} />
-							)}
-							{projects && projects.length > 0 && (
-								<Projects projects={projects} />
-							)}
-							{volunteer && volunteer.length > 0 && (
-								<Volunteer volunteer={volunteer} />
-							)}
-						</div>
+				<div className='folio-columns mt-9 print:mt-6'>
+					{/* Main column */}
+					<div className='min-w-0'>
+						{MAIN_SECTIONS.map((section) => (
+							<Fragment key={section.key}>{section.render(resume)}</Fragment>
+						))}
+					</div>
 
-						{/* Sidebar: after the main column in the DOM in
-						    both layout modes (ATS-safe document order);
-						    wide-canvas geometry from --folio-cols-wide */}
-						<div className='min-w-0'>
-							{skills && skills.length > 0 && <Skills skills={skills} />}
-							{languages && languages.length > 0 && (
-								<Languages languages={languages} />
-							)}
-							{publications && publications.length > 0 && (
-								<Publications publications={publications} />
-							)}
-							{certificates && certificates.length > 0 && (
-								<Certificates certificates={certificates} />
-							)}
-							{awards && awards.length > 0 && <Awards awards={awards} />}
-							{references && references.length > 0 && (
-								<References references={references} />
-							)}
-							{interests && interests.length > 0 && (
-								<Interests interests={interests} />
-							)}
-						</div>
+					{/* Sidebar: after the main column in the DOM in both
+					    layout modes (ATS-safe document order);
+					    wide-canvas geometry from --folio-cols-wide */}
+					<div className='min-w-0'>
+						{SIDEBAR_SECTIONS.map((section) => (
+							<Fragment key={section.key}>{section.render(resume)}</Fragment>
+						))}
 					</div>
 				</div>
 			</div>
-		)
-	},
-)
+		</div>
+	)
+})
 
 export default Resume
