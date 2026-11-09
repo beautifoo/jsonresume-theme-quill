@@ -17,24 +17,22 @@ export const Awards: FC<AwardsProps> = ({ awards }) => {
 
 	return (
 		<Section title='sections.awards' variant='list'>
-			<div className='space-y-3 print:space-y-2.5'>
-				{awards.map((award, index) => (
-					<SidebarEntry
-						key={index}
-						icon={<TrophyIcon className='h-3.5 w-3.5' />}
-						title={award.title}
-						subtitle={
-							award.awarder
-								? `${t('common.awardedBy')} ${award.awarder}`
-								: undefined
-						}
-						date={award.date ? <DateStamp date={award.date} /> : undefined}
-						url={award.url}
-						urlLabel={t('common.viewAward')}
-						content={award.summary}
-					/>
-				))}
-			</div>
+			{awards.map((award, index) => (
+				<SidebarEntry
+					key={index}
+					icon={<TrophyIcon className='h-3.5 w-3.5' />}
+					title={award.title}
+					subtitle={
+						award.awarder
+							? `${t('common.awardedBy')} ${award.awarder}`
+							: undefined
+					}
+					date={award.date ? <DateStamp date={award.date} /> : undefined}
+					url={award.url}
+					urlLabel={t('common.viewAward')}
+					content={award.summary}
+				/>
+			))}
 		</Section>
 	)
 }

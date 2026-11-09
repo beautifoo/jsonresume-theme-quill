@@ -17,27 +17,23 @@ export const Certificates: FC<CertificatesProps> = ({ certificates }) => {
 
 	return (
 		<Section title='sections.certificates' variant='list'>
-			<div className='space-y-3 print:space-y-2.5'>
-				{certificates.map((certificate, index) => (
-					<SidebarEntry
-						key={index}
-						icon={<CertificateIcon className='h-3.5 w-3.5' />}
-						title={certificate.name}
-						subtitle={
-							certificate.issuer
-								? `${t('common.issuedBy')} ${certificate.issuer}`
-								: undefined
-						}
-						date={
-							certificate.date ? (
-								<DateStamp date={certificate.date} />
-							) : undefined
-						}
-						url={certificate.url}
-						urlLabel={t('common.viewCertificate')}
-					/>
-				))}
-			</div>
+			{certificates.map((certificate, index) => (
+				<SidebarEntry
+					key={index}
+					icon={<CertificateIcon className='h-3.5 w-3.5' />}
+					title={certificate.name}
+					subtitle={
+						certificate.issuer
+							? `${t('common.issuedBy')} ${certificate.issuer}`
+							: undefined
+					}
+					date={
+						certificate.date ? <DateStamp date={certificate.date} /> : undefined
+					}
+					url={certificate.url}
+					urlLabel={t('common.viewCertificate')}
+				/>
+			))}
 		</Section>
 	)
 }

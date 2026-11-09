@@ -12,6 +12,8 @@ interface SectionProps {
 	 * `timeline`: a hairline rule runs the full height of the entries,
 	 * each entry sitting beside it (work, education, projects, volunteer).
 	 * `list`: a quiet stack (sidebar entries, taxonomies, the about block).
+	 * Each variant owns its entry rhythm — the timeline's rule, the
+	 * stack's gutter — so callers never retype it.
 	 */
 	variant: SectionVariant
 	children: ReactNode
@@ -49,7 +51,12 @@ export const Section: FC<SectionProps> = ({
 					{children}
 				</div>
 			) : (
-				<div className={cn('mt-3 print:mt-2', contentClassName)}>
+				<div
+					className={cn(
+						'mt-3 space-y-3 print:mt-2 print:space-y-2.5',
+						contentClassName,
+					)}
+				>
 					{children}
 				</div>
 			)}

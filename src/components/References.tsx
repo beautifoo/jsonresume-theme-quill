@@ -13,27 +13,25 @@ export const References: FC<ReferencesProps> = ({ references }) => {
 
 	return (
 		<Section title='sections.references' variant='list'>
-			<div className='space-y-3 print:space-y-2.5'>
-				{references.map((reference, index) => (
-					<SidebarEntry
-						key={index}
-						title={reference.name}
-						subtitle={
-							reference.label ||
-							reference.position ||
-							reference.relationship ||
-							reference.organization
-						}
-						content={
-							reference.summary || reference.reference ? (
-								<Markdown
-									content={reference.summary || reference.reference || ''}
-								/>
-							) : undefined
-						}
-					/>
-				))}
-			</div>
+			{references.map((reference, index) => (
+				<SidebarEntry
+					key={index}
+					title={reference.name}
+					subtitle={
+						reference.label ||
+						reference.position ||
+						reference.relationship ||
+						reference.organization
+					}
+					content={
+						reference.summary || reference.reference ? (
+							<Markdown
+								content={reference.summary || reference.reference || ''}
+							/>
+						) : undefined
+					}
+				/>
+			))}
 		</Section>
 	)
 }
