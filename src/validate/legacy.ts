@@ -16,8 +16,6 @@
  * never warned about.
  */
 
-import * as v from 'valibot'
-
 export interface LegacyIssue {
 	/** Dot path of the offending field, e.g. `basics.title` or `awards[0].name` */
 	path: string
@@ -131,13 +129,6 @@ export function findLegacyFields(document: unknown): LegacyIssue[] {
 	return issues
 }
 
-/** The valibot form of the same table: any legacy field present is a failure. */
-export const legacySchema = v.custom(
-	(doc: unknown): boolean => findLegacyFields(doc).length === 0,
-	'resume contains 1.x (legacy) fields',
-)
-
-/** Render one legacy issue as a migration hint. */
 export function legacyMessage(issue: LegacyIssue): string {
 	const hint = issue.successor
 		? `"${issue.field}" → "${issue.successor}"`

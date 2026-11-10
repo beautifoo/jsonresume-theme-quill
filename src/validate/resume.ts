@@ -2,12 +2,13 @@
  * The **resume contract** (ADR 0003): the theme's typed commitment to
  * the resume document, checked at build time.
  *
- * Two checks, two valibot schemas, one entry:
+ * Two checks, one entry:
  *
- * - **stable** — the 2.x schema (`schema.ts`). Violations are a broken
- *   document; `build.ts` fails the build.
- * - **legacy** — known 1.x field names (`legacy.ts`). A valid but
- *   outdated document; `build.ts` prints a migration checklist.
+ * - **stable** — the 2.x schema (`schema.ts`), checked with valibot.
+ *   Violations are a broken document; `build.ts` fails the build.
+ * - **legacy** — known 1.x field names (`legacy.ts`), a direct table
+ *   walk. A valid but outdated document; `build.ts` prints a migration
+ *   checklist.
  *
  * The module returns issues; it never prints and never exits. valibot
  * is a devDependency, so nothing in this module reaches the published
@@ -16,7 +17,7 @@
 
 import * as v from 'valibot'
 import { getDotPath } from 'valibot'
-import { findLegacyFields, type LegacyIssue, legacySchema } from './legacy'
+import { findLegacyFields, type LegacyIssue } from './legacy'
 import { resumeSchema } from './schema'
 
 type StableIssue = {
@@ -49,14 +50,11 @@ export function validateResume(document: unknown): ValidationResult {
 		message: issue.message,
 	}))
 
-	// The legacy gate runs through valibot like the stable one; the table
-	// walk supplies the per-field detail (paths + successors).
-	const legacyGate = v.safeParse(legacySchema, document)
+	// The table walk is the legacy check itself — the table knows whether
+	// there are findings; no gate-and-rewrite double pass.
 
 	return {
 		stable,
-		legacy: legacyGate.success ? [] : findLegacyFields(document),
+		legacy: findLegacyFields(document),
 	}
 }
-
-export { legacySchema, resumeSchema }
