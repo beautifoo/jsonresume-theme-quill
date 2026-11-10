@@ -8,4 +8,4 @@ Accepted tradeoff: the face **drifts** across viewers — macOS resolves to New 
 
 Considered: one embedded face (a Source Serif 4 instance, subset and base64-inlined — ~35 KB of WOFF2, ≈47 KB in the built CSS, with the OFL rename and a regeneration script; rejected for the payload and maintenance surface a system face avoids); a font CDN (rejected — breaks self-containment).
 
-Consequences: the name keeps its role everywhere while the face may differ per machine; swapping the display face later is a one-token change (`--font-display`). `--folio-name-weight` stays 600; viewers without a 600 cut resolve to the nearest available weight. Body text is unaffected — it was always the system sans stack.
+Consequences: the name keeps its role everywhere while the face may differ per machine; swapping the display face later is a one-token change (`--font-display`). `--quill-name-weight` stays 600; viewers without a 600 cut resolve to the nearest available weight. Body text is unaffected — it was always the system sans stack.

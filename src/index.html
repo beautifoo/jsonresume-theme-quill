@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="./index.css" />
     <script>
       // Select the screen color scheme before first paint (no flash).
-      // A forced scheme (localStorage "folio-scheme": "light" | "dark")
+      // A forced scheme (localStorage "quill-scheme": "light" | "dark")
       // wins over the system preference; the print palette is always
       // light regardless of this class.
       (function () {
         var root = document.documentElement
         var forced = null
         try {
-          forced = localStorage.getItem('folio-scheme')
+          forced = localStorage.getItem('quill-scheme')
         } catch (e) {
           /* private mode */
         }

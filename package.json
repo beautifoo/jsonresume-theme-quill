@@ -1,5 +1,5 @@
 {
-	"name": "jsonresume-theme-folio",
+	"name": "jsonresume-theme-quill",
 	"version": "0.1.0",
 	"keywords": [
 		"jsonresume",
@@ -11,7 +11,7 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com:LRNZ09/jsonresume-theme-folio.git"
+		"url": "git+https://github.com/beautifoo/jsonresume-theme-quill.git"
 	},
 	"license": "MIT",
 	"author": "Lorenzo Pieri",

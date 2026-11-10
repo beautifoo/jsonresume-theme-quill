@@ -42,9 +42,9 @@ export const SidebarEntry: FC<SidebarEntryProps> = ({
 					<h3 className='text-[0.9rem] font-semibold leading-snug text-ink'>
 						{title}
 					</h3>
-					{subtitle && <div className='folio-context mt-0.5'>{subtitle}</div>}
+					{subtitle && <div className='quill-context mt-0.5'>{subtitle}</div>}
 					{(date || url) && (
-						<div className='folio-meta mt-1 flex flex-wrap gap-x-2.5 gap-y-0.5'>
+						<div className='quill-meta mt-1 flex flex-wrap gap-x-2.5 gap-y-0.5'>
 							{date}
 							{url && (
 								<a href={url} target='_blank' rel='noopener noreferrer'>
@@ -54,7 +54,7 @@ export const SidebarEntry: FC<SidebarEntryProps> = ({
 						</div>
 					)}
 					{content && (
-						<div className='folio-body mt-1.5 text-[0.9rem]'>{content}</div>
+						<div className='quill-body mt-1.5 text-[0.9rem]'>{content}</div>
 					)}
 				</div>
 			</div>

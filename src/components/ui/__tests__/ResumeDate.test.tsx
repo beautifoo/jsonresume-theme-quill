@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
-import { FolioProvider } from '../../FolioProvider'
+import { QuillProvider } from '../../QuillProvider'
 import { DateRange, DateSpan, DateStamp } from '../ResumeDate'
 
 // Pinned "now" — open-ended durations must be pin-able, never the wall
@@ -9,7 +9,7 @@ import { DateRange, DateSpan, DateStamp } from '../ResumeDate'
 const NOW = new Date(2024, 0, 1)
 
 const wrap = (children: ReactNode) => (
-	<FolioProvider now={NOW}>{children}</FolioProvider>
+	<QuillProvider now={NOW}>{children}</QuillProvider>
 )
 
 // Vitest runs without globals, so RTL's automatic cleanup never registers.
@@ -17,7 +17,7 @@ afterEach(cleanup)
 
 // The pure side of the date contract (`parseResumeDate`, `formatDuration`,
 // `dateSpan`) is tested directly in `lib/__tests__/dates.test.ts` — this
-// file covers the seam: the presenters rendered through the Folio provider,
+// file covers the seam: the presenters rendered through the Quill provider,
 // including the wiring that resolves the duration words from the catalog.
 
 describe('DateRange', () => {

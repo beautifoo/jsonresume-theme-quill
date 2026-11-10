@@ -1,10 +1,10 @@
-# jsonresume-theme-folio
+# jsonresume-theme-quill
 
 A quiet, typographic [JSON Resume](https://jsonresume.org/) theme: one accent,
 a real type hierarchy, and a single embedded serif moment (the name). Built
 with Bun, TypeScript, React 19, and Tailwind CSS v4.
 
-Folio renders to two equal targets:
+Quill renders to two equal targets:
 
 - **Screen** — any viewport, light or dark (`prefers-color-scheme`), fully
   self-contained (no CDN, no network, no webfont requests)
@@ -20,31 +20,31 @@ bun run build      # self-contained dist/
 bun test           # vitest
 ```
 
-The compare page renders the theme's variants (folio / folio-monochrome)
+The compare page renders the theme's variants (default / monochrome)
 side by side for the same resume, with layout (single/double), scheme,
 and variant controls.
 
 ## Theming
 
-Everything is parameterized by `--folio-*` custom properties
+Everything is parameterized by `--quill-*` custom properties
 (see `src/styles/globals.css`): the **ink scale** (type hierarchy),
 one **accent**, **surface**, **line**, the layout columns, and the
 display face. Override them on any wrapper — or per resume:
 
 ```css
 :root {
-	--folio-accent: oklch(0.5 0.15 30); /* one line, new identity */
-	--folio-cols-wide: minmax(0, 1fr); /* single-column layout */
+	--quill-accent: oklch(0.5 0.15 30); /* one line, new identity */
+	--quill-cols-wide: minmax(0, 1fr); /* single-column layout */
 }
 ```
 
 The React API exposes the structural knobs:
 
 ```tsx
-<Resume resume={resume} layout="double" variant="folio" />
+<Resume resume={resume} layout="double" variant="default" />
 // layout: "double" (default, main + sidebar) | "single" —
-//         applied as the layout-* class, which presets --folio-cols-wide
-// variant: "folio" (default) | "folio-monochrome" (zero hue: the accent collapses to ink)
+//         applied as the layout-* class, which presets --quill-cols-wide
+// variant: "default" | "monochrome" (zero hue: the accent collapses to ink)
 ```
 
 The DOM is one flat semantic flow (main sections first, sidebar after —

@@ -21,7 +21,7 @@ interface DateRangeProps {
 	className?: string
 	/**
 	 * Styling of the range itself — the default is the timeline row
-	 * (emphasized); grouped entries use the quiet `folio-meta` form.
+	 * (emphasized); grouped entries use the quiet `quill-meta` form.
 	 */
 	rangeClassName?: string
 }
@@ -35,7 +35,7 @@ export const DateRange: FC<DateRangeProps> = ({
 	start,
 	end,
 	className,
-	rangeClassName = 'folio-meta font-medium text-ink-3',
+	rangeClassName = 'quill-meta font-medium text-ink-3',
 }) => {
 	const f = useFormatter()
 	const t = useTranslations()
@@ -71,7 +71,7 @@ export const DateRange: FC<DateRangeProps> = ({
 			<time dateTime={start} className={rangeClassName}>
 				{range}
 			</time>
-			{duration && <time className='folio-meta opacity-80'>({duration})</time>}
+			{duration && <time className='quill-meta opacity-80'>({duration})</time>}
 		</div>
 	)
 }

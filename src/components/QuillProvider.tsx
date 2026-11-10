@@ -5,7 +5,7 @@ import { type Locale, locales } from '../i18n/config'
 import { resolveLocale } from '../i18n/resolveLocale'
 import type { ResumeDocument } from '../types/resume'
 
-interface FolioProviderProps {
+interface QuillProviderProps {
 	/** The resume document — its declared language is the locale default */
 	resume?: ResumeDocument
 	/** Explicit locale — otherwise the resume's declared language, else English */
@@ -16,7 +16,7 @@ interface FolioProviderProps {
 }
 
 /**
- * The **Folio provider**: the theme's runtime configuration, owned
+ * The **Quill provider**: the theme's runtime configuration, owned
  * once — the i18n message catalog, locale resolution, the viewer's
  * timezone, "now", and the duotone icon weight.
  *
@@ -27,7 +27,7 @@ interface FolioProviderProps {
  * a pinned "now". The theme is timezone-immune because dates parse
  * locally and render through the provider's zone.
  */
-export const FolioProvider: FC<FolioProviderProps> = ({
+export const QuillProvider: FC<QuillProviderProps> = ({
 	resume,
 	locale,
 	now,

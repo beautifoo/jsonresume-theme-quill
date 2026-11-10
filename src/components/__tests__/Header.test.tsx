@@ -2,10 +2,10 @@ import { cleanup, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
 import type { ResumeBasics } from '../../types/resume'
-import { FolioProvider } from '../FolioProvider'
+import { QuillProvider } from '../QuillProvider'
 import { Header } from '../Header'
 
-const wrap = (children: ReactNode) => <FolioProvider>{children}</FolioProvider>
+const wrap = (children: ReactNode) => <QuillProvider>{children}</QuillProvider>
 
 // Vitest runs without globals, so RTL's automatic cleanup never registers.
 afterEach(cleanup)

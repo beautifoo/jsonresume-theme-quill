@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
-import { FolioProvider } from '../FolioProvider'
+import { QuillProvider } from '../QuillProvider'
 import { Volunteer } from '../Volunteer'
 
 // Pinned "now" — open-ended durations must be pin-able, never the wall
@@ -9,7 +9,7 @@ import { Volunteer } from '../Volunteer'
 const NOW = new Date(2024, 0, 1)
 
 const wrap = (children: ReactNode) => (
-	<FolioProvider now={NOW}>{children}</FolioProvider>
+	<QuillProvider now={NOW}>{children}</QuillProvider>
 )
 
 // Vitest runs without globals, so RTL's automatic cleanup never registers.

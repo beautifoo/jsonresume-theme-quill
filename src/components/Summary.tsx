@@ -18,7 +18,7 @@ export const Summary: FC<SummaryProps> = memo(({ summary }) => {
 			variant='list'
 			contentClassName='max-w-[62ch]'
 		>
-			<div className='folio-body'>
+			<div className='quill-body'>
 				<Markdown content={summary} metrics />
 			</div>
 		</Section>

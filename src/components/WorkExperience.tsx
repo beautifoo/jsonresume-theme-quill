@@ -24,7 +24,7 @@ const GroupHeader: FC<{
 	return (
 		<div className='mb-3 flex items-baseline justify-between gap-3 print:mb-2'>
 			<span className='text-[0.9rem] font-semibold text-ink'>{company}</span>
-			<span className='folio-meta shrink-0'>
+			<span className='quill-meta shrink-0'>
 				<DateSpan start={start} end={end} open={open} />
 				{roles > 1 ? ` • ${t('common.roleCount', { count: roles })}` : ''}
 			</span>
@@ -76,7 +76,7 @@ export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
 											start={workItem.startDate}
 											end={workItem.endDate}
 											className='mb-1.5 print:mb-1'
-											rangeClassName='folio-meta'
+											rangeClassName='quill-meta'
 										/>
 									)}
 									<SectionCard

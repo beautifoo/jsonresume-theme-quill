@@ -1,10 +1,10 @@
 import { cleanup, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
-import { FolioProvider } from '../FolioProvider'
+import { QuillProvider } from '../QuillProvider'
 import { Publications } from '../Publications'
 
-const wrap = (children: ReactNode) => <FolioProvider>{children}</FolioProvider>
+const wrap = (children: ReactNode) => <QuillProvider>{children}</QuillProvider>
 
 // Vitest runs without globals, so RTL's automatic cleanup never registers.
 afterEach(cleanup)
@@ -14,11 +14,11 @@ describe('Publications — the 2.x field semantics', () => {
 		render(
 			wrap(
 				<Publications
-					publications={[{ name: 'A Study of Folio', publisher: 'ACM' }]}
+					publications={[{ name: 'A Study of Typesetting', publisher: 'ACM' }]}
 				/>,
 			),
 		)
-		expect(screen.getByText('A Study of Folio')).toBeInTheDocument()
+		expect(screen.getByText('A Study of Typesetting')).toBeInTheDocument()
 		expect(screen.getByText('ACM')).toBeInTheDocument()
 	})
 

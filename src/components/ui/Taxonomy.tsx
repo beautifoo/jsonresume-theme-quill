@@ -34,13 +34,13 @@ export const Taxonomy: FC<TaxonomyProps> = ({ title, entries }) => {
 					<h3 className='flex items-baseline justify-between gap-2 text-[0.9rem] font-semibold text-ink'>
 						<span className='min-w-0'>{entry.name}</span>
 						{entry.value && (
-							<span className='folio-meta shrink-0 font-normal'>
+							<span className='quill-meta shrink-0 font-normal'>
 								{entry.value}
 							</span>
 						)}
 					</h3>
 					{entry.keywords && entry.keywords.length > 0 && (
-						<p className='folio-context mt-0.5 leading-relaxed'>
+						<p className='quill-context mt-0.5 leading-relaxed'>
 							{entry.keywords.join(', ')}
 						</p>
 					)}

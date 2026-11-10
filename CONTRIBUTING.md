@@ -1,6 +1,6 @@
-# Contributing to jsonresume-theme-folio
+# Contributing to jsonresume-theme-quill
 
-Thank you for considering contributing to jsonresume-theme-folio! This document provides guidelines and instructions for contributing to this project.
+Thank you for considering contributing to jsonresume-theme-quill! This document provides guidelines and instructions for contributing to this project.
 
 ## Code of Conduct
 
@@ -60,7 +60,7 @@ The project is tested with Vitest (`bun run test`), and the resume contract (ADR
 ## How it works
 
 - **Resume contract (2.x-only, ADR 0003):** the theme renders stable (2.x) JSON Resume fields. `src/validate/` holds the valibot stable schema, the 1.x legacy table, and `cli.ts` (`bun run validate [path]` for instant feedback while editing a resume). The build runs the same gate: stable violations fail, legacy (1.x) fields print a migration checklist. valibot is a devDependency, so it never reaches the published bundle.
-- **Theme identity:** the Tailwind v4 theme in `src/styles/index.css` maps the design tokens (Ink scale, folio accents, Layout mode) into Tailwind utilities. The component tree lives in `src/components/`; the published entry is `src/frontend.tsx` (a `bun build` target — never `bun --bun`).
+- **Theme identity:** the Tailwind v4 theme in `src/styles/index.css` maps the design tokens (Ink scale, quill accents, Layout mode) into Tailwind utilities. The component tree lives in `src/components/`; the published entry is `src/frontend.tsx` (a `bun build` target — never `bun --bun`).
 - **Language:** `src/i18n/` (locale registry + messages). Section titles and date units are translated; dates are viewer-zone via the i18n provider, which is what keeps the output timezone-immune.
 
 ## Documentation

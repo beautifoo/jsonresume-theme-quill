@@ -21,8 +21,8 @@ export const Header: FC<HeaderProps> = memo(({ basics }) => {
 	return (
 		<header className='flex items-start gap-6 print:gap-4'>
 			<div className='min-w-0 flex-1'>
-				<h1 className='folio-name break-words'>{name}</h1>
-				{label && <p className='folio-label mt-1.5 print:mt-1'>{label}</p>}
+				<h1 className='quill-name break-words'>{name}</h1>
+				{label && <p className='quill-label mt-1.5 print:mt-1'>{label}</p>}
 
 				{locationLine && (
 					<div className='mt-3 flex items-center gap-2 text-[0.9rem] text-ink-3 print:mt-2 print:text-[0.8rem]'>

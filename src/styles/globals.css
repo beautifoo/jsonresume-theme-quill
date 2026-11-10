@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------ *
- * Folio design tokens
+ * Quill design tokens
  *
- * Folio is quiet, typographic, one accent. Everything is parameterized
- * by --folio-* custom properties: this is the public theming surface.
+ * Quill is quiet, typographic, one accent. Everything is parameterized
+ * by --quill-* custom properties: this is the public theming surface.
  * Hosts (or per-resume theming) override these; components never
  * hardcode a color.
  *
@@ -15,56 +15,56 @@
 
 :root {
 	/* Surfaces: page, and one step off it */
-	--folio-bg: oklch(1 0 0);
-	--folio-surface: oklch(0.965 0 0);
+	--quill-bg: oklch(1 0 0);
+	--quill-surface: oklch(0.965 0 0);
 
 	/* Ink scale: the type hierarchy, darkest → lightest */
-	--folio-ink: oklch(0.24 0 0); /* headings, strong */
-	--folio-ink-2: oklch(0.4 0 0); /* body */
-	--folio-ink-3: oklch(0.55 0 0); /* secondary, context */
-	--folio-ink-4: oklch(0.66 0 0); /* muted, dates */
+	--quill-ink: oklch(0.24 0 0); /* headings, strong */
+	--quill-ink-2: oklch(0.4 0 0); /* body */
+	--quill-ink-3: oklch(0.55 0 0); /* secondary, context */
+	--quill-ink-4: oklch(0.66 0 0); /* muted, dates */
 
 	/* Rules and borders */
-	--folio-line: oklch(0.87 0 0);
-	--folio-line-strong: oklch(0.78 0 0);
+	--quill-line: oklch(0.87 0 0);
+	--quill-line-strong: oklch(0.78 0 0);
 
 	/* The one accent: section titles, links, timeline rule, indicators */
-	--folio-accent: oklch(0.45 0.13 258);
+	--quill-accent: oklch(0.45 0.13 258);
 
 	/*
 	 * Layout mode: `double` (main column + sidebar, the default) or
 	 * `single` (one column). CSS cannot branch on a variable *value*,
 	 * so the mode is exposed as a `layout-*` class on the resume root
-	 * that presets --folio-cols-wide (see below); hosts switch layout
+	 * that presets --quill-cols-wide (see below); hosts switch layout
 	 * by adding the class or overriding the token directly. The DOM
 	 * order is identical in both modes (ATS-safe document order).
 	 */
-	--folio-cols-wide: minmax(0, 5fr) minmax(0, 3fr);
+	--quill-cols-wide: minmax(0, 5fr) minmax(0, 3fr);
 
 	/* The one serif moment: the candidate's name */
-	--folio-name-font: var(--font-display);
-	--folio-name-weight: 600;
+	--quill-name-font: var(--font-display);
+	--quill-name-weight: 600;
 }
 
 .dark {
-	--folio-bg: oklch(0.17 0 0);
-	--folio-surface: oklch(0.23 0 0);
-	--folio-ink: oklch(0.93 0 0);
-	--folio-ink-2: oklch(0.78 0 0);
-	--folio-ink-3: oklch(0.63 0 0);
-	--folio-ink-4: oklch(0.52 0 0);
-	--folio-line: oklch(0.28 0 0);
-	--folio-line-strong: oklch(0.4 0 0);
-	--folio-accent: oklch(0.7 0.13 258);
+	--quill-bg: oklch(0.17 0 0);
+	--quill-surface: oklch(0.23 0 0);
+	--quill-ink: oklch(0.93 0 0);
+	--quill-ink-2: oklch(0.78 0 0);
+	--quill-ink-3: oklch(0.63 0 0);
+	--quill-ink-4: oklch(0.52 0 0);
+	--quill-line: oklch(0.28 0 0);
+	--quill-line-strong: oklch(0.4 0 0);
+	--quill-accent: oklch(0.7 0.13 258);
 }
 
 /*
  * Theme variants: identity knobs only, everything else is shared.
- *  - folio:    serif name; ink-blue accent (the default)
- *  - folio-monochrome: zero hue — the accent collapses to ink
+ *  - default:    serif name; ink-blue accent
+ *  - monochrome: zero hue — the accent collapses to ink
  */
-.variant-folio-monochrome {
-	--folio-accent: var(--folio-ink);
+.variant-monochrome {
+	--quill-accent: var(--quill-ink);
 }
 
 /*
@@ -72,22 +72,22 @@
  * mode needs no rule — the :root token above is the double definition.
  */
 .layout-single {
-	--folio-cols-wide: minmax(0, 1fr);
+	--quill-cols-wide: minmax(0, 1fr);
 }
 
 /* Print: always the light palette */
 @media print {
 	:root,
 	.dark {
-		--folio-bg: oklch(1 0 0);
-		--folio-surface: oklch(0.965 0 0);
-		--folio-ink: oklch(0.24 0 0);
-		--folio-ink-2: oklch(0.4 0 0);
-		--folio-ink-3: oklch(0.55 0 0);
-		--folio-ink-4: oklch(0.66 0 0);
-		--folio-line: oklch(0.87 0 0);
-		--folio-line-strong: oklch(0.78 0 0);
-		--folio-accent: oklch(0.45 0.13 258);
+		--quill-bg: oklch(1 0 0);
+		--quill-surface: oklch(0.965 0 0);
+		--quill-ink: oklch(0.24 0 0);
+		--quill-ink-2: oklch(0.4 0 0);
+		--quill-ink-3: oklch(0.55 0 0);
+		--quill-ink-4: oklch(0.66 0 0);
+		--quill-line: oklch(0.87 0 0);
+		--quill-line-strong: oklch(0.78 0 0);
+		--quill-accent: oklch(0.45 0.13 258);
 	}
 }
 
@@ -101,15 +101,15 @@
 		"Noto Sans", sans-serif;
 	--font-display: "New York", Georgia, "Times New Roman", serif;
 
-	--color-bg: var(--folio-bg);
-	--color-surface: var(--folio-surface);
-	--color-ink: var(--folio-ink);
-	--color-ink-2: var(--folio-ink-2);
-	--color-ink-3: var(--folio-ink-3);
-	--color-ink-4: var(--folio-ink-4);
-	--color-line: var(--folio-line);
-	--color-line-strong: var(--folio-line-strong);
-	--color-accent: var(--folio-accent);
+	--color-bg: var(--quill-bg);
+	--color-surface: var(--quill-surface);
+	--color-ink: var(--quill-ink);
+	--color-ink-2: var(--quill-ink-2);
+	--color-ink-3: var(--quill-ink-3);
+	--color-ink-4: var(--quill-ink-4);
+	--color-line: var(--quill-line);
+	--color-line-strong: var(--quill-line-strong);
+	--color-accent: var(--quill-accent);
 }
 
 /* ------------------------------------------------------------------ *
@@ -168,39 +168,39 @@
 
 @layer components {
 	/* Name — the display face moment */
-	.folio-name {
-		font-family: var(--folio-name-font);
-		font-weight: var(--folio-name-weight);
+	.quill-name {
+		font-family: var(--quill-name-font);
+		font-weight: var(--quill-name-weight);
 		@apply text-[2.5rem] leading-[1.08] text-ink;
 	}
 
 	/* Label under the name */
-	.folio-label {
+	.quill-label {
 		@apply text-[1.1rem] leading-normal text-ink-3;
 	}
 
 	/* Section titles: the accent is allowed here */
-	.folio-section-title {
+	.quill-section-title {
 		@apply text-[0.78rem] font-semibold uppercase tracking-[0.08em] text-accent;
 	}
 
 	/* Entry title (position, project, course of study) */
-	.folio-entry-title {
+	.quill-entry-title {
 		@apply text-[1rem] font-semibold leading-snug text-ink;
 	}
 
 	/* Entry context: employer / issuer / publisher, linked */
-	.folio-context {
+	.quill-context {
 		@apply text-[0.9rem] text-ink-3;
 	}
 
 	/* Dates and metadata: tabular figures keep columns steady */
-	.folio-meta {
+	.quill-meta {
 		@apply text-[0.85rem] tabular-nums text-ink-4;
 	}
 
 	/* Narrative: summary, highlights, references */
-	.folio-body {
+	.quill-body {
 		@apply text-[0.95rem] leading-[1.55] text-ink-2;
 	}
 
@@ -210,22 +210,22 @@
 	 * column; the DOM (main, then sidebar) is the source of stacking
 	 * in both modes, so document order is layout-independent.
 	 */
-	.folio-columns {
+	.quill-columns {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
 		row-gap: 2rem;
 	}
 
 	@media (width >= 48rem) {
-		.folio-columns {
-			grid-template-columns: var(--folio-cols-wide);
+		.quill-columns {
+			grid-template-columns: var(--quill-cols-wide);
 			column-gap: 2.25rem;
 			row-gap: 2.25rem;
 		}
 	}
 
 	@media print {
-		.folio-columns {
+		.quill-columns {
 			column-gap: 1.5rem;
 			row-gap: 1.5rem;
 		}

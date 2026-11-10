@@ -1,10 +1,10 @@
-# jsonresume-theme-folio
+# jsonresume-theme-quill
 
 A JSON Resume theme: one resume document, rendered to two equal targets — screen and print.
 
 ## Language
 
-**Folio**:
+**Quill**:
 The design identity of this theme: quiet, typographic, one accent.
 _Avoid_: "the react theme" (that's the upstream it was forked from)
 
@@ -24,7 +24,7 @@ _Avoid_: `bg-color`, `bg-surface` (legacy upstream token, dead since the migrati
 A CSS custom property defined in `:root` that parameterizes the theme (ink, accent, surface, spacing, radius, layout columns). Hosts or resumes may override tokens; components never hardcode colors.
 
 **Layout mode**:
-How the theme arranges its sections: `double` (main column + sidebar, the default) or `single` (one column, pro-style). Selected via a token: the `--folio-cols-wide` value, preset by the `layout-single` / `layout-double` class on the resume root — CSS cannot branch on a variable *value*, so the class is the selector form of the token (ADR 0001); hosts may set either. Both must honor the ATS-safe document order.
+How the theme arranges its sections: `double` (main column + sidebar, the default) or `single` (one column, pro-style). Selected via a token: the `--quill-cols-wide` value, preset by the `layout-single` / `layout-double` class on the resume root — CSS cannot branch on a variable *value*, so the class is the selector form of the token (ADR 0001); hosts may set either. Both must honor the ATS-safe document order.
 _Avoid_: "columns mode", "two-column" — the canonical mode names are **single** and **double**
 
 **Resume date**:
@@ -53,7 +53,7 @@ The theme's typed commitment to the resume document: the **stable** (2.x) valibo
 
 ## Relationships
 
-- The **Folio** identity is expressed entirely through **Tokens**
+- The **Quill** identity is expressed entirely through **Tokens**
 - A resume document renders to one **Screen target** view and one **Print target** view; layout decisions that only affect one must be marked as such
 - **Accent** appears at most a handful of times per page; everything else is **Ink scale** or **Surface**
 - Both layout modes share one **ATS-safe document order**, owned by the **Section registry**; `double` repositions the sidebar visually, never reorders the DOM
@@ -79,8 +79,8 @@ _Avoid_: "the font" (the body is the system sans stack — see ADR 0002)
 The work items held at one employer, rendered as a single timeline block with a company header. Grouping is by employer name, regardless of contiguity — a return to a former employer merges into one block. The group's span carries an `open` flag (any role ongoing) as data, so the header's total renders "… – Present" through the date seam — never a span that merely ends at "now". Defined in `src/components/workGrouping.ts`.
 _Avoid_: "company block", "role cluster"
 
-**Folio provider**:
-The theme's runtime configuration, owned once behind the Resume interface (`src/components/FolioProvider.tsx`): the i18n message catalog, locale resolution, the viewer's timezone, "now", and the duotone icon weight. The **Resume date** contract — locale, timezone, and "now" all from the provider — is enforced here, not by callers. `Resume` installs it behind its own interface; tests use it directly with a pinned "now".
+**Quill provider**:
+The theme's runtime configuration, owned once behind the Resume interface (`src/components/QuillProvider.tsx`): the i18n message catalog, locale resolution, the viewer's timezone, "now", and the duotone icon weight. The **Resume date** contract — locale, timezone, and "now" all from the provider — is enforced here, not by callers. `Resume` installs it behind its own interface; tests use it directly with a pinned "now".
 _Avoid_: "intl setup", "the providers"
 
 **Section registry**:

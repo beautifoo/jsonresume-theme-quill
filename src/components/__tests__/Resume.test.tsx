@@ -29,7 +29,7 @@ const fullResume = {
 	interests: [{ name: 'Typography' }],
 } as ResumeDocument
 
-// `Resume` installs its own Folio provider (the Resume date contract
+// `Resume` installs its own Quill provider (the Resume date contract
 // is enforced behind its interface), so tests render it bare.
 
 describe('Resume — the ATS-safe document order (ADR 0001)', () => {
@@ -95,7 +95,7 @@ describe('Resume — the ATS-safe document order (ADR 0001)', () => {
 
 	it('renders nothing without basics', () => {
 		const { container } = render(<Resume resume={{}} />)
-		expect(container.querySelector('.folio-resume')).toBeNull()
+		expect(container.querySelector('.quill-resume')).toBeNull()
 	})
 
 	it('renders the sample resume, with main before sidebar', () => {

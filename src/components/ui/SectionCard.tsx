@@ -57,7 +57,7 @@ export const SectionCard: FC<SectionCardProps> = memo(
 				<div className='flex flex-col gap-1 print:gap-0.5'>
 					{title && (
 						<div className='flex items-start justify-between gap-3'>
-							<h3 className='folio-entry-title min-w-0 flex-1'>
+							<h3 className='quill-entry-title min-w-0 flex-1'>
 								{title}
 								{subtitle && (
 									<span className='font-normal text-ink-3'>
@@ -79,7 +79,7 @@ export const SectionCard: FC<SectionCardProps> = memo(
 					)}
 
 					{(locationText || context) && (
-						<div className='folio-context flex items-center gap-1.5'>
+						<div className='quill-context flex items-center gap-1.5'>
 							{locationText && (
 								<>
 									<MapPinIcon
@@ -99,7 +99,7 @@ export const SectionCard: FC<SectionCardProps> = memo(
 					)}
 
 					{summary && (
-						<div className='folio-body mt-2 print:mt-1.5'>
+						<div className='quill-body mt-2 print:mt-1.5'>
 							<Markdown content={summary} metrics />
 						</div>
 					)}
@@ -109,7 +109,7 @@ export const SectionCard: FC<SectionCardProps> = memo(
 							{highlights.map((highlight, i) => (
 								<li
 									key={i}
-									className='folio-body list-disc marker:text-accent/70'
+									className='quill-body list-disc marker:text-accent/70'
 								>
 									<Markdown content={highlight} metrics />
 								</li>
