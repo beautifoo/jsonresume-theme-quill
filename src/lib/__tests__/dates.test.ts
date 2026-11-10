@@ -83,8 +83,8 @@ describe('formatDuration', () => {
 })
 
 describe('dateSpan', () => {
-	it('spans a group from the earliest start to the latest end', () => {
-		const { start, end } = dateSpan(
+	it('spans a group from the earliest start to the latest end, closed spans closed', () => {
+		const { start, end, open } = dateSpan(
 			[
 				{ startDate: '2022-01', endDate: '2023-12' },
 				{ startDate: '2024-01', endDate: '2024-12' },
@@ -93,12 +93,14 @@ describe('dateSpan', () => {
 		)
 		expect(start?.getFullYear()).toBe(2022)
 		expect(end?.getFullYear()).toBe(2024)
+		expect(open).toBe(false)
 	})
 
-	it('treats open-ended items as the provider now, never the wall clock', () => {
+	it('treats open-ended items as the provider now, and marks the span open', () => {
 		const now = new Date(2024, 0, 1)
-		const { end } = dateSpan([{ startDate: '2021-03' }], now)
+		const { end, open } = dateSpan([{ startDate: '2021-03' }], now)
 		expect(end?.getTime()).toBe(now.getTime())
+		expect(open).toBe(true)
 	})
 
 	it('returns empty dates when nothing parses', () => {
@@ -107,6 +109,6 @@ describe('dateSpan', () => {
 				[{ startDate: 'someday', endDate: 'someday' }],
 				new Date(2024, 0, 1),
 			),
-		).toEqual({ start: undefined, end: undefined })
+		).toEqual({ start: undefined, end: undefined, open: false })
 	})
 })

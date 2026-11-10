@@ -2,7 +2,7 @@ import { cleanup, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
 import { FolioProvider } from '../../FolioProvider'
-import { DateRange, DateStamp } from '../ResumeDate'
+import { DateRange, DateSpan, DateStamp } from '../ResumeDate'
 
 // Pinned "now" — open-ended durations must be pin-able, never the wall
 // clock. Local midnight, timezone-immune.
@@ -36,6 +36,31 @@ describe('DateRange', () => {
 	it('renders nothing without a parseable start date', () => {
 		const { container } = render(wrap(<DateRange start='someday' />))
 		expect(container.querySelector('div')).toBeNull()
+	})
+})
+
+describe('DateSpan', () => {
+	it('renders a closed span as a localized range', () => {
+		render(
+			wrap(
+				<DateSpan start={new Date(2021, 0, 1)} end={new Date(2023, 11, 1)} />,
+			),
+		)
+		expect(screen.getByText(/Jan 2021/)).toBeInTheDocument()
+		expect(screen.getByText(/Dec 2023/)).toBeInTheDocument()
+	})
+
+	it('renders an open span with the present wording, like DateRange', () => {
+		render(wrap(<DateSpan start={new Date(2021, 2, 1)} open />))
+		expect(screen.getByText(/Present/)).toBeInTheDocument()
+		expect(screen.getByText(/Mar 2021/)).toBeInTheDocument()
+	})
+
+	it('renders nothing without a start', () => {
+		const { container } = render(
+			wrap(<DateSpan end={new Date(2023, 0, 1)} />),
+		)
+		expect(container.querySelector('time')).toBeNull()
 	})
 })
 

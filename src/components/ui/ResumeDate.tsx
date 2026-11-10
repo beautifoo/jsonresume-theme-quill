@@ -1,10 +1,13 @@
 /**
  * The Resume date rendering seam: the i18n-backed presenters of the
- * date contract — `DateRange` (a row with range + duration) and
- * `DateStamp` (a single localized date). The pure side of the contract
- * (parsing, durations, spans) lives in the `dates` module, framework-free:
- * the duration words are resolved from the i18n catalog here, at the seam,
- * and passed to it as data.
+ * date contract — `DateRange` (a row with range + duration),
+ * `DateStamp` (a single localized date), and `DateSpan` (a derived
+ * span, e.g. a Work group's total). Document-field presenters take the
+ * resume's raw strings and parse them here; `DateSpan` takes the pure
+ * side's computed output, which has no raw string form. The pure side
+ * of the contract (parsing, durations, spans) lives in the `dates`
+ * module, framework-free: the duration words are resolved from the i18n
+ * catalog here, at the seam, and passed to it as data.
  */
 
 import type { FC } from 'react'
@@ -70,6 +73,40 @@ export const DateRange: FC<DateRangeProps> = ({
 			</time>
 			{duration && <time className='folio-meta opacity-80'>({duration})</time>}
 		</div>
+	)
+}
+
+interface DateSpanProps {
+	/** Parsed dates — derived data, not document fields */
+	start?: Date
+	end?: Date
+	/** The span is ongoing — renders the "Present" form, like `DateRange` */
+	open?: boolean
+	className?: string
+}
+
+/**
+ * A derived date span (a Work group's total): the localized range,
+ * deliberately unstyled — it inherits the surrounding metadata row.
+ * Open-ended spans read `… – Present`, the same wording as `DateRange`,
+ * so a header and the rows beneath it can never drift apart.
+ */
+export const DateSpan: FC<DateSpanProps> = ({ start, end, open, className }) => {
+	const f = useFormatter()
+	const t = useTranslations()
+
+	if (!start) return null
+
+	const startLabel = f.dateTime(start, { month: 'short', year: 'numeric' })
+	const range =
+		end && !open
+			? f.dateTimeRange(start, end, { month: 'short', year: 'numeric' })
+			: t('date.present', { start: startLabel })
+
+	return (
+		<time dateTime={start.toISOString()} className={className}>
+			{range}
+		</time>
 	)
 }
 

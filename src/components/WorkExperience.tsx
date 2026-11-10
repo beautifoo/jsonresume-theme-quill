@@ -1,8 +1,8 @@
 import type { FC } from 'react'
-import { useFormatter, useNow, useTranslations } from 'use-intl'
+import { useNow, useTranslations } from 'use-intl'
 import type { Work } from '../types/resume'
 import { GrowthIndicator } from './ui/GrowthIndicator'
-import { DateRange } from './ui/ResumeDate'
+import { DateRange, DateSpan } from './ui/ResumeDate'
 import { Section } from './ui/Section'
 import { SectionCard } from './ui/SectionCard'
 import { TimelineEntry } from './ui/TimelineEntry'
@@ -16,21 +16,16 @@ const GroupHeader: FC<{
 	company: string
 	start?: Date
 	end?: Date
+	open?: boolean
 	roles: number
-}> = ({ company, start, end, roles }) => {
-	const f = useFormatter()
+}> = ({ company, start, end, open, roles }) => {
 	const t = useTranslations()
-
-	const total =
-		start && end
-			? f.dateTimeRange(start, end, { month: 'short', year: 'numeric' })
-			: ''
 
 	return (
 		<div className='mb-3 flex items-baseline justify-between gap-3 print:mb-2'>
 			<span className='text-[0.9rem] font-semibold text-ink'>{company}</span>
 			<span className='folio-meta shrink-0'>
-				{total}
+				<DateSpan start={start} end={end} open={open} />
 				{roles > 1 ? ` • ${t('common.roleCount', { count: roles })}` : ''}
 			</span>
 		</div>
@@ -41,8 +36,10 @@ const GroupHeader: FC<{
  * Work history: a presentation over the **Work group** rule — the
  * grouping itself (sort, by employer, regardless of contiguity) is
  * the `workGrouping` module's business. Single-role blocks render a
- * plain date row; grouped blocks get a company header with the total
- * span, and a quiet date row per role.
+ * plain date row; grouped blocks get a company header whose total
+ * span renders through the `DateSpan` seam — open-ended groups read
+ * "… – Present", the way the rows beneath them do — plus a quiet
+ * date row per role.
  */
 export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
 	const now = useNow()
@@ -67,6 +64,7 @@ export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
 								company={group.company}
 								start={group.start}
 								end={group.end}
+								open={group.open}
 								roles={group.items.length}
 							/>
 						)}

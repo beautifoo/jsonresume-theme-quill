@@ -16,6 +16,8 @@ export interface WorkGroup {
 	start?: Date
 	/** The group span: latest end, where an open-ended role counts as `now` */
 	end?: Date
+	/** The group is ongoing — at least one role is open-ended */
+	open: boolean
 }
 
 /**
@@ -50,6 +52,7 @@ export function groupWork(items: Work[], now: Date): WorkGroup[] {
 			grouped: items.length > 1,
 			start: span.start,
 			end: span.end,
+			open: span.open,
 		}
 	})
 }

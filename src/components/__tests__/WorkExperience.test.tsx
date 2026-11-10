@@ -47,12 +47,41 @@ describe('WorkExperience grouping', () => {
 		)
 
 		// Company A has two contiguous roles, so a group header is rendered
-		const header = screen.getByText(/Company A/i)
+		const header = screen.getByText(/Company A/i).parentElement
 		expect(header).toBeInTheDocument()
 		expect(screen.getByText(/2 roles/i)).toBeInTheDocument()
+		// Both roles closed — the total span never reads "Present"
+		expect(header).not.toHaveTextContent(/Present/)
 
 		// Company B has a single role, so no group header is rendered for it
 		expect(screen.queryByText('Company B')).not.toBeInTheDocument()
+	})
+
+	it('reads an open-ended group header as Present, like the rows beneath it', () => {
+		const work = [
+			{
+				name: 'Company A',
+				position: 'Senior Analyst',
+				startDate: '2024-01',
+			},
+			{
+				name: 'Company A',
+				position: 'Analyst',
+				startDate: '2022-01',
+				endDate: '2023-12',
+			},
+		]
+
+		render(
+			wrap(
+				<WorkExperience
+					work={work as Parameters<typeof WorkExperience>[0]['work']}
+				/>,
+			),
+		)
+
+		const header = screen.getByText('Company A').parentElement
+		expect(header).toHaveTextContent(/Present/)
 	})
 
 	it('renders a growth indicator when growth metadata is provided', () => {

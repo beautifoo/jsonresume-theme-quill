@@ -76,7 +76,7 @@ The single system serif (the `--font-display` stack) used for the name and nowhe
 _Avoid_: "the font" (the body is the system sans stack — see ADR 0002)
 
 **Work group**:
-The work items held at one employer, rendered as a single timeline block with a company header. Grouping is by employer name, regardless of contiguity — a return to a former employer merges into one block. Defined in `src/components/workGrouping.ts`.
+The work items held at one employer, rendered as a single timeline block with a company header. Grouping is by employer name, regardless of contiguity — a return to a former employer merges into one block. The group's span carries an `open` flag (any role ongoing) as data, so the header's total renders "… – Present" through the date seam — never a span that merely ends at "now". Defined in `src/components/workGrouping.ts`.
 _Avoid_: "company block", "role cluster"
 
 **Folio provider**:

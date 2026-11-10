@@ -75,13 +75,20 @@ export interface DatedItem {
 
 /**
  * The date span of a group of dated items, the theme-wide way:
- * the earliest start, and the latest end where an *open-ended*
- * item counts as the passed "now" (never the wall clock).
+ * the earliest start, the latest end — where an *open-ended* item
+ * counts as the passed "now" (never the wall clock) — plus whether
+ * any item is still ongoing. The flag is data, not inference: the
+ * presenters render "Present" from it, never from comparing the end
+ * against "now".
  */
-export function dateSpan(
-	items: DatedItem[],
-	now: Date,
-): { start?: Date; end?: Date } {
+export interface DateSpan {
+	start?: Date
+	end?: Date
+	/** Any item has no end date — the span is ongoing */
+	open: boolean
+}
+
+export function dateSpan(items: DatedItem[], now: Date): DateSpan {
 	const starts = items
 		.map((i) => (i.startDate ? parseResumeDate(i.startDate) : undefined))
 		.filter((d): d is Date => Boolean(d))
@@ -94,5 +101,6 @@ export function dateSpan(
 	return {
 		start: starts.length ? starts.reduce((a, b) => (a < b ? a : b)) : undefined,
 		end: ends.length ? ends.reduce((a, b) => (a > b ? a : b)) : undefined,
+		open: items.some((i) => !i.endDate),
 	}
 }

@@ -20,6 +20,8 @@ describe('groupWork — the Work group rule', () => {
 			NOW,
 		)
 		expect(groups.map((g) => g.company)).toEqual(['New Co', 'Mid Co', 'Old Co'])
+		// Only the newest employer is ongoing
+		expect(groups.map((g) => g.open)).toEqual([false, false, true])
 	})
 
 	it('merges a return to a former employer into one block, newest role first', () => {
@@ -36,11 +38,13 @@ describe('groupWork — the Work group rule', () => {
 		expect(acme?.items).toHaveLength(2)
 		expect(acme?.items.map((w) => w.startDate)).toEqual(['2021-01', '2019-01'])
 		expect(acme?.grouped).toBe(true)
+		expect(acme?.open).toBe(true)
 	})
 
 	it('marks single-role groups as ungrouped', () => {
 		const [group] = groupWork([item('Solo Co', '2020-01')], NOW)
 		expect(group?.grouped).toBe(false)
+		expect(group?.open).toBe(true)
 	})
 
 	it('spans the group from earliest start, open-ended end as the passed now', () => {
@@ -50,6 +54,7 @@ describe('groupWork — the Work group rule', () => {
 		)
 		expect(group?.start?.getTime()).toBe(new Date(2019, 0, 1).getTime())
 		expect(group?.end?.getTime()).toBe(NOW.getTime())
+		expect(group?.open).toBe(true)
 	})
 
 	it('yields empty dates when nothing parses', () => {
@@ -58,6 +63,8 @@ describe('groupWork — the Work group rule', () => {
 		// so nothing feeds either end of the span.
 		expect(group?.start).toBeUndefined()
 		expect(group?.end).toBeUndefined()
+		// The set (unparseable) endDate is not open-ended
+		expect(group?.open).toBe(false)
 	})
 
 	it('buckets nameless items together', () => {
