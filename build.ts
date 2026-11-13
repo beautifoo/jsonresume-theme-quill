@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 import { existsSync } from 'node:fs'
-import { rm } from 'node:fs/promises'
+import { readFile, rm, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import plugin from 'bun-plugin-tailwind'
 import { checkResumeContract } from './src/validate/cli'
@@ -132,35 +132,69 @@ if (existsSync(outdir)) {
 
 const start = performance.now()
 
-const entrypoints = [...new Bun.Glob('**.html').scanSync('src')]
-	.map((a) => path.resolve('src', a))
-	.filter((dir) => !dir.includes('node_modules'))
-	// compare.html is a dev tool (src/compare) — never part of the theme
-	.filter((dir) => !dir.includes(`${path.sep}compare`))
-console.log(
-	`📄 Found ${entrypoints.length} HTML ${entrypoints.length === 1 ? 'file' : 'files'} to process\n`,
-)
-
+// The theme is a Node module (ADR 0004): one ESM entry exporting
+// render(resume) → a self-contained HTML document. The stylesheet
+// builds as a sibling asset, then inlines into it.
 const result = await Bun.build({
-	entrypoints,
+	entrypoints: [path.resolve('src/theme.tsx')],
 	outdir,
 	plugins: [plugin],
 	minify: true,
-	target: 'browser',
-	sourcemap: 'linked',
+	target: 'node',
+	format: 'esm',
+	sourcemap: 'none',
 	define: {
 		'process.env.NODE_ENV': JSON.stringify('production'),
 	},
 	...cliConfig,
 })
 
+if (!result.success) {
+	for (const log of result.logs) console.error(log.message)
+	process.exit(1)
+}
+
+// Inline the compiled stylesheet: the marker in src/theme.tsx sits
+// inside a string literal in the bundle, so the JSON-escaped (but
+// unquoted) CSS text drops straight in.
+const cssOutput = result.outputs.find((o) => o.path.endsWith('.css'))
+if (!cssOutput)
+	throw new Error('Expected a CSS output — is src/index.css imported?')
+const css = await Bun.file(cssOutput.path).text()
+
+const entryPath = path.join(outdir, 'theme.js')
+let entry = await readFile(entryPath, 'utf8')
+if (!entry.includes('__quill-stylesheet__')) {
+	throw new Error('Stylesheet marker not found in the bundle')
+}
+entry = entry.replaceAll(
+	'__quill-stylesheet__',
+	JSON.stringify(css).slice(1, -1),
+)
+
+const finalEntryPath = path.join(outdir, 'index.js')
+await writeFile(finalEntryPath, entry)
+await rm(entryPath, { force: true })
+await rm(cssOutput.path, { force: true })
+
+// The published file, with the repo's demo resume — for a quick look.
+const { render } = await import(finalEntryPath)
+const demoResume = JSON.parse(
+	await readFile(path.resolve('resume.json'), 'utf8'),
+)
+const demoPath = path.join(outdir, 'demo.html')
+await writeFile(demoPath, render(demoResume))
+
 const end = performance.now()
 
-const outputTable = result.outputs.map((output) => ({
-	File: path.relative(process.cwd(), output.path),
-	Type: output.kind,
-	Size: formatFileSize(output.size),
-}))
+const outputTable = [finalEntryPath, demoPath].map((file) => {
+	const size = Bun.file(file).size
+	return {
+		File: path.relative(process.cwd(), file),
+		Type: path.extname(file),
+		Size: formatFileSize(size),
+	}
+})
 
 console.table(outputTable)
 const buildTime = (end - start).toFixed(2)

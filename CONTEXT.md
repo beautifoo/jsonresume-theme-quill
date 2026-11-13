@@ -38,7 +38,7 @@ The flat semantic DOM order: main sections first, sidebar sections after; no tab
 On-screen rendering (any viewport, light or dark via `prefers-color-scheme`), including the resume **published as a static web page** — the built output must be self-contained (no CDN or network dependencies).
 
 **Print target**:
-PDF output rendered from an 850px-wide canvas. Always the light palette, regardless of `prefers-color-scheme`.
+PDF output rendered from a 794px-wide canvas — A4 at 96 dpi. Always the light palette, regardless of `prefers-color-scheme`.
 
 **Stable fields**:
 The current JSON Resume 2.x field names — the era the theme guarantees to render. **Stable** is the canonical side of the stable/legacy pair.

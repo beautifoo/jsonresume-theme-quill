@@ -8,8 +8,25 @@ Quill renders to two equal targets:
 
 - **Screen** — any viewport, light or dark (`prefers-color-scheme`), fully
   self-contained (no CDN, no network, no webfont requests)
-- **Print** — PDF from an ~850px canvas, always the light palette, at a
-  denser scale, with page-break-safe entries
+- **Print** — PDF from a 794px canvas (A4 at 96 dpi), always the light
+  palette, at a denser scale, with page-break-safe entries
+
+## Using it with resume-cli
+
+```bash
+npm install jsonresume-theme-quill
+
+resume export resume.pdf   --theme quill   # A4 PDF, print palette
+resume export resume.html  --theme quill   # self-contained static page
+resume audit resume.json   --theme quill   # ATS score (reads the real DOM)
+resume serve --theme quill # live preview with reload
+```
+
+The theme is a Node module exporting `render(resume) → html`; the
+published document carries inlined CSS and static markup — no client
+JavaScript, so it also renders in JS-disabled viewers. Duration strings
+("3 yrs 2 mos") are measured at export time and freeze with the file;
+re-export to refresh.
 
 ## Development
 
