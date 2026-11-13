@@ -1,8 +1,8 @@
 import { cleanup, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
-import { QuillProvider } from '../QuillProvider'
 import { Publications } from '../Publications'
+import { QuillProvider } from '../QuillProvider'
 
 const wrap = (children: ReactNode) => <QuillProvider>{children}</QuillProvider>
 

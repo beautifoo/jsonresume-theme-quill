@@ -91,7 +91,12 @@ interface DateSpanProps {
  * Open-ended spans read `… – Present`, the same wording as `DateRange`,
  * so a header and the rows beneath it can never drift apart.
  */
-export const DateSpan: FC<DateSpanProps> = ({ start, end, open, className }) => {
+export const DateSpan: FC<DateSpanProps> = ({
+	start,
+	end,
+	open,
+	className,
+}) => {
 	const f = useFormatter()
 	const t = useTranslations()
 

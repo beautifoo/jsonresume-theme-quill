@@ -57,9 +57,7 @@ describe('DateSpan', () => {
 	})
 
 	it('renders nothing without a start', () => {
-		const { container } = render(
-			wrap(<DateSpan end={new Date(2023, 0, 1)} />),
-		)
+		const { container } = render(wrap(<DateSpan end={new Date(2023, 0, 1)} />))
 		expect(container.querySelector('time')).toBeNull()
 	})
 })

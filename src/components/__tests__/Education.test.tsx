@@ -2,8 +2,8 @@ import { cleanup, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
 import { Education } from '../Education'
-import { QuillProvider } from '../QuillProvider'
 import { Projects } from '../Projects'
+import { QuillProvider } from '../QuillProvider'
 
 // Pinned "now" — open-ended durations must be pin-able, never the wall
 // clock. Local midnight, timezone-immune.
