@@ -69,6 +69,8 @@ If you add new features or make significant changes, please update the README.md
 
 ## Releases
 
-Project maintainers will handle version updates and releases.
+Project maintainers will handle version updates and releases. Releases are automated with semantic-release from Conventional Commits on `main` (`feat:`, `fix:`, `perf:` bump the version; `docs:`, `ci:`, `build:`, `chore:`, … do not).
+
+**Breaking changes must be written as a `BREAKING CHANGE:` footer in the commit body — not as `!` after the type.** The `conventional-commits-parser` in this stack does not recognize `type!:` headers (it silently fails to parse them), so a `feat!:` commit contributes nothing to the release analysis. The footer is the one form the parser reliably detects.
 
 Thank you for your contributions!
