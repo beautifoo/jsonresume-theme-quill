@@ -44,7 +44,9 @@
 		"@jsonresume/schema": "1.7.1",
 		"@jsonresume/types": "0.6.0",
 		"@phosphor-icons/react": "2.1.10",
+		"@semantic-release/changelog": "7.0.0",
 		"@semantic-release/commit-analyzer": "^13.0.1",
+		"@semantic-release/git": "11.0.1",
 		"@semantic-release/github": "^12.0.8",
 		"@semantic-release/npm": "^13.1.5",
 		"@semantic-release/release-notes-generator": "^14.1.1",
@@ -75,8 +77,25 @@
 		"plugins": [
 			"@semantic-release/commit-analyzer",
 			"@semantic-release/release-notes-generator",
+			[
+				"@semantic-release/changelog",
+				{
+					"changelogTitle": "# Changelog"
+				}
+			],
+			[
+				"@semantic-release/git",
+				{
+					"assets": ["CHANGELOG.md"]
+				}
+			],
 			"@semantic-release/npm",
-			"@semantic-release/github"
+			[
+				"@semantic-release/github",
+				{
+					"assets": ["CHANGELOG.md"]
+				}
+			]
 		]
 	}
 }
