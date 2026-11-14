@@ -58,6 +58,7 @@ The theme's typed commitment to the resume document: the **stable** (2.x) valibo
 - **Accent** appears at most a handful of times per page; everything else is **Ink scale** or **Surface**
 - Both layout modes share one **ATS-safe document order**, owned by the **Section registry**; `double` repositions the sidebar visually, never reorders the DOM
 - The theme consumes **stable** (2.x) resumes only; **legacy** (1.x) names are detected and warned about at build time, never rendered (ADR 0003)
+- **Conference talks** are publications split out by `type`; both resulting sections sit in the **Section registry**, Conferences before Publications (ADR 0005)
 
 ## Example dialogue
 
@@ -82,6 +83,10 @@ _Avoid_: "company block", "role cluster"
 **Quill provider**:
 The theme's runtime configuration, owned once behind the Resume interface (`src/components/QuillProvider.tsx`): the i18n message catalog, locale resolution, the viewer's timezone, "now", and the duotone icon weight. The **Resume date** contract — locale, timezone, and "now" all from the provider — is enforced here, not by callers. `Resume` installs it behind its own interface; tests use it directly with a pinned "now".
 _Avoid_: "intl setup", "the providers"
+
+**Conference talk**:
+A `publications` item whose `type` is `talk`, `presentation`, or `speech` (case-insensitive whitelist). Routed to the **Conferences** section (sidebar, before Publications); every other publication — including untyped ones — stays in **Publications**. Each publication renders exactly once. Routing reads a stable 2.x field, so no schema extension is involved (ADR 0005).
+_Avoid_: "talks section", "speaking" — the item's section is **Conferences**
 
 **Section registry**:
 The table of the resume's sections (a key plus its treatment): the main column first, the sidebar after — the **ATS-safe document order** (ADR 0001) as one module (`src/components/sections.tsx`), which `Resume` consumes to compose its two columns. The emptiness guard stays with each section treatment: an empty section renders nothing, and the order does not shift.

@@ -6,6 +6,7 @@
 		"projects": "项目经验",
 		"awards": "获奖情况",
 		"certificates": "证书资质",
+		"conferences": "会议演讲",
 		"publications": "发表作品",
 		"languages": "语言能力",
 		"interests": "兴趣爱好",
@@ -16,6 +17,7 @@
 	"common": {
 		"present": "至今",
 		"visitWebsite": "访问网站",
+		"viewTalk": "查看演讲",
 		"viewPublication": "查看作品",
 		"viewProject": "查看项目",
 		"viewCertificate": "查看证书",

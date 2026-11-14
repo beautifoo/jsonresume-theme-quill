@@ -6,6 +6,7 @@
 		"projects": "Projets",
 		"awards": "Distinctions",
 		"certificates": "Certifications",
+		"conferences": "Conférences",
 		"publications": "Publications",
 		"languages": "Langues",
 		"interests": "Centres d'Intérêt",
@@ -16,6 +17,7 @@
 	"common": {
 		"present": "Présent",
 		"visitWebsite": "Visiter le Site",
+		"viewTalk": "Voir la Présentation",
 		"viewPublication": "Voir la Publication",
 		"viewProject": "Voir le Projet",
 		"viewCertificate": "Voir le Certificat",

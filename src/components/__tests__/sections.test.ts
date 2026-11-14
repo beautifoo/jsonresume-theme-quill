@@ -16,6 +16,7 @@ describe('the section registry — the ATS-safe document order (ADR 0001)', () =
 		expect(SIDEBAR_SECTIONS.map((s) => s.key)).toEqual([
 			'skills',
 			'languages',
+			'conferences',
 			'publications',
 			'certificates',
 			'awards',

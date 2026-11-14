@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import type { ResumeDocument } from '../types/resume'
 import { Awards } from './Awards'
+import { isConferenceTalk } from './conferenceRouting'
 import { Certificates } from './Certificates'
 import { Education } from './Education'
 import { Projects } from './Projects'
@@ -66,9 +67,26 @@ export const SIDEBAR_SECTIONS: SectionDef[] = [
 			/>
 		),
 	},
+	// ADR 0005: publications split by `type` — talk-like items render in
+	// Conferences, everything else (incl. untyped) in Publications.
+	// Each publication renders exactly once; both entries may empty out.
+	{
+		key: 'conferences',
+		render: (r) => (
+			<Publications
+				title='sections.conferences'
+				urlLabelKey='common.viewTalk'
+				publications={(r.publications ?? []).filter(isConferenceTalk)}
+			/>
+		),
+	},
 	{
 		key: 'publications',
-		render: (r) => <Publications publications={r.publications} />,
+		render: (r) => (
+			<Publications
+				publications={(r.publications ?? []).filter((p) => !isConferenceTalk(p))}
+			/>
+		),
 	},
 	{
 		key: 'certificates',

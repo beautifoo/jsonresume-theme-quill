@@ -62,4 +62,18 @@ describe('Publications — the 2.x field semantics', () => {
 		const { container } = render(wrap(<Publications publications={[]} />))
 		expect(container.querySelector('section')).toBeNull()
 	})
+
+	it('accepts a custom title and link label for the Conferences section', () => {
+		render(
+			wrap(
+				<Publications
+					title='sections.conferences'
+					urlLabelKey='common.viewTalk'
+					publications={[{ name: 'Keynote: Types', publisher: 'OSCON', url: 'http://x' }]}
+				/>,
+			),
+		)
+		expect(screen.getByText('Conferences')).toBeInTheDocument()
+		expect(screen.getByText('View Talk')).toBeInTheDocument()
+	})
 })

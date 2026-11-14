@@ -6,6 +6,7 @@
 		"projects": "Проекты",
 		"awards": "Награды",
 		"certificates": "Сертификаты",
+		"conferences": "Конференции",
 		"publications": "Публикации",
 		"languages": "Языки",
 		"interests": "Интересы",
@@ -16,6 +17,7 @@
 	"common": {
 		"present": "Настоящее Время",
 		"visitWebsite": "Посетить Сайт",
+		"viewTalk": "Просмотр Доклада",
 		"viewPublication": "Просмотр Публикации",
 		"viewProject": "Просмотр Проекта",
 		"viewCertificate": "Просмотр Сертификата",
