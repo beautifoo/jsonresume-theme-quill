@@ -16,6 +16,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import './index.css'
 import { Resume } from './components/Resume'
 import { resumeDocumentMetadata } from './lib/document'
+import { STYLESHEET_MARKER } from './lib/stylesheetMarker'
 import type { ResumeDocument } from './types/resume'
 
 // resume-cli's PDF export reads these off the theme module
@@ -24,10 +25,6 @@ import type { ResumeDocument } from './types/resume'
 // (A4 at 96 dpi) as the page viewport.
 export const pdfRenderOptions = { format: 'A4', mediaType: 'print' } as const
 export const pdfViewport = { width: 794, height: 1123 } as const
-
-// build.ts replaces this marker with the compiled stylesheet,
-// JSON-escaped into the surrounding string literal.
-const stylesheet = '__quill-stylesheet__'
 
 // Kept in sync with the inline copy in `src/index.html` — the one
 // there boots the dev/preview page, the one here the published file.
@@ -78,7 +75,7 @@ export function render(resume: ResumeDocument): string {
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>${escapeHtml(title ?? 'Resume')}</title>
-		<style>${stylesheet}</style>
+		<style>${STYLESHEET_MARKER}</style>
 		<script>${schemeScript}</script>
 	</head>
 	<body>${document}</body>

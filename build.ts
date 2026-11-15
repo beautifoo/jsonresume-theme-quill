@@ -4,6 +4,7 @@ import { readFile, rm, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import plugin from 'bun-plugin-tailwind'
 import { checkResumeContract } from './src/validate/cli'
+import { STYLESHEET_MARKER } from './src/lib/stylesheetMarker'
 
 if (process.argv.includes('--help') || process.argv.includes('-h')) {
 	console.log(`
@@ -164,13 +165,10 @@ const css = await Bun.file(cssOutput.path).text()
 
 const entryPath = path.join(outdir, 'theme.js')
 let entry = await readFile(entryPath, 'utf8')
-if (!entry.includes('__quill-stylesheet__')) {
+if (!entry.includes(STYLESHEET_MARKER)) {
 	throw new Error('Stylesheet marker not found in the bundle')
 }
-entry = entry.replaceAll(
-	'__quill-stylesheet__',
-	JSON.stringify(css).slice(1, -1),
-)
+entry = entry.replaceAll(STYLESHEET_MARKER, JSON.stringify(css).slice(1, -1))
 
 const finalEntryPath = path.join(outdir, 'index.js')
 await writeFile(finalEntryPath, entry)
