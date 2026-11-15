@@ -7,10 +7,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: write
-  issues: write
-  pull-requests: write
-  id-token: write
+  contents: read
 
 jobs:
   build:
@@ -60,25 +57,6 @@ jobs:
           ./node_modules/.bin/resume audit resume.json --theme quill
           ./node_modules/.bin/resume themes | grep quill
 
-  release:
-    needs: [build, e2e]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: true
-      - name: Configure Git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-      - uses: oven-sh/setup-bun@v2
-      - uses: actions/setup-node@v4
-        with:
-          # npm ≥ 11.15 is required for the OIDC trusted-publishing exchange in `npm publish`
-          node-version: '24'
-      - run: bun install --frozen-lockfile
-      - run: bunx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+# Releases live in release.yml: a CD pipeline that runs on pushes to main
+# (and manual dispatch) should not sit inside the CI workflow that also
+# runs on pull requests.

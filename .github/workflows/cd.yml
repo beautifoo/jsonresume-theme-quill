@@ -1,0 +1,84 @@
+name: CD
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  # The same gates CI runs on PRs, re-run here so a release only happens
+  # on a fully verified commit (a release pipeline that trusted another
+  # workflow's outcome would need cross-workflow wiring for the same safety).
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: bun install --frozen-lockfile
+      - run: bun run lint
+      - run: bun run typecheck
+      - run: bun run test
+      - run: bun run build
+
+  e2e:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+      # A clean install of the packed package against the real resume-cli:
+      # npm refuses to install a package named after the working directory,
+      # so the CLI runs from a scratch subdirectory.
+      - run: |
+          mkdir -p e2e && cp resume.json e2e/
+          npm pack --pack-destination e2e
+          cd e2e && npm init -y
+          npm install --no-save resume-cli ./*.tgz
+      - name: resume export (html + pdf)
+        working-directory: e2e
+        env:
+          RESUME_PUPPETEER_NO_SANDBOX: 1
+        run: |
+          ./node_modules/.bin/resume export out.html --theme quill --format html
+          ./node_modules/.bin/resume export out.pdf --theme quill --format pdf
+          test -s out.html && test -s out.pdf
+      - name: resume audit + themes discovery
+        working-directory: e2e
+        run: |
+          ./node_modules/.bin/resume audit resume.json --theme quill
+          ./node_modules/.bin/resume themes | grep quill
+
+  release:
+    needs: [build, e2e]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          # npm ≥ 11.15 is required for the OIDC trusted-publishing exchange in `npm publish`
+          node-version: '24'
+      - run: bun install --frozen-lockfile
+      - run: bunx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
