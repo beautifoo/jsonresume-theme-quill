@@ -1,19 +1,20 @@
 /**
  * Theme comparison page — a development tool, excluded from dist.
  *
- * Renders the theme's variants side by side for the repo's sample
- * resume, with layout/scheme/variant/language controls, at full
- * resolution for a human eye. Each panel is a self-contained `Resume`
- * (its own Quill provider), so the matrix previews exactly what the
- * published page renders — same icon weight, same date semantics.
+ * Renders the theme's variants side by side for the loaded resume —
+ * resume.local.json when present, else the repo's demo resume — with
+ * layout/scheme/variant/language controls, at full resolution for a
+ * human eye. Each panel is a self-contained `Resume` (its own Quill
+ * provider), so the matrix previews exactly what the published page
+ * renders — same icon weight, same date semantics.
  */
 
-import { type FC, StrictMode, useMemo, useState } from 'react'
+import { type FC, StrictMode, useEffect, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import resume from '../resume.json'
 import { type LayoutMode, Resume, type ThemeVariant } from './components/Resume'
 import { type Locale, locales } from './i18n/config'
 import { resolveLocale } from './i18n/resolveLocale'
+import { loadResume } from './lib/resume'
 import type { ResumeDocument } from './types/resume'
 
 const Button: FC<{ value: string; active: boolean; onClick: () => void }> = ({
@@ -51,40 +52,50 @@ const Caption: FC<{ title: string; sub: string }> = ({ title, sub }) => (
 const FOIL_VARIANTS: ThemeVariant[] = ['default', 'monochrome']
 
 const Compare: FC = () => {
+	const [resume, setResume] = useState<ResumeDocument | null>(null)
 	const [layout, setLayout] = useState<LayoutMode>('double')
 	const [scheme, setScheme] = useState<'light' | 'dark'>('light')
 	const [variant, setVariant] = useState<ThemeVariant | 'all'>('all')
-	const [locale, setLocale] = useState<Locale>(
-		resolveLocale(resume as ResumeDocument),
-	)
+	const [locale, setLocale] = useState<Locale>('en')
 
-	const resumeData = resume as ResumeDocument
+	useEffect(() => {
+		loadResume().then((r) => {
+			setResume(r)
+			setLocale(resolveLocale(r))
+		})
+	}, [])
+
+	const resumeData = resume
 	const quillVariants = FOIL_VARIANTS.filter(
 		(v) => variant === 'all' || v === variant,
 	)
 
 	const quillPanels = useMemo(
 		() =>
-			quillVariants.map((v) => (
-				<figure key={v} className='m-0'>
-					<Caption title={`Quill — ${v}`} sub='this theme' />
-					<div
-						className={
-							'min-h-120 overflow-auto rounded-lg border border-line bg-bg ' +
-							(scheme === 'dark' ? 'dark' : '')
-						}
-					>
-						<Resume
-							resume={resumeData}
-							variant={v}
-							layout={layout}
-							locale={locale}
-						/>
-					</div>
-				</figure>
-			)),
+			resumeData
+				? quillVariants.map((v) => (
+						<figure key={v} className='m-0'>
+							<Caption title={`Quill — ${v}`} sub='this theme' />
+							<div
+								className={
+									'min-h-120 overflow-auto rounded-lg border border-line bg-bg ' +
+									(scheme === 'dark' ? 'dark' : '')
+								}
+							>
+								<Resume
+									resume={resumeData}
+									variant={v}
+									layout={layout}
+									locale={locale}
+								/>
+							</div>
+						</figure>
+					))
+				: [],
 		[resumeData, layout, scheme, locale, quillVariants],
 	)
+
+	if (!resume) return null
 
 	return (
 		<div className='min-h-dvh bg-[oklch(0.96_0_0)] font-sans text-ink-2'>

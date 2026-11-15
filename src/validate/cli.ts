@@ -43,7 +43,12 @@ export function checkResumeContract(path: string = 'resume.json'): void {
 	}
 }
 
-// Standalone: `bun run validate` (or `bun src/validate/cli.ts [path]`)
+// Standalone: `bun run validate` (or `bun src/validate/cli.ts [path]`).
+// Checks resume.local.json when present (the resume you edit locally),
+// else the repo's demo resume. The build keeps its own demo check.
 if (import.meta.main) {
-	checkResumeContract(process.argv[2] ?? 'resume.json')
+	checkResumeContract(
+		process.argv[2] ??
+			(existsSync('resume.local.json') ? 'resume.local.json' : 'resume.json'),
+	)
 }

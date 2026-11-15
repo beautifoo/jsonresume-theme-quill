@@ -7,13 +7,16 @@
 
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import resume from '../resume.json'
 import { Resume } from './components/Resume'
 import { applyDocumentMetadata } from './lib/document'
+import { loadResume } from './lib/resume'
 
-function start() {
+async function start() {
 	const rootEl = document.getElementById('root')
 	if (!rootEl) return
+
+	// Local resume when present, else the bundled demo resume.
+	const resume = await loadResume()
 
 	// A published resume page should announce itself properly.
 	applyDocumentMetadata(resume)
