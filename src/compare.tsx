@@ -9,13 +9,12 @@
  * renders — same icon weight, same date semantics.
  */
 
-import { type FC, StrictMode, useEffect, useMemo, useState } from 'react'
+import { Suspense, type FC, StrictMode, use, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { type LayoutMode, Resume, type ThemeVariant } from './components/Resume'
 import { type Locale, locales } from './i18n/config'
 import { resolveLocale } from './i18n/resolveLocale'
 import { loadResume } from './lib/resume'
-import type { ResumeDocument } from './types/resume'
 
 const Button: FC<{ value: string; active: boolean; onClick: () => void }> = ({
 	value,
@@ -51,51 +50,42 @@ const Caption: FC<{ title: string; sub: string }> = ({ title, sub }) => (
 
 const FOIL_VARIANTS: ThemeVariant[] = ['default', 'monochrome']
 
+// Module-level so `use()` receives a stable promise across renders.
+const resumePromise = loadResume()
+
 const Compare: FC = () => {
-	const [resume, setResume] = useState<ResumeDocument | null>(null)
+	const resume = use(resumePromise)
 	const [layout, setLayout] = useState<LayoutMode>('double')
 	const [scheme, setScheme] = useState<'light' | 'dark'>('light')
 	const [variant, setVariant] = useState<ThemeVariant | 'all'>('all')
-	const [locale, setLocale] = useState<Locale>('en')
+	const [locale, setLocale] = useState(() => resolveLocale(resume))
 
-	useEffect(() => {
-		loadResume().then((r) => {
-			setResume(r)
-			setLocale(resolveLocale(r))
-		})
-	}, [])
-
-	const resumeData = resume
 	const quillVariants = FOIL_VARIANTS.filter(
 		(v) => variant === 'all' || v === variant,
 	)
 
 	const quillPanels = useMemo(
 		() =>
-			resumeData
-				? quillVariants.map((v) => (
-						<figure key={v} className='m-0'>
-							<Caption title={`Quill — ${v}`} sub='this theme' />
-							<div
-								className={
-									'min-h-120 overflow-auto rounded-lg border border-line bg-bg ' +
-									(scheme === 'dark' ? 'dark' : '')
-								}
-							>
-								<Resume
-									resume={resumeData}
-									variant={v}
-									layout={layout}
-									locale={locale}
-								/>
-							</div>
-						</figure>
-					))
-				: [],
-		[resumeData, layout, scheme, locale, quillVariants],
+			quillVariants.map((v) => (
+				<figure key={v} className='m-0'>
+					<Caption title={`Quill — ${v}`} sub='this theme' />
+					<div
+						className={
+							'min-h-120 overflow-auto rounded-lg border border-line bg-bg ' +
+							(scheme === 'dark' ? 'dark' : '')
+						}
+					>
+						<Resume
+							resume={resume}
+							variant={v}
+							layout={layout}
+							locale={locale}
+						/>
+					</div>
+				</figure>
+			)),
+		[resume, layout, scheme, locale, quillVariants],
 	)
-
-	if (!resume) return null
 
 	return (
 		<div className='min-h-dvh bg-[oklch(0.96_0_0)] font-sans text-ink-2'>
@@ -181,7 +171,9 @@ if (typeof document !== 'undefined') {
 	if (el) {
 		createRoot(el).render(
 			<StrictMode>
+				<Suspense fallback={null}>
 				<Compare />
+				</Suspense>
 			</StrictMode>,
 		)
 	}
