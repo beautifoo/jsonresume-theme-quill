@@ -1,5 +1,12 @@
 # Changelog
 
+# [2.1.0](https://github.com/beautifoo/jsonresume-theme-quill/compare/v2.0.0...v2.1.0) (2026-11-15)
+
+
+### Features
+
+* load resume.local.json in local dev, falling back to the demo resume ([6909788](https://github.com/beautifoo/jsonresume-theme-quill/commit/690978873a94df3219e0a6a2a70a572212507be4))
+
 # [2.0.0](https://github.com/beautifoo/jsonresume-theme-quill/compare/v1.0.1...v2.0.0) (2026-11-14)
 
 
