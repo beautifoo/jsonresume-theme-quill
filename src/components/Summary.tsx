@@ -3,7 +3,7 @@ import { Markdown } from './ui/Markdown'
 import { Section } from './ui/Section'
 
 interface SummaryProps {
-	summary: string
+	summary?: string
 }
 
 /**

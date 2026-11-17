@@ -19,11 +19,14 @@ import type {
 	AwardItem,
 	CertificateItem,
 	EducationItem,
+	InterestItem,
 	Iso8601,
+	LanguageItem,
 	ProjectItem,
 	PublicationItem,
 	ReferenceItem,
 	Resume,
+	SkillItem,
 	VolunteerItem,
 	WorkItem,
 } from '@jsonresume/types'
@@ -68,11 +71,17 @@ export type Reference = ReferenceItem & {
 	summary?: string
 }
 
-/** Education, volunteer, projects, publications, and certificates render as-is. */
+/**
+ * Education, volunteer, projects, publications, certificates, skills,
+ * languages, and interests render as-is.
+ */
 export type Education = EducationItem
 export type Volunteer = VolunteerItem
 export type Project = ProjectItem
 export type Certificate = CertificateItem
 export type Publication = PublicationItem
+export type Skill = SkillItem
+export type Language = LanguageItem
+export type Interest = InterestItem
 
 export type { Iso8601 }

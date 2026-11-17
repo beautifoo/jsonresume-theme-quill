@@ -4,11 +4,13 @@ import { Awards } from './Awards'
 import { isConferenceTalk } from './conferenceRouting'
 import { Certificates } from './Certificates'
 import { Education } from './Education'
+import { Interests } from './Interests'
+import { Languages } from './Languages'
 import { Projects } from './Projects'
 import { Publications } from './Publications'
 import { References } from './References'
+import { Skills } from './Skills'
 import { Summary } from './Summary'
-import { Taxonomy } from './ui/Taxonomy'
 import { Volunteer } from './Volunteer'
 import { WorkExperience } from './WorkExperience'
 
@@ -33,7 +35,7 @@ interface SectionDef {
 export const MAIN_SECTIONS: SectionDef[] = [
 	{
 		key: 'summary',
-		render: (r) => <Summary summary={r.basics?.summary ?? ''} />,
+		render: (r) => <Summary summary={r.basics?.summary} />,
 	},
 	{ key: 'work', render: (r) => <WorkExperience work={r.work} /> },
 	{ key: 'education', render: (r) => <Education education={r.education} /> },
@@ -44,28 +46,11 @@ export const MAIN_SECTIONS: SectionDef[] = [
 export const SIDEBAR_SECTIONS: SectionDef[] = [
 	{
 		key: 'skills',
-		render: (r) => (
-			<Taxonomy
-				title='sections.skills'
-				entries={(r.skills ?? []).map((skill) => ({
-					name: skill.name ?? '',
-					value: skill.level,
-					keywords: skill.keywords,
-				}))}
-			/>
-		),
+		render: (r) => <Skills skills={r.skills} />,
 	},
 	{
 		key: 'languages',
-		render: (r) => (
-			<Taxonomy
-				title='sections.languages'
-				entries={(r.languages ?? []).map((language) => ({
-					name: language.language ?? '',
-					value: language.fluency,
-				}))}
-			/>
-		),
+		render: (r) => <Languages languages={r.languages} />,
 	},
 	// ADR 0005: publications split by `type` — talk-like items render in
 	// Conferences, everything else (incl. untyped) in Publications.
@@ -76,7 +61,7 @@ export const SIDEBAR_SECTIONS: SectionDef[] = [
 			<Publications
 				title='sections.conferences'
 				urlLabelKey='common.viewTalk'
-				publications={(r.publications ?? []).filter(isConferenceTalk)}
+				publications={r.publications?.filter(isConferenceTalk)}
 			/>
 		),
 	},
@@ -84,7 +69,7 @@ export const SIDEBAR_SECTIONS: SectionDef[] = [
 		key: 'publications',
 		render: (r) => (
 			<Publications
-				publications={(r.publications ?? []).filter((p) => !isConferenceTalk(p))}
+				publications={r.publications?.filter((p) => !isConferenceTalk(p))}
 			/>
 		),
 	},
@@ -99,14 +84,6 @@ export const SIDEBAR_SECTIONS: SectionDef[] = [
 	},
 	{
 		key: 'interests',
-		render: (r) => (
-			<Taxonomy
-				title='sections.interests'
-				entries={(r.interests ?? []).map((interest) => ({
-					name: interest.name ?? '',
-					keywords: interest.keywords,
-				}))}
-			/>
-		),
+		render: (r) => <Interests interests={r.interests} />,
 	},
 ]
