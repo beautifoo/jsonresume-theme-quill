@@ -15,6 +15,24 @@ import { useFormatter, useNow, useTranslations } from 'use-intl'
 import { formatDuration, parseResumeDate } from '../../lib/dates'
 import { cn } from '../../lib/utils'
 
+/**
+ * The shared range label: `DateRange` and `DateSpan` must read
+ * open-ended ranges with the same catalog wording ("… – Present"),
+ * so the rule lives once — never a third copy.
+ */
+function formatRangeLabel(
+	f: ReturnType<typeof useFormatter>,
+	t: ReturnType<typeof useTranslations>,
+	start: Date,
+	end: Date | undefined | null,
+): string {
+	const format = { month: 'short', year: 'numeric' } as const
+	const startLabel = f.dateTime(start, format)
+	return end
+		? f.dateTimeRange(start, end, format)
+		: t('date.present', { start: startLabel })
+}
+
 interface DateRangeProps {
 	start?: string
 	end?: string
@@ -46,16 +64,7 @@ export const DateRange: FC<DateRangeProps> = ({
 
 	if (!parsedStart) return null
 
-	const startLabel = f.dateTime(parsedStart, {
-		month: 'short',
-		year: 'numeric',
-	})
-	const range = parsedEnd
-		? f.dateTimeRange(parsedStart, parsedEnd, {
-				month: 'short',
-				year: 'numeric',
-			})
-		: t('date.present', { start: startLabel })
+	const range = formatRangeLabel(f, t, parsedStart, parsedEnd)
 	const duration = formatDuration(parsedStart, parsedEnd ?? now, {
 		year: t('common.duration.year'),
 		years: t('common.duration.years'),
@@ -102,11 +111,7 @@ export const DateSpan: FC<DateSpanProps> = ({
 
 	if (!start) return null
 
-	const startLabel = f.dateTime(start, { month: 'short', year: 'numeric' })
-	const range =
-		end && !open
-			? f.dateTimeRange(start, end, { month: 'short', year: 'numeric' })
-			: t('date.present', { start: startLabel })
+	const range = formatRangeLabel(f, t, start, open ? null : end)
 
 	return (
 		<time dateTime={start.toISOString()} className={className}>

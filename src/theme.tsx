@@ -63,11 +63,17 @@ function escapeHtml(value: string): string {
  * moment of rendering and freeze with the exported file — re-export
  * to refresh. (shortcut: static export freezes "now"; revisit if
  * real client interactivity ever lands)
+ *
+ * `now` pins the open-ended durations to a fixed instant (tests) —
+ * otherwise the wall clock, as for the published file.
  */
-export function render(resume: ResumeDocument): string {
+export function render(
+	resume: ResumeDocument,
+	{ now }: { now?: Date } = {},
+): string {
 	const { title, lang } = resumeDocumentMetadata(resume)
 
-	const document = renderToStaticMarkup(<Resume resume={resume} />)
+	const document = renderToStaticMarkup(<Resume resume={resume} now={now} />)
 
 	return `<!doctype html>
 <html lang="${lang}">
