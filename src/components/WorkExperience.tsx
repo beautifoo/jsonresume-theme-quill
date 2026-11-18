@@ -22,7 +22,7 @@ const GroupHeader: FC<{
 	const t = useTranslations()
 
 	return (
-		<div className='mb-3 flex items-baseline justify-between gap-3 print:mb-2'>
+		<div className='mb-3 flex items-baseline justify-between gap-3 print:mb-2 print:break-after-avoid'>
 			<span className='text-[0.9rem] font-semibold text-ink'>{company}</span>
 			<span className='quill-meta shrink-0'>
 				<DateSpan start={start} end={end} open={open} />
@@ -75,7 +75,7 @@ export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
 										<DateRange
 											start={workItem.startDate}
 											end={workItem.endDate}
-											className='mb-1.5 print:mb-1'
+											className='mb-1.5 print:mb-1 print:break-after-avoid'
 											rangeClassName='quill-meta'
 										/>
 									)}

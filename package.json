@@ -86,14 +86,18 @@
 			[
 				"@semantic-release/git",
 				{
-					"assets": ["CHANGELOG.md"]
+					"assets": [
+						"CHANGELOG.md"
+					]
 				}
 			],
 			"@semantic-release/npm",
 			[
 				"@semantic-release/github",
 				{
-					"assets": ["CHANGELOG.md"]
+					"assets": [
+						"CHANGELOG.md"
+					]
 				}
 			]
 		]

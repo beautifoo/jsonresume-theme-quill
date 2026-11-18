@@ -53,10 +53,10 @@ export const SectionCard: FC<SectionCardProps> = memo(
 		const locationText = formatLocation(location)
 
 		return (
-			<article className={cn('break-inside-avoid', className)}>
+			<article className={cn(className)}>
 				<div className='flex flex-col gap-1 print:gap-0.5'>
 					{title && (
-						<div className='flex items-start justify-between gap-3'>
+						<div className='flex items-start justify-between gap-3 print:break-after-avoid'>
 							<h3 className='quill-entry-title min-w-0 flex-1'>
 								{title}
 								{subtitle && (
@@ -109,7 +109,7 @@ export const SectionCard: FC<SectionCardProps> = memo(
 							{highlights.map((highlight, i) => (
 								<li
 									key={i}
-									className='quill-body list-disc marker:text-accent/70'
+									className='quill-body list-disc marker:text-accent/70 print:break-inside-avoid'
 								>
 									<Markdown content={highlight} metrics />
 								</li>

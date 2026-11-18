@@ -39,7 +39,7 @@
 	 * by adding the class or overriding the token directly. The DOM
 	 * order is identical in both modes (ATS-safe document order).
 	 */
-	--quill-cols-wide: minmax(0, 5fr) minmax(0, 3fr);
+	--quill-cols-wide: minmax(0, 7fr) minmax(0, 3fr);
 
 	/* The one serif moment: the candidate's name */
 	--quill-name-font: var(--font-display);
@@ -226,8 +226,9 @@
 
 	@media print {
 		.quill-columns {
-			column-gap: 1.5rem;
-			row-gap: 1.5rem;
+			grid-template-columns: var(--quill-cols-wide);
+			column-gap: 2.25rem;
+			row-gap: 2.25rem;
 		}
 	}
 }

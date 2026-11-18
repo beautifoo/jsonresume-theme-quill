@@ -1,5 +1,4 @@
 import type { FC, ReactNode } from 'react'
-import { cn } from '../../lib/utils'
 import { DateRange } from './ResumeDate'
 
 interface TimelineEntryProps {
@@ -12,6 +11,10 @@ interface TimelineEntryProps {
 /**
  * One dated entry on a timeline: the date range row (with duration)
  * above, the entry content below. Open-ended roles read `… – Present`.
+ *
+ * Entries may break across pages in print (a block that merely does
+ * not fit would otherwise push whole entries onto the next page and
+ * leave big gaps); the date row keeps its content with it, though.
  */
 export const TimelineEntry: FC<TimelineEntryProps> = ({
 	startDate,
@@ -19,8 +22,12 @@ export const TimelineEntry: FC<TimelineEntryProps> = ({
 	children,
 	className,
 }) => (
-	<article className={cn('break-inside-avoid', className)}>
-		<DateRange start={startDate} end={endDate} />
+	<article className={className}>
+		<DateRange
+			start={startDate}
+			end={endDate}
+			className='print:break-after-avoid'
+		/>
 		{children}
 	</article>
 )

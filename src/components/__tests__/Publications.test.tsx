@@ -69,7 +69,9 @@ describe('Publications — the 2.x field semantics', () => {
 				<Publications
 					title='sections.conferences'
 					urlLabelKey='common.viewTalk'
-					publications={[{ name: 'Keynote: Types', publisher: 'OSCON', url: 'http://x' }]}
+					publications={[
+						{ name: 'Keynote: Types', publisher: 'OSCON', url: 'http://x' },
+					]}
 				/>,
 			),
 		)

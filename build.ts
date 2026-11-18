@@ -3,8 +3,8 @@ import { existsSync } from 'node:fs'
 import { readFile, rm, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import plugin from 'bun-plugin-tailwind'
-import { checkResumeContract } from './src/validate/cli'
 import { STYLESHEET_MARKER } from './src/lib/stylesheetMarker'
+import { checkResumeContract } from './src/validate/cli'
 
 if (process.argv.includes('--help') || process.argv.includes('-h')) {
 	console.log(`
