@@ -24,7 +24,10 @@ export const SectionTitle: FC<SectionTitleProps> = ({
 	return (
 		<h2
 			id={id}
-			className={cn('quill-section-title flex items-center gap-3', className)}
+			className={cn(
+				'quill-section-title flex items-center gap-3 print:break-after-avoid',
+				className,
+			)}
 		>
 			<span>{t(title)}</span>
 			<span aria-hidden='true' className='h-px min-w-4 flex-1 bg-line' />
