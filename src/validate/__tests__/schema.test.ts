@@ -19,6 +19,12 @@ describe('the stable (2.x) schema', () => {
 		expect(validateResume(resume).stable).toEqual([])
 	})
 
+	it('rejects free-text dates (the schema\'s iso8601 pattern is enforced)', () => {
+		const broken = { ...resume, work: [{ ...resume.work[0]!, startDate: 'spring 2019' }] }
+		const { stable } = validateResume(broken)
+		expect(stable.map((issue) => issue.path)).toContain('work.0.startDate')
+	})
+
 	it('fails a malformed document, with paths', () => {
 		const { stable } = validateResume({
 			basics: { email: 42 },

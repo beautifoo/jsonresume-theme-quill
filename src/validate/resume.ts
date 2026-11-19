@@ -21,7 +21,7 @@ import { findLegacyFields, type LegacyIssue } from './legacy'
 import { resumeSchema } from './schema'
 
 type StableIssue = {
-	/** Dot path of the offending value, e.g. `basics.email` or `work[0].startDate` */
+	/** Dot path of the offending value, e.g. `basics.email` or `work.0.startDate` */
 	path: string
 	message: string
 }

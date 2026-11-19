@@ -2,7 +2,7 @@
 
 The typed legacy-field tolerance (introduced in `0d00bbd`, "the theme renders either era") was leaking: the fallbacks were scattered across ~8 components, and the basics block never read the 1.x names at all (`title`/`bio`) — the promise was never actually kept, and a half-kept promise is worse than a strict one. We decided the theme consumes **stable (2.x) resumes only**: the legacy fallbacks are deleted, and a build-time gate enforces the contract with two checks — the **stable** schema, checked with valibot (violations fail the build) and **legacy** 1.x-name detection, a direct table walk (warnings, each naming its stable successor).
 
-Considered: a full both-eras normalizer (one seam mapping 1.x → 2.x before rendering) — rejected: it would maintain a second, forever hand-kept field table for an era the ecosystem left behind. A reorganize-only move of the existing fallbacks into one module — superseded by going 2.x-only.
+Considered: a full both-eras normalizer (one seam mapping 1.x → 2.x before rendering) — rejected: it would maintain a second, forever hand-kept field table for an era the ecosystem left behind. A reorganize-only move of the existing fallbacks into one module — superseded by going 2.x-only. The validator that ships inside `@jsonresume/schema` (a legacy `jsonschema` library, untyped — its callback shape would need our own declaration) — rejected: the transcription is fully typed via `@jsonresume/types` + valibot, and the type-check gate is the drift alarm.
 
 Consequences:
 

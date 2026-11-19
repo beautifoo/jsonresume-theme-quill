@@ -4,7 +4,8 @@
  * Transcribed by hand from `@jsonresume/types` (which upstream generates
  * from `@jsonresume/schema`); the type-check gate keeps the two in sync —
  * an upstream schema bump that changes the shape breaks CI until this
- * file catches up.
+ * file catches up. The `format`/`pattern` constraints come from
+ * `@jsonresume/schema` itself — the types cannot express them.
  *
  * This is a build-time gate (see `resume.ts`), never part of the
  * published bundle: valibot is a devDependency.
@@ -32,10 +33,21 @@ import * as v from 'valibot'
 
 /**
  * ISO-8601 with each section after the year optional (2023, 2023-04,
- * 2023-04-05). Free text is tolerated — the date module degrades to
- * "unparseable, not rendered".
+ * 2023-04-05) — the `pattern` of `@jsonresume/schema`'s `iso8601`
+ * definition. Free text is a build failure; the date module still
+ * degrades gracefully for anything that slips through.
  */
-const iso8601 = v.string()
+const iso8601 = v.pipe(
+	v.string(),
+	v.regex(
+		/^([1-2][0-9]{3}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])|[1-2][0-9]{3}-(0[1-9]|1[0-2])|[1-2][0-9]{3})$/,
+	),
+)
+
+// Piped: in valibot 1.x a validation action only runs when applied to a
+// schema — a bare `v.email()` silently accepts anything under `safeParse`.
+const uri = v.pipe(v.string(), v.url())
+const email = v.pipe(v.string(), v.email())
 
 const locationFields = v.object({
 	address: v.optional(v.string()),
@@ -50,7 +62,7 @@ const resumeLocation = v.optional(locationFields)
 const resumeProfile = v.object({
 	network: v.optional(v.string()),
 	username: v.optional(v.string()),
-	url: v.optional(v.string()),
+	url: v.optional(uri),
 })
 
 export const resumeBasics = v.object({
@@ -58,9 +70,9 @@ export const resumeBasics = v.object({
 	label: v.optional(v.string()),
 	pronouns: v.optional(v.string()),
 	image: v.optional(v.string()),
-	email: v.optional(v.string()),
+	email: v.optional(email),
 	phone: v.optional(v.string()),
-	url: v.optional(v.string()),
+	url: v.optional(uri),
 	summary: v.optional(v.string()),
 	location: resumeLocation,
 	profiles: v.optional(v.array(resumeProfile)),
@@ -73,7 +85,7 @@ export const workItem = v.object({
 	location: workLocation,
 	description: v.optional(v.string()),
 	position: v.optional(v.string()),
-	url: v.optional(v.string()),
+	url: v.optional(uri),
 	startDate: v.optional(iso8601),
 	endDate: v.optional(iso8601),
 	summary: v.optional(v.string()),
@@ -85,7 +97,7 @@ export const volunteerItem = v.object({
 	organization: v.optional(v.string()),
 	location: workLocation,
 	position: v.optional(v.string()),
-	url: v.optional(v.string()),
+	url: v.optional(uri),
 	startDate: v.optional(iso8601),
 	endDate: v.optional(iso8601),
 	summary: v.optional(v.string()),
@@ -95,7 +107,7 @@ export const volunteerItem = v.object({
 export const educationItem = v.object({
 	institution: v.optional(v.string()),
 	location: workLocation,
-	url: v.optional(v.string()),
+	url: v.optional(uri),
 	area: v.optional(v.string()),
 	studyType: v.optional(v.string()),
 	startDate: v.optional(iso8601),
@@ -115,7 +127,7 @@ export const awardItem = v.object({
 export const certificateItem = v.object({
 	name: v.optional(v.string()),
 	date: v.optional(iso8601),
-	url: v.optional(v.string()),
+	url: v.optional(uri),
 	credentialId: v.optional(v.string()),
 	issuer: v.optional(v.string()),
 	expiryDate: v.optional(iso8601),
@@ -137,7 +149,7 @@ export const publicationItem = v.object({
 	issue: v.optional(v.string()),
 	pages: v.optional(v.string()),
 	identifiers: v.optional(publicationIdentifiers),
-	url: v.optional(v.string()),
+	url: v.optional(uri),
 	summary: v.optional(v.string()),
 	type: v.optional(v.string()),
 })
@@ -175,20 +187,23 @@ export const projectItem = v.object({
 	keywords: v.optional(v.array(v.string())),
 	startDate: v.optional(iso8601),
 	endDate: v.optional(iso8601),
-	url: v.optional(v.string()),
+	url: v.optional(uri),
 	roles: v.optional(v.array(v.string())),
 	entity: v.optional(v.string()),
 	type: v.optional(v.string()),
 })
 
 const resumeMeta = v.object({
-	canonical: v.optional(v.string()),
+	canonical: v.optional(uri),
 	version: v.optional(v.string()),
-	lastModified: v.optional(iso8601),
+	// The spec leaves lastModified unconstrained (its description says
+	// ISO 8601 with a time part; the `iso8601` date-only pattern would
+	// reject it) — so it stays plain string, as the types say.
+	lastModified: v.optional(v.string()),
 })
 
 export const resumeSchema = v.object({
-	$schema: v.optional(v.string()),
+	$schema: v.optional(uri),
 	basics: v.optional(resumeBasics),
 	objective: v.optional(v.string()),
 	work: v.optional(v.array(workItem)),
