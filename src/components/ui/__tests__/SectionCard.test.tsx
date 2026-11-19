@@ -90,6 +90,23 @@ describe('SectionCard — the main-column entry contract, one prop per test', ()
 		expect(bold.closest('p')).toHaveTextContent('Shipped 12 releases')
 	})
 
+	it('bolds the whole word when a number is embedded in it', () => {
+		render(
+			wrap(
+				<SectionCard
+					title='Engineer'
+					summary='Fixed a11y bugs and E2E flakes in the 3D viewer'
+			/>,
+			),
+		)
+		for (const word of ['a11y', 'E2E', '3D']) {
+			expect(screen.getByText(word).tagName).toBe('STRONG')
+		}
+		expect(screen.getByText('a11y').closest('p')).toHaveTextContent(
+			'Fixed a11y bugs and E2E flakes in the 3D viewer',
+		)
+	})
+
 	it('renders highlights as a list, one item each', () => {
 		render(
 			wrap(
