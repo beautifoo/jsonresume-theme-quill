@@ -1,5 +1,29 @@
 # Changelog
 
+# [3.0.0](https://github.com/beautifoo/jsonresume-theme-quill/compare/v2.1.0...v3.0.0) (2026-11-19)
+
+
+* fix!(validate): Enforce the spec's format and pattern constraints ([f10aff9](https://github.com/beautifoo/jsonresume-theme-quill/commit/f10aff95348fa4532afd6b0befe80d72aa2c5f50))
+
+
+### Bug Fixes
+
+* **metrics:** Bold the whole word for numbers embedded in words ([0c1c437](https://github.com/beautifoo/jsonresume-theme-quill/commit/0c1c437d9849e8cd82bd6127c01a6d0768c2082f))
+* **print:** keep section titles with their section ([e796bd3](https://github.com/beautifoo/jsonresume-theme-quill/commit/e796bd3b1ca65ca9f58072fd6b01eb70e390ff67))
+* **print:** let timeline entries flow across pages ([c449fdd](https://github.com/beautifoo/jsonresume-theme-quill/commit/c449fdde5af89ac85e5ceb379732373049bc86eb))
+
+
+### Features
+
+* A4 target on the compare page — the print target as a live 794px preview ([ec9d09e](https://github.com/beautifoo/jsonresume-theme-quill/commit/ec9d09ebaf60981b872996c330877c16c371a69c))
+
+
+### BREAKING CHANGES
+
+* resume documents with free-text dates or malformed
+format-constrained values now fail the build-time gate instead of
+passing.
+
 # [2.1.0](https://github.com/beautifoo/jsonresume-theme-quill/compare/v2.0.0...v2.1.0) (2026-11-15)
 
 
