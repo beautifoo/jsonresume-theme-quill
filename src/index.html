@@ -5,31 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resume</title>
     <link rel="stylesheet" href="./index.css" />
+    <!--
+      Screen-scheme bootstrap — single source: src/lib/schemeBootstrap.ts.
+      Kept byte-equivalent by src/__tests__/indexHtml.test.ts; edit the
+      const there, not this copy.
+    -->
     <script>
-      // Select the screen color scheme before first paint (no flash).
-      // A forced scheme (localStorage "quill-scheme": "light" | "dark")
-      // wins over the system preference; the print palette is always
-      // light regardless of this class.
-      (function () {
-        var root = document.documentElement
-        var forced = null
-        try {
-          forced = localStorage.getItem('quill-scheme')
-        } catch (e) {
-          /* private mode */
-        }
-        var dark = forced
-          ? forced === 'dark'
-          : window.matchMedia('(prefers-color-scheme: dark)').matches
-        if (dark) root.classList.add('dark')
-        if (!forced) {
-          window
-            .matchMedia('(prefers-color-scheme: dark)')
-            .addEventListener('change', function (e) {
-              root.classList.toggle('dark', e.matches)
-            })
-        }
-      })()
+(function () {
+	var root = document.documentElement
+	var forced = null
+	try {
+		forced = localStorage.getItem('quill-scheme')
+	} catch (e) {
+		/* private mode */
+	}
+	var dark = forced
+		? forced === 'dark'
+		: window.matchMedia('(prefers-color-scheme: dark)').matches
+	if (dark) root.classList.add('dark')
+	if (!forced) {
+		window
+			.matchMedia('(prefers-color-scheme: dark)')
+			.addEventListener('change', function (e) {
+				root.classList.toggle('dark', e.matches)
+			})
+	}
+})()
     </script>
   </head>
   <body>

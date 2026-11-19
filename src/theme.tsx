@@ -16,6 +16,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import './index.css'
 import { Resume } from './components/Resume'
 import { resumeDocumentMetadata } from './lib/document'
+import { schemeBootstrap } from './lib/schemeBootstrap'
 import { STYLESHEET_MARKER } from './lib/stylesheetMarker'
 import type { ResumeDocument } from './types/resume'
 
@@ -25,29 +26,6 @@ import type { ResumeDocument } from './types/resume'
 // (A4 at 96 dpi) as the page viewport.
 export const pdfRenderOptions = { format: 'A4', mediaType: 'print' } as const
 export const pdfViewport = { width: 794, height: 1123 } as const
-
-// Kept in sync with the inline copy in `src/index.html` — the one
-// there boots the dev/preview page, the one here the published file.
-const schemeScript = `(function () {
-	var root = document.documentElement
-	var forced = null
-	try {
-		forced = localStorage.getItem('quill-scheme')
-	} catch (e) {
-		/* private mode */
-	}
-	var dark = forced
-		? forced === 'dark'
-		: window.matchMedia('(prefers-color-scheme: dark)').matches
-	if (dark) root.classList.add('dark')
-	if (!forced) {
-		window
-			.matchMedia('(prefers-color-scheme: dark)')
-			.addEventListener('change', function (e) {
-				root.classList.toggle('dark', e.matches)
-			})
-	}
-})()`
 
 function escapeHtml(value: string): string {
 	return value
@@ -82,7 +60,7 @@ export function render(
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>${escapeHtml(title ?? 'Resume')}</title>
 		<style>${STYLESHEET_MARKER}</style>
-		<script>${schemeScript}</script>
+		<script>${schemeBootstrap}</script>
 	</head>
 	<body>${document}</body>
 </html>`
