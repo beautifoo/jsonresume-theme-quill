@@ -9,8 +9,12 @@ import { TagList } from './TagList'
 
 interface SectionCardProps {
 	title?: string
-	subtitle?: string | ReactNode
-	url?: string
+	/**
+	 * The title-row context, composed by the treatment — e.g. an AtLink
+	 * ("at Acme") for an organization. One URL gets one link channel per
+	 * entry: the subtitle or the action row, never both.
+	 */
+	subtitle?: ReactNode
 	/** The 2.x schema allows a string or a location object */
 	location?: string | Location
 	/** Quiet context beside the location (e.g. an education `studyType`) */
@@ -35,7 +39,6 @@ export const SectionCard: FC<SectionCardProps> = memo(
 	({
 		title,
 		subtitle,
-		url,
 		location,
 		context,
 		tags,
@@ -60,16 +63,7 @@ export const SectionCard: FC<SectionCardProps> = memo(
 							<h3 className='quill-entry-title min-w-0 flex-1'>
 								{title}
 								{subtitle && (
-									<span className='font-normal text-ink-3'>
-										{` ${t('common.at')} `}
-										{url ? (
-											<a href={url} target='_blank' rel='noopener noreferrer'>
-												{subtitle}
-											</a>
-										) : (
-											subtitle
-										)}
-									</span>
+									<span className='font-normal text-ink-3'>{subtitle}</span>
 								)}
 							</h3>
 							{addonAfterTitle && (

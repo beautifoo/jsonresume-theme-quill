@@ -13,12 +13,8 @@ export const Summary: FC<SummaryProps> = memo(({ summary }) => {
 	if (!summary) return null
 
 	return (
-		<Section
-			title='sections.about'
-			variant='list'
-			contentClassName='max-w-[62ch]'
-		>
-			<div className='quill-body'>
+		<Section title='sections.about' variant='list'>
+			<div className='quill-body max-w-[62ch]'>
 				<Markdown content={summary} metrics />
 			</div>
 		</Section>

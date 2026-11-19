@@ -1,5 +1,7 @@
 import type { FC } from 'react'
+import { useTranslations } from 'use-intl'
 import type { Education as EducationItem } from '../types/resume'
+import { AtLink } from './ui/AtLink'
 import { Section } from './ui/Section'
 import { SectionCard } from './ui/SectionCard'
 import { TimelineEntry } from './ui/TimelineEntry'
@@ -9,6 +11,8 @@ interface EducationProps {
 }
 
 export const Education: FC<EducationProps> = ({ education }) => {
+	const t = useTranslations()
+
 	if (!education || education.length === 0) return null
 
 	return (
@@ -21,7 +25,7 @@ export const Education: FC<EducationProps> = ({ education }) => {
 					? /(GPA|Laude|Honor|Distinction)/i.test(item.score)
 						? item.score
 						: /^\d/.test(item.score)
-							? `GPA: ${item.score}`
+							? t('common.gpa', { score: item.score })
 							: item.score
 					: undefined
 
@@ -33,8 +37,11 @@ export const Education: FC<EducationProps> = ({ education }) => {
 					>
 						<SectionCard
 							title={item.area || item.studyType || ''}
-							subtitle={item.institution}
-							url={item.url}
+							subtitle={
+								item.institution ? (
+									<AtLink label={item.institution} url={item.url} />
+								) : undefined
+							}
 							location={item.location}
 							context={item.area ? item.studyType : undefined}
 							summary={item.summary || gpa}

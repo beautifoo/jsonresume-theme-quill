@@ -9,11 +9,11 @@ interface MarkdownProps {
 	content?: string
 	className?: string
 	/**
- * Bold numbers in narrative text (metrics: "3 promotions", "20%",
- * "$1.2M") so quantified results stand out. Numbers embedded in words
- * ("a11y", "3D", "E2E") bold the whole word. Inspired by
- * jsonresume-theme-data-driven.
- */
+	 * Bold numbers in narrative text (metrics: "3 promotions", "20%",
+	 * "$1.2M") so quantified results stand out. Numbers embedded in words
+	 * ("a11y", "3D", "E2E") bold the whole word. Inspired by
+	 * jsonresume-theme-data-driven.
+	 */
 	metrics?: boolean
 }
 

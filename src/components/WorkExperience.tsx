@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 import { useNow, useTranslations } from 'use-intl'
 import type { Work } from '../types/resume'
+import { AtLink } from './ui/AtLink'
 import { GrowthIndicator } from './ui/GrowthIndicator'
 import { DateRange, DateSpan } from './ui/ResumeDate'
 import { Section } from './ui/Section'
@@ -81,8 +82,11 @@ export const WorkExperience: FC<WorkExperienceProps> = ({ work }) => {
 									)}
 									<SectionCard
 										title={workItem.position}
-										subtitle={showHeader ? undefined : workItem.name}
-										url={workItem.url}
+										subtitle={
+											showHeader || !workItem.name ? undefined : (
+												<AtLink label={workItem.name} url={workItem.url} />
+											)
+										}
 										location={workItem.location}
 										summary={workItem.summary}
 										highlights={workItem.highlights}

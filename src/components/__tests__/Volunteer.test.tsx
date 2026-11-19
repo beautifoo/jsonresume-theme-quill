@@ -56,7 +56,7 @@ describe('Volunteer — the field→role mapping', () => {
 		)
 	})
 
-	it('offers the visit-website action for a linked organization', () => {
+	it('links the organization exactly once — the title row, no action duplicate', () => {
 		render(
 			wrap(
 				<Volunteer
@@ -70,9 +70,9 @@ describe('Volunteer — the field→role mapping', () => {
 				/>,
 			),
 		)
-		expect(screen.getByRole('link', { name: /Visit Website/ })).toHaveAttribute(
-			'href',
-			'https://codeclub.example',
-		)
+		// One URL, one link channel: the organization link, no action row.
+		const links = screen.getAllByRole('link')
+		expect(links).toHaveLength(1)
+		expect(links[0]).toHaveAttribute('href', 'https://codeclub.example')
 	})
 })

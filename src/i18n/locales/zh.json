@@ -15,7 +15,6 @@
 		"about": "关于"
 	},
 	"common": {
-		"visitWebsite": "访问网站",
 		"viewTalk": "查看演讲",
 		"viewPublication": "查看作品",
 		"viewProject": "查看项目",
@@ -35,7 +34,9 @@
 			"months": "个月",
 			"lessThanMonth": "不到一个月"
 		},
-		"roleCount": "{count} 个职位"
+		"roleCount": "{count} 个职位",
+		"growth": "成长",
+		"gpa": "平均绩点: {score}"
 	},
 	"date": {
 		"present": "{start} – 至今"

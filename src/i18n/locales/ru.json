@@ -15,7 +15,6 @@
 		"about": "О себе"
 	},
 	"common": {
-		"visitWebsite": "Посетить Сайт",
 		"viewTalk": "Просмотр Доклада",
 		"viewPublication": "Просмотр Публикации",
 		"viewProject": "Просмотр Проекта",
@@ -35,7 +34,9 @@
 			"month": "месяц",
 			"months": "месяцев",
 			"lessThanMonth": "Меньше месяца"
-		}
+		},
+		"growth": "Рост",
+		"gpa": "Средний балл: {score}"
 	},
 	"date": {
 		"present": "{start} – Настоящее Время"

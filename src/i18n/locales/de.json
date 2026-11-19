@@ -15,7 +15,6 @@
 		"about": "Über Mich"
 	},
 	"common": {
-		"visitWebsite": "Website Besuchen",
 		"viewTalk": "Beitrag Anzeigen",
 		"viewPublication": "Veröffentlichung Anzeigen",
 		"viewProject": "Projekt Anzeigen",
@@ -35,7 +34,9 @@
 			"months": "Monate",
 			"lessThanMonth": "Weniger als ein Monat"
 		},
-		"roleCount": "{count} Positionen"
+		"roleCount": "{count} Positionen",
+		"growth": "Wachstum",
+		"gpa": "Nota: {score}"
 	},
 	"date": {
 		"present": "{start} – Aktuell"

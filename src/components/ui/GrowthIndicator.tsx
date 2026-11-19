@@ -1,3 +1,4 @@
+import { useTranslations } from 'use-intl'
 import { cn } from '../../lib/utils'
 
 interface GrowthIndicatorProps {
@@ -14,11 +15,12 @@ interface GrowthIndicatorProps {
  * Screen garnish only — the SectionCard hides addons in print.
  */
 export const GrowthIndicator = ({
-	label = 'Growth',
+	label,
 	level,
 	percent,
 	className,
 }: GrowthIndicatorProps) => {
+	const t = useTranslations()
 	const clampedPercent =
 		typeof percent === 'number'
 			? Math.max(0, Math.min(100, percent))
@@ -36,7 +38,7 @@ export const GrowthIndicator = ({
 			<span aria-hidden='true' className='font-semibold'>
 				↑
 			</span>
-			{label}
+			{label ?? t('common.growth')}
 
 			{typeof clampedLevel === 'number' && (
 				<span className='flex items-center gap-0.5' aria-hidden='true'>

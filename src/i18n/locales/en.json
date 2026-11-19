@@ -15,7 +15,6 @@
 		"volunteer": "Volunteer"
 	},
 	"common": {
-		"visitWebsite": "Visit Website",
 		"viewTalk": "View Talk",
 		"viewPublication": "View Publication",
 		"viewProject": "View Project",
@@ -35,7 +34,9 @@
 			"months": "months",
 			"lessThanMonth": "Less than a month"
 		},
-		"roleCount": "{count} roles"
+		"roleCount": "{count} roles",
+		"growth": "Growth",
+		"gpa": "GPA: {score}"
 	},
 	"date": {
 		"present": "{start} – Present"

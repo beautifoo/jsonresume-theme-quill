@@ -15,7 +15,6 @@
 		"volunteer": "Voluntariado"
 	},
 	"common": {
-		"visitWebsite": "Visitar o Site",
 		"viewTalk": "Ver Palestra",
 		"viewPublication": "Ver Publicação",
 		"viewProject": "Ver Projeto",
@@ -35,7 +34,9 @@
 			"months": "meses",
 			"lessThanMonth": "Menos de um mês"
 		},
-		"roleCount": "{count} posições"
+		"roleCount": "{count} posições",
+		"growth": "Crescimento",
+		"gpa": "Média: {score}"
 	},
 	"date": {
 		"present": "{start} – Atual"

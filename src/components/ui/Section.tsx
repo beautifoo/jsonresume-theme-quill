@@ -18,8 +18,6 @@ interface SectionProps {
 	variant: SectionVariant
 	children: ReactNode
 	className?: string
-	/** Extra classes for the content wrapper (`list` variant) */
-	contentClassName?: string
 }
 
 /**
@@ -33,7 +31,6 @@ export const Section: FC<SectionProps> = ({
 	variant,
 	children,
 	className,
-	contentClassName,
 }) => {
 	const leaf = title.split('.').pop() ?? title
 	const sectionId = `section-${leaf}`
@@ -51,12 +48,7 @@ export const Section: FC<SectionProps> = ({
 					{children}
 				</div>
 			) : (
-				<div
-					className={cn(
-						'mt-3 space-y-3 print:mt-2 print:space-y-2.5',
-						contentClassName,
-					)}
-				>
+				<div className='mt-3 space-y-3 print:mt-2 print:space-y-2.5'>
 					{children}
 				</div>
 			)}

@@ -15,7 +15,6 @@
 		"about": "Chi Sono"
 	},
 	"common": {
-		"visitWebsite": "Visita il Sito",
 		"viewTalk": "Visualizza Intervento",
 		"viewPublication": "Visualizza Pubblicazione",
 		"viewProject": "Visualizza Progetto",
@@ -35,7 +34,9 @@
 			"months": "mesi",
 			"lessThanMonth": "Meno di un mese"
 		},
-		"roleCount": "{count} ruoli"
+		"roleCount": "{count} ruoli",
+		"growth": "Crescita",
+		"gpa": "Voto: {score}"
 	},
 	"date": {
 		"present": "{start} – Attuale"

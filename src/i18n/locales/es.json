@@ -15,7 +15,6 @@
 		"about": "Acerca de"
 	},
 	"common": {
-		"visitWebsite": "Visitar Sitio Web",
 		"viewTalk": "Ver Charla",
 		"viewPublication": "Ver Publicación",
 		"viewProject": "Ver Proyecto",
@@ -35,7 +34,9 @@
 			"month": "mes",
 			"months": "meses",
 			"lessThanMonth": "Menos de un mes"
-		}
+		},
+		"growth": "Crecimiento",
+		"gpa": "Media: {score}"
 	},
 	"date": {
 		"present": "{start} – Actual"

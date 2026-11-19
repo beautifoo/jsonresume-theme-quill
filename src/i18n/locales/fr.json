@@ -15,7 +15,6 @@
 		"about": "À propos"
 	},
 	"common": {
-		"visitWebsite": "Visiter le Site",
 		"viewTalk": "Voir la Présentation",
 		"viewPublication": "Voir la Publication",
 		"viewProject": "Voir le Projet",
@@ -35,7 +34,9 @@
 			"months": "mois",
 			"lessThanMonth": "Moins d'un mois"
 		},
-		"roleCount": "{count} postes"
+		"roleCount": "{count} postes",
+		"growth": "Progression",
+		"gpa": "Moyenne: {score}"
 	},
 	"date": {
 		"present": "{start} – Présent"

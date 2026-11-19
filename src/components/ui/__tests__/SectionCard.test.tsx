@@ -17,25 +17,39 @@ describe('SectionCard — the main-column entry contract, one prop per test', ()
 		).toBeInTheDocument()
 	})
 
-	it('renders the subtitle as an "at" context, linked when a url is given', () => {
+	it('renders the treatment-composed subtitle in the title row', () => {
 		render(
 			wrap(
-				<SectionCard title='Engineer' subtitle='Acme' url='https://acme.com' />,
+				<SectionCard
+					title='Engineer'
+					subtitle={
+						<>
+							{' at '}
+							<a
+								href='https://acme.com'
+								target='_blank'
+								rel='noopener noreferrer'
+							>
+								Acme
+							</a>
+						</>
+					}
+				/>,
 			),
 		)
-		// The link wraps the subtitle only; the "at" sits beside it in the heading.
+		// The card renders whatever the treatment composed — link included.
 		expect(screen.getByRole('link', { name: 'Acme' })).toHaveAttribute(
 			'href',
 			'https://acme.com',
 		)
 		expect(
-			screen.getByRole('heading', { level: 3, name: /Engineer at Acme/ }),
+			screen.getByRole('heading', { level: 3, name: /Engineer/ }),
 		).toBeInTheDocument()
 	})
 
-	it('renders the subtitle unlinked without a url', () => {
+	it('renders a plain subtitle without a link', () => {
 		render(wrap(<SectionCard title='Engineer' subtitle='Acme' />))
-		expect(screen.getByText(/at Acme/)).toBeInTheDocument()
+		expect(screen.getByText(/Acme/)).toBeInTheDocument()
 		expect(screen.queryByRole('link')).not.toBeInTheDocument()
 	})
 
@@ -96,7 +110,7 @@ describe('SectionCard — the main-column entry contract, one prop per test', ()
 				<SectionCard
 					title='Engineer'
 					summary='Fixed a11y bugs and E2E flakes in the 3D viewer'
-			/>,
+				/>,
 			),
 		)
 		for (const word of ['a11y', 'E2E', '3D']) {
