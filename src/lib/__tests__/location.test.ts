@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'bun:test'
 import { formatLocation } from '../location'
 
 describe('formatLocation — the compact location line', () => {

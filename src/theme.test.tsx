@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'bun:test'
 import resumeJson from '../resume.json'
 import { render } from './theme'
 import type { ResumeDocument } from './types/resume'
@@ -11,9 +11,9 @@ describe('render (the published theme entry)', () => {
 
 		expect(html).toMatch(/^<!doctype html>/)
 		expect(html).toContain('<style>')
-		expect(html).toContain(resume.basics?.name)
+		expect(html).toContain(resume.basics!.name!)
 		// Static markup: the real DOM, readable without executing anything.
-		expect(html).toContain(resume.work?.[0]?.name)
+		expect(html).toContain(resume.work![0]!.name!)
 		// And no client React bundle: only the scheme bootstrap script.
 		const scriptTags = html.match(/<script/g) ?? []
 		expect(scriptTags).toHaveLength(1)

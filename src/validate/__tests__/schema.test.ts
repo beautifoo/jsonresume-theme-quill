@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'bun:test'
 import careerChanger from '../../../node_modules/@jsonresume/schema/examples/career-changer.resume.json'
 import newGrad from '../../../node_modules/@jsonresume/schema/examples/new-grad.resume.json'
 import seniorEngineer from '../../../node_modules/@jsonresume/schema/examples/senior-engineer.resume.json'

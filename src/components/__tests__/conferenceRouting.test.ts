@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'bun:test'
 import { isConferenceTalk } from '../conferenceRouting'
 
 // ADR 0005: the whitelist that re-homes talk-like publications into the

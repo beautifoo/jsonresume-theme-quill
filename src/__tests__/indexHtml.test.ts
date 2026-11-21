@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { expect, it } from 'vitest'
+import { expect, it } from 'bun:test'
 import { schemeBootstrap } from '../lib/schemeBootstrap'
 
 // The screen-scheme bootstrap is written out twice — into the published file

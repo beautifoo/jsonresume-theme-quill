@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'bun:test'
 import resumeJson from '../../../resume.json'
 import type { ResumeDocument } from '../../types/resume'
 import { loadResume } from '../resume'
