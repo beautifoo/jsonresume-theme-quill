@@ -55,7 +55,7 @@ If you have an idea for an enhancement, please create an issue with the followin
 
 ## Testing
 
-The project is tested with Vitest (`bun run test`), and the resume contract (ADR 0003) is enforced at build time (`bun run build`) — or in isolation while editing a resume with `bun run validate [path]` (see the How it works notes below): stable (2.x) violations fail, legacy (1.x) fields print a migration checklist. When submitting changes, run `bun run lint`, `bun run typecheck`, `bun run test`, and `bun run build`, and check the rendered theme with your own resume data.
+The project is tested with bun's built-in test runner (`bun run test`), and the resume contract (ADR 0003) is enforced at build time (`bun run build`) — or in isolation while editing a resume with `bun run validate [path]` (see the How it works notes below): stable (2.x) violations fail, legacy (1.x) fields print a migration checklist. When submitting changes, run `bun run lint`, `bun run typecheck`, `bun run test`, and `bun run build`, and check the rendered theme with your own resume data.
 
 ## How it works
 

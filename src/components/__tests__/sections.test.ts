@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'bun:test'
 import { MAIN_SECTIONS, SIDEBAR_SECTIONS } from '../sections'
 
 describe('the section registry — the ATS-safe document order (ADR 0001)', () => {

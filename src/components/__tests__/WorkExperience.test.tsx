@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from '@testing-library/react'
 import type { ReactNode } from 'react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from 'bun:test'
 import { QuillProvider } from '../QuillProvider'
 import { WorkExperience } from '../WorkExperience'
 

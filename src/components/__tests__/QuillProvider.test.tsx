@@ -1,5 +1,5 @@
 import { cleanup, render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from 'bun:test'
 import type { ResumeDocument } from '../../types/resume'
 import { QuillProvider } from '../QuillProvider'
 import { DateRange } from '../ui/ResumeDate'

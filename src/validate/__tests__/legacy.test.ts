@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'bun:test'
 import resume from '../../../resume.json'
 import { findLegacyFields, legacyMessage } from '../legacy'
 import { validateResume } from '../resume'

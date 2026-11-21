@@ -34,7 +34,7 @@ re-export to refresh.
 bun install
 bun dev            # the resume page; /compare serves the theme comparison tool
 bun run build      # self-contained dist/
-bun test           # vitest
+bun test           # bun test
 ```
 
 The compare page renders the theme's variants (default / monochrome)
