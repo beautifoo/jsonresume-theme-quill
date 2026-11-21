@@ -4,12 +4,10 @@
  * Renders the theme's variants side by side for the loaded resume —
  * resume.local.json when present, else the repo's demo resume — with
  * target/layout/scheme/variant/language controls, at full resolution for
- * a human eye. The A4 target previews the print target: an iframe of
- * the published document at the 794px print canvas (A4 at 96 dpi). A
- * browser cannot switch a document into print media on screen, so the
- * stylesheet's `@media print` rules are re-emitted un-wrapped (derived
- * at runtime — nothing hand-maintained), and the light palette, 12px
- * root scale, and print geometry apply for real. Each panel is a
+ * a human eye. The A4 target is the print preview (`printPreview.tsx`):
+ * an iframe of the published document at the print canvas, with the
+ * stylesheet's `@media print` rules re-emitted un-wrapped — a browser
+ * cannot switch a document into print media on screen. Each panel is a
  * self-contained `Resume` (its own Quill
  * provider), so the matrix previews exactly what the published page
  * renders — same icon weight, same date semantics.
@@ -17,13 +15,17 @@
 
 import { type FC, StrictMode, Suspense, use, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { renderToStaticMarkup } from 'react-dom/server'
-import { type LayoutMode, Resume, type ThemeVariant } from './components/Resume'
+import { pdfViewport } from './theme'
+import {
+	type LayoutMode,
+	Resume,
+	THEME_VARIANTS,
+	type ThemeVariant,
+} from './components/Resume'
 import { type Locale, locales } from './i18n/config'
 import { resolveLocale } from './i18n/resolveLocale'
-import { resumeDocumentMetadata } from './lib/document'
+import { PrintSheet } from './printPreview'
 import { loadResume } from './lib/resume'
-import type { ResumeDocument } from './types/resume'
 
 const Button: FC<{ value: string; active: boolean; onClick: () => void }> = ({
 	value,
@@ -57,97 +59,16 @@ const Caption: FC<{ title: string; sub: string }> = ({ title, sub }) => (
 	</div>
 )
 
-const FOIL_VARIANTS: ThemeVariant[] = ['default', 'monochrome']
-
-// One A4 page at 96 dpi — the print canvas (`pdfViewport` in theme.tsx)
-const A4_HEIGHT = 1123
-
 // Module-level so `use()` receives a stable promise across renders.
 const resumePromise = loadResume()
 
-// The page's own stylesheet, for the A4 preview's iframe: the published
+// The page's own stylesheet, for the print preview's iframe: the published
 // document inlines this same compiled CSS, so the iframe renders exactly
 // what the PDF contains.
 const stylesheetPromise = fetch(
 	document.querySelector<HTMLLinkElement>('link[rel="stylesheet"]')?.href ??
 		'index.css',
 ).then((r) => r.text())
-
-/**
- * The print target, live: the resume rendered to the published document
- * shape, embedded in an A4-sized iframe with the stylesheet's print
- * rules applied (un-wrapped from `@media print` at runtime). The
- * published file's `@page` margins and the multi-page flow only appear
- * in the real PDF.
- */
-
-/**
- * The compiled stylesheet's `@media print` rules, re-emitted without the
- * media wrapper, so they apply in an on-screen preview document. Derived
- * from the stylesheet itself: when the print rules change, the preview
- * follows — no copy to keep in sync.
- */
-function unmediaPrintRules(css: string): string {
-	const host = document.createElement('style')
-	host.textContent = css
-	document.head.append(host)
-	try {
-		const out: string[] = []
-		const walk = (rules: CSSRuleList | null, inPrint: boolean) => {
-			for (let i = 0; rules && i < rules.length; i++) {
-				const rule = rules[i]
-				if (!rule) continue
-				if (rule instanceof CSSMediaRule) {
-					walk(rule.cssRules, inPrint || rule.conditionText === 'print')
-				} else if (rule instanceof CSSGroupingRule) {
-					// @layer / @supports blocks may nest print rules (Tailwind output)
-					walk(rule.cssRules, inPrint)
-				} else if (inPrint) {
-					out.push(rule.cssText)
-				}
-			}
-		}
-		walk(host.sheet?.cssRules ?? null, false)
-		return out.join('\n')
-	} finally {
-		host.remove()
-	}
-}
-const PrintSheet: FC<{
-	doc: string
-	resume: ResumeDocument
-	layout: LayoutMode
-	variant: ThemeVariant
-	locale: Locale
-}> = ({ doc, resume, layout, variant, locale }) => {
-	const [height, setHeight] = useState(A4_HEIGHT)
-	const printRules = useMemo(() => unmediaPrintRules(doc), [doc])
-	const markup = useMemo(
-		() =>
-			renderToStaticMarkup(
-				<Resume
-					resume={resume}
-					layout={layout}
-					variant={variant}
-					locale={locale}
-				/>,
-			),
-		[resume, layout, variant, locale],
-	)
-	const { lang } = resumeDocumentMetadata(resume)
-	return (
-		<iframe
-			title={`Quill — ${variant} (A4 print)`}
-			className='mx-auto block w-[794px] bg-bg'
-			style={{ height }}
-			srcDoc={`<!doctype html><html lang="${lang}"><head><meta charset="UTF-8"><style>${doc}\n${printRules}</style></head><body>${markup}</body></html>`}
-			onLoad={(e) => {
-				const d = e.currentTarget.contentDocument
-				if (d) setHeight(Math.max(A4_HEIGHT, d.documentElement.scrollHeight))
-			}}
-		/>
-	)
-}
 
 const Compare: FC = () => {
 	const resume = use(resumePromise)
@@ -158,7 +79,7 @@ const Compare: FC = () => {
 	const [variant, setVariant] = useState<ThemeVariant | 'all'>('all')
 	const [locale, setLocale] = useState(() => resolveLocale(resume))
 
-	const quillVariants = FOIL_VARIANTS.filter(
+	const quillVariants = THEME_VARIANTS.filter(
 		(v) => variant === 'all' || v === variant,
 	)
 
@@ -252,7 +173,7 @@ const Compare: FC = () => {
 							active={variant === 'all'}
 							onClick={() => setVariant('all')}
 						/>
-						{FOIL_VARIANTS.map((v) => (
+						{THEME_VARIANTS.map((v) => (
 							<Button
 								key={v}
 								value={v}
@@ -279,7 +200,7 @@ const Compare: FC = () => {
 				className={
 					'grid gap-6 p-6 ' +
 					(target === 'a4'
-						? '[grid-template-columns:repeat(auto-fill,minmax(800px,1fr))]' // the 794px A4 sheet must fit unclipped
+						? '[grid-template-columns:repeat(auto-fill,minmax(800px,1fr))]' // the A4 sheet (pdfViewport) must fit unclipped
 						: '[grid-template-columns:repeat(auto-fill,minmax(560px,1fr))]')
 				}
 			>
@@ -287,9 +208,7 @@ const Compare: FC = () => {
 			</main>
 
 			<footer className='px-6 pb-8 text-[0.8rem] text-ink-3'>
-				The A4 target is the published document at the 794px print canvas (light
-				palette, 12px root, always light); the `@page` margins and multi-page
-				flow only appear in the real PDF from the standalone resume page.
+				{`The A4 target is the published document at the ${pdfViewport.width}px print canvas (light palette, 12px root, always light); the @page margins and multi-page flow only appear in the real PDF from the standalone resume page.`}
 			</footer>
 		</div>
 	)

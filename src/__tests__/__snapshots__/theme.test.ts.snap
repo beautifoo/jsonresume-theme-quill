@@ -10,17 +10,17 @@ exports[`renders the demo resume to a stable, self-contained document 1`] = `
 		<style>__quill-stylesheet__</style>
 		<script>(function () {
 	var root = document.documentElement
-	var forced = null
+	var scheme = null
 	try {
-		forced = localStorage.getItem('quill-scheme')
+		scheme = scheme || localStorage.getItem('quill-scheme')
 	} catch (e) {
 		/* private mode */
 	}
-	var dark = forced
-		? forced === 'dark'
+	var dark = scheme
+		? scheme === 'dark'
 		: window.matchMedia('(prefers-color-scheme: dark)').matches
 	if (dark) root.classList.add('dark')
-	if (!forced) {
+	if (!scheme) {
 		window
 			.matchMedia('(prefers-color-scheme: dark)')
 			.addEventListener('change', function (e) {

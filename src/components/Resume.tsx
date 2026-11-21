@@ -7,7 +7,9 @@ import { QuillProvider } from './QuillProvider'
 import { MAIN_SECTIONS, SIDEBAR_SECTIONS } from './sections'
 
 export type LayoutMode = 'single' | 'double'
-export type ThemeVariant = 'default' | 'monochrome'
+/** The two variants the compare page renders the document in. */
+export const THEME_VARIANTS = ['default', 'monochrome'] as const
+export type ThemeVariant = (typeof THEME_VARIANTS)[number]
 
 interface ResumeProps {
 	resume: ResumeDocument
