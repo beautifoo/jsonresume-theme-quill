@@ -63,7 +63,9 @@ export const SectionCard: FC<SectionCardProps> = memo(
 							<h3 className='quill-entry-title min-w-0 flex-1'>
 								{title}
 								{subtitle && (
-									<span className='font-normal text-ink-3'>{subtitle}</span>
+									// The leading space is the title-row gap: subtitles
+									// are either an AtLink or a bare role, neither padded.
+									<span className='font-normal text-ink-3'>{' '}{subtitle}</span>
 								)}
 							</h3>
 							{addonAfterTitle && (
