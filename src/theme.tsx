@@ -44,6 +44,11 @@ function escapeHtml(value: string): string {
  *
  * `now` pins the open-ended durations to a fixed instant (tests) —
  * otherwise the wall clock, as for the published file.
+ *
+ * The column layout is read from the document's own `custom.quill.layout`
+ * (resume-cli passes nothing else to `render`); a missing or malformed
+ * value falls back to the `double` default. DOM order is identical in
+ * both layouts (ADR 0001), so PDF and `resume audit` are unaffected.
  */
 export function render(
 	resume: ResumeDocument,
@@ -51,7 +56,11 @@ export function render(
 ): string {
 	const { title, lang } = resumeDocumentMetadata(resume)
 
-	const document = renderToStaticMarkup(<Resume resume={resume} now={now} />)
+	const layout = resume.custom?.quill?.layout === 'single' ? 'single' : 'double'
+
+	const document = renderToStaticMarkup(
+		<Resume resume={resume} layout={layout} now={now} />,
+	)
 
 	return `<!doctype html>
 <html lang="${lang}">

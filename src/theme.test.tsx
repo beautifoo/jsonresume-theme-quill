@@ -40,4 +40,19 @@ describe('render (the published theme entry)', () => {
 		expect(html).toContain('<title>Resume</title>')
 		expect(html).toContain('<body>')
 	})
+
+	it('collapses to a single column when the document asks for it', () => {
+		// resume-cli passes only the resume to render — the document's
+		// custom.quill.layout is the layout channel.
+		expect(render(resume)).toContain('layout-double')
+		expect(
+			render({ ...resume, custom: { quill: { layout: 'single' } } }),
+		).toContain('layout-single')
+		// A malformed value falls back to the default.
+		expect(
+			render(
+				{ ...resume, custom: { quill: { layout: 'diagonal' } } } as unknown as ResumeDocument,
+			),
+		).toContain('layout-double')
+	})
 })
