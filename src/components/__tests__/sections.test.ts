@@ -7,8 +7,8 @@ describe('the section registry — the ATS-safe document order (ADR 0001)', () =
 			'summary',
 			'work',
 			'education',
-			'projects',
 			'volunteer',
+			'projects',
 		])
 	})
 

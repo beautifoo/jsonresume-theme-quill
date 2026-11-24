@@ -39,8 +39,8 @@ export const MAIN_SECTIONS: SectionDef[] = [
 	},
 	{ key: 'work', render: (r) => <WorkExperience work={r.work} /> },
 	{ key: 'education', render: (r) => <Education education={r.education} /> },
-	{ key: 'projects', render: (r) => <Projects projects={r.projects} /> },
 	{ key: 'volunteer', render: (r) => <Volunteer volunteer={r.volunteer} /> },
+	{ key: 'projects', render: (r) => <Projects projects={r.projects} /> },
 ]
 
 export const SIDEBAR_SECTIONS: SectionDef[] = [
