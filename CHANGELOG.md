@@ -16,6 +16,22 @@
 * **publications:** Show the authors beside the summary ([604a24a](https://github.com/beautifoo/jsonresume-theme-quill/commit/604a24ad05c8f5fc0893b8194bad68063db71ab8))
 * **render:** Read the column layout from the resume document ([e89b805](https://github.com/beautifoo/jsonresume-theme-quill/commit/e89b805ff9b20c41954c80ce71bd3ad80d07cf1e))
 
+# [3.1.0](https://github.com/beautifoo/jsonresume-theme-quill/compare/v3.0.0...v3.1.0) (2026-11-24)
+
+
+### Bug Fixes
+
+* **projects:** Separate a project name from its role ([9026a42](https://github.com/beautifoo/jsonresume-theme-quill/commit/9026a42694b261472f57f052a1f2088f7a822b5e))
+* **sections:** Place volunteer experience before projects ([5bdbd9c](https://github.com/beautifoo/jsonresume-theme-quill/commit/5bdbd9c09120330481a6df47c0d3c4d0ac8526cd))
+* **summary:** Let the about narrative span the full column ([04e521e](https://github.com/beautifoo/jsonresume-theme-quill/commit/04e521e2328a8821604ad09f7be664d24189dd47))
+
+
+### Features
+
+* **header:** Render the location beside the contact details ([7f4ed4b](https://github.com/beautifoo/jsonresume-theme-quill/commit/7f4ed4bae51ab5e86f8ebf1eddf0d29679fdb515))
+* **publications:** Show the authors beside the summary ([604a24a](https://github.com/beautifoo/jsonresume-theme-quill/commit/604a24ad05c8f5fc0893b8194bad68063db71ab8))
+* **render:** Read the column layout from the resume document ([e89b805](https://github.com/beautifoo/jsonresume-theme-quill/commit/e89b805ff9b20c41954c80ce71bd3ad80d07cf1e))
+
 # [3.0.0](https://github.com/beautifoo/jsonresume-theme-quill/compare/v2.1.0...v3.0.0) (2026-11-19)
 
 
