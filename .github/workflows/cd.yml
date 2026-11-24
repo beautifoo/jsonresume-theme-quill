@@ -69,6 +69,10 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: true
+      # Identity for git commits that semantic-release does not run itself.
+      # (The release commit, tag and notes ref are governed by the GIT_* env
+      # vars on the semantic-release step below, which take precedence over
+      # git config: user env is spread last in semantic-release's run().)
       - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
@@ -82,3 +86,12 @@ jobs:
       - run: bunx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GitHub rejects refs/notes updates committed by an identity that is
+          # not the pushing account, and semantic-release hardcodes its own bot
+          # identity on CI. These vars override that default, so the release
+          # commit, tag and notes ref are all committed as the account behind
+          # GITHUB_TOKEN.
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
