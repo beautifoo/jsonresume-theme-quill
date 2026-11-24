@@ -43,12 +43,17 @@ export const Publications: FC<PublicationsProps> = memo(
 						url={publication.url || undefined}
 						urlLabel={t(urlLabelKey)}
 						content={
-							publication.summary ? (
-								<Markdown content={publication.summary} />
-							) : publication.authors?.length ? (
-								<span className='text-ink-3'>
-									{publication.authors.join(', ')}
-								</span>
+							publication.summary || publication.authors?.length ? (
+								<>
+									{publication.authors?.length ? (
+										<span className='text-ink-3'>
+											{publication.authors.join(', ')}
+										</span>
+									) : null}
+									{publication.summary ? (
+										<Markdown content={publication.summary} />
+									) : null}
+								</>
 							) : undefined
 						}
 					/>

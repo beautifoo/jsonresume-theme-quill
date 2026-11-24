@@ -29,7 +29,7 @@ They are shaped for different kinds of thing:
 
 In this theme they render differently:
 
-- `Publications.tsx` → **sidebar** (`Section` + `SidebarEntry`): title, `publisher` as subtitle, year-only date, url, `summary` or `authors` as body. No `highlights` or range dates are read; the one field it routes on is `type` (below).
+- `Publications.tsx` → **sidebar** (`Section` + `SidebarEntry`): title, `publisher` as subtitle, year-only date, url, `authors` and `summary` as body (whichever is present; both when both are). No `highlights` or range dates are read; the one field it routes on is `type` (below).
 - `Projects.tsx` → **main column** (`Section` + `TimelineEntry`/`SectionCard`): title, `roles[0] || entity` as subtitle, date range, summary, highlights, keyword tags.
 
 **The theme splits `publications` by `type` (ADR 0005).** Talk-like items — `type` of `talk`, `presentation` or `speech`, matched case-insensitively by the whitelist in `src/components/conferenceRouting.ts` — render in a distinct **Conferences** section (sidebar, before Publications, `View Talk` link label); everything else, including untyped publications, stays in **Publications**. Each publication renders exactly once, and the split is opt-in: a misspelled or novel `type` (`keynote`, `lecture`) safely stays in Publications. Since `type` is a stable 2.x field, no schema extension is involved — routing reads what the schema already declares. A talk placed in `projects` instead gets full main-column timeline treatment and is not part of the split.
