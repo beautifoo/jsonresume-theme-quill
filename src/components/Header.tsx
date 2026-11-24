@@ -24,18 +24,21 @@ export const Header: FC<HeaderProps> = memo(({ basics }) => {
 				<h1 className='quill-name break-words'>{name}</h1>
 				{label && <p className='quill-label mt-1.5 print:mt-1'>{label}</p>}
 
-				{locationLine && (
-					<div className='mt-3 flex items-center gap-2 text-[0.9rem] text-ink-3 print:mt-2 print:text-[0.8rem]'>
-						<HouseLineIcon
-							className='h-3.5 w-3.5 shrink-0 text-accent'
-							aria-hidden='true'
-						/>
-						<span>{locationLine}</span>
-					</div>
-				)}
-
 				<div className='mt-4 space-y-2 print:mt-2.5 print:space-y-1.5'>
-					<ContactInfo {...basics} />
+					<div className='flex flex-wrap items-center gap-x-6 gap-y-2 print:gap-x-4 print:gap-y-1.5'>
+						{locationLine && (
+							<span className='inline-flex items-center gap-2 whitespace-nowrap text-[0.9rem] text-ink-3 print:text-[0.8rem]'>
+								<HouseLineIcon
+									className='h-3.5 w-3.5 shrink-0 text-accent'
+									aria-hidden='true'
+								/>
+								{locationLine}
+							</span>
+						)}
+
+						<ContactInfo {...basics} />
+					</div>
+
 					<SocialProfiles profiles={basics.profiles} />
 				</div>
 			</div>

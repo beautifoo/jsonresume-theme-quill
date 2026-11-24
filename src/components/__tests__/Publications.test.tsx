@@ -33,7 +33,7 @@ describe('Publications — the 2.x field semantics', () => {
 		expect(screen.getByText('2021')).toBeInTheDocument()
 	})
 
-	it('prefers the summary over the authors for the content', () => {
+	it('shows the authors and the summary together', () => {
 		render(
 			wrap(
 				<Publications
@@ -44,7 +44,7 @@ describe('Publications — the 2.x field semantics', () => {
 			),
 		)
 		expect(screen.getByText(/A study/)).toBeInTheDocument()
-		expect(screen.queryByText('Jane Doe')).not.toBeInTheDocument()
+		expect(screen.getByText('Jane Doe')).toBeInTheDocument()
 	})
 
 	it('falls back to the authors when there is no summary', () => {

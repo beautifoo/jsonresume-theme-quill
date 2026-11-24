@@ -13,10 +13,14 @@
  * - `Award.url` — the 2.x award has no URL
  * - `Reference.label` / `position` / `summary` — free-text context the
  *   schema leaves to `relationship` / `organization`
+ * - `custom.quill.layout` — column layout (`single` | `double`). Namespaced
+ *   per the schema's `custom` definition; resume-cli passes no options to
+ *   the theme's `render`, so the document is the only channel.
  */
 
 import type {
 	AwardItem,
+	Custom,
 	CertificateItem,
 	EducationItem,
 	InterestItem,
@@ -31,8 +35,17 @@ import type {
 	WorkItem,
 } from '@jsonresume/types'
 
-/** A stable resume document. */
-export type ResumeDocument = Resume
+/**
+ * A stable resume document, plus the theme's `custom.quill` namespace.
+ */
+export type ResumeDocument = Resume & {
+	custom?: Custom & {
+		quill?: {
+			/** `single` collapses the sidebar into the main column; the default is `double` */
+			layout?: 'single' | 'double'
+		}
+	}
+}
 
 /**
  * The upstream shapes the app consumes, re-exported so this module is

@@ -12,7 +12,8 @@ export const AtLink = ({ label, url }: { label: string; url?: string }) => {
 
 	return (
 		<>
-			{` ${t('common.at')} `}
+			{/* No leading space: SectionCard pads the title-row gap */}
+			{`${t('common.at')} `}
 			{url ? (
 				<a href={url} target='_blank' rel='noopener noreferrer'>
 					{label}
