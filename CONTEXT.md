@@ -40,6 +40,10 @@ On-screen rendering (any viewport, light or dark via `prefers-color-scheme`), in
 **Print target**:
 PDF output rendered from a 794px-wide canvas — A4 at 96 dpi. Always the light palette, regardless of `prefers-color-scheme`.
 
+**Print preview**:
+The on-screen stand-in for the print target on the compare page: the published document in an A4-sized iframe, with the compiled stylesheet's `@media print` rules re-emitted un-wrapped (a browser cannot switch a document into print media). The `@page` margins and the multi-page flow only appear in the real PDF. (`src/printPreview.tsx`)
+_Avoid_: "PDF preview", "print emulation"
+
 **Stable fields**:
 The current JSON Resume 2.x field names — the era the theme guarantees to render. **Stable** is the canonical side of the stable/legacy pair.
 _Avoid_: "2.x fields", "current fields"

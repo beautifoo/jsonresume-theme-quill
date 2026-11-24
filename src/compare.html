@@ -5,9 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quill — theme comparison</title>
     <link rel="stylesheet" href="./index.css" />
+    <!--
+      Screen-scheme bootstrap, forced light — single source:
+      src/lib/schemeBootstrap.ts. The compare page is judged by hand, so it
+      never follows the system preference or a stored scheme. Kept
+      byte-equivalent by src/__tests__/compareHtml.test.ts; edit the module
+      there, not this copy.
+    -->
     <script>
-      // The compare page is judged by hand, so it always starts light.
-      document.documentElement.classList.remove('dark')
+(function () {
+	var root = document.documentElement
+	var scheme = 'light'
+	try {
+		scheme = scheme || localStorage.getItem('quill-scheme')
+	} catch (e) {
+		/* private mode */
+	}
+	var dark = scheme
+		? scheme === 'dark'
+		: window.matchMedia('(prefers-color-scheme: dark)').matches
+	if (dark) root.classList.add('dark')
+	if (!scheme) {
+		window
+			.matchMedia('(prefers-color-scheme: dark)')
+			.addEventListener('change', function (e) {
+				root.classList.toggle('dark', e.matches)
+			})
+	}
+})()
     </script>
   </head>
   <body>

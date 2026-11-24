@@ -8,22 +8,22 @@
     <!--
       Screen-scheme bootstrap — single source: src/lib/schemeBootstrap.ts.
       Kept byte-equivalent by src/__tests__/indexHtml.test.ts; edit the
-      const there, not this copy.
+      module there, not this copy.
     -->
     <script>
 (function () {
 	var root = document.documentElement
-	var forced = null
+	var scheme = null
 	try {
-		forced = localStorage.getItem('quill-scheme')
+		scheme = scheme || localStorage.getItem('quill-scheme')
 	} catch (e) {
 		/* private mode */
 	}
-	var dark = forced
-		? forced === 'dark'
+	var dark = scheme
+		? scheme === 'dark'
 		: window.matchMedia('(prefers-color-scheme: dark)').matches
 	if (dark) root.classList.add('dark')
-	if (!forced) {
+	if (!scheme) {
 		window
 			.matchMedia('(prefers-color-scheme: dark)')
 			.addEventListener('change', function (e) {

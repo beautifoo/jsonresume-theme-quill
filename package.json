@@ -36,7 +36,8 @@
 		"validate": "bun src/validate/cli.ts",
 		"prepublishOnly": "bun run build",
 		"typecheck": "bunx tsc --noEmit",
-		"start": "NODE_ENV=production bun src/index.tsx"
+		"start": "NODE_ENV=production bun src/index.tsx",
+		"test:browser": "playwright test"
 	},
 	"dependencies": {},
 	"devDependencies": {
@@ -45,6 +46,7 @@
 		"@jsonresume/schema": "1.7.1",
 		"@jsonresume/types": "0.6.1",
 		"@phosphor-icons/react": "2.1.10",
+		"@playwright/test": "1.65.0",
 		"@semantic-release/changelog": "7.0.0",
 		"@semantic-release/commit-analyzer": "^13.0.1",
 		"@semantic-release/git": "11.0.1",

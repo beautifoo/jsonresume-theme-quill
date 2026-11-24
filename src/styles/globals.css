@@ -8,8 +8,10 @@
  * Hosts (or per-resume theming) override these; components never
  * hardcode a color.
  *
- * Screen scheme is selected with a .dark class on <html> (the document
- * sets it from prefers-color-scheme before paint — see index.html).
+ * Screen scheme is selected with a .dark class: on <html> in the
+ * documents (the scheme bootstrap sets it before paint — see
+ * schemeBootstrap.ts), or on any container on the compare page, which
+ * previews dark inside a light page.
  * The print target is always the light palette, at a denser scale.
  * ------------------------------------------------------------------ */
 
